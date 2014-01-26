@@ -71,12 +71,32 @@ public class MainForm extends javax.swing.JFrame {
         splitPane.setRightComponent(desktopPane);
 
         leaveEventButton.setText("Leave Event");
+        leaveEventButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaveEventButtonActionPerformed(evt);
+            }
+        });
 
         employeeButton.setText("Employee");
+        employeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeeButtonActionPerformed(evt);
+            }
+        });
 
         contractButton.setText("Contract");
+        contractButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contractButtonActionPerformed(evt);
+            }
+        });
 
         organizationButton.setText("Organization");
+        organizationButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                organizationButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout navigationPanelLayout = new javax.swing.GroupLayout(navigationPanel);
         navigationPanel.setLayout(navigationPanelLayout);
@@ -196,6 +216,24 @@ public class MainForm extends javax.swing.JFrame {
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
+
+    private void leaveEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveEventButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_leaveEventButtonActionPerformed
+
+    private void employeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_employeeButtonActionPerformed
+
+    private void contractButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contractButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contractButtonActionPerformed
+
+    private void organizationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationButtonActionPerformed
+        OrganizationFrame of = new OrganizationFrame();
+        desktopPane.add(of);
+        of.setVisible(true);
+    }//GEN-LAST:event_organizationButtonActionPerformed
 
     /**
      * @param args the command line arguments

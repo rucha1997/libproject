@@ -207,6 +207,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Leave Event"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="leaveEventButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="separator1">
             </Component>
@@ -214,11 +217,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Employee"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="employeeButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="contractButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Contract"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="contractButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="separator2">
             </Component>
@@ -226,6 +235,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Organization"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="organizationButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="separator3">
             </Component>
