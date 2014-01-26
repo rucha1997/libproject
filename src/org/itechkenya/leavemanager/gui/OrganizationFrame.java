@@ -186,7 +186,7 @@ public class OrganizationFrame extends LeaveManagerFrame {
     }
 
     @Override
-    public JButton getSaveButton() {
+    public JButton getOkButton() {
         return saveButton;
     }
 }

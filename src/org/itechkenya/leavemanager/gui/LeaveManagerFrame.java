@@ -21,7 +21,7 @@ import static org.itechkenya.leavemanager.gui.OrganizationFrame.addEscapeListene
 public abstract class LeaveManagerFrame extends JInternalFrame {
 
     public void configureButtons() {
-        getRootPane().setDefaultButton(getSaveButton());
+        getRootPane().setDefaultButton(getOkButton());
         addEscapeListener(this);
     }
 
@@ -41,5 +41,5 @@ public abstract class LeaveManagerFrame extends JInternalFrame {
 
     public abstract void loadData();
 
-    public abstract JButton getSaveButton();
+    public abstract JButton getOkButton();
 }

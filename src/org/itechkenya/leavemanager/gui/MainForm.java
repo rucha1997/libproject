@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.itechkenya.leavemanager.gui;
 
 /**
@@ -222,7 +221,9 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_leaveEventButtonActionPerformed
 
     private void employeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeButtonActionPerformed
-        // TODO add your handling code here:
+        EmployeeFrame ef = new EmployeeFrame();
+        desktopPane.add(ef);
+        ef.setVisible(true);
     }//GEN-LAST:event_employeeButtonActionPerformed
 
     private void contractButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contractButtonActionPerformed
