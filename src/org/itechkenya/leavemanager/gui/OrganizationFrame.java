@@ -5,15 +5,10 @@
  */
 package org.itechkenya.leavemanager.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JComponent;
-import javax.swing.JInternalFrame;
-import javax.swing.KeyStroke;
+import javax.swing.JButton;
 import org.itechkenya.leavemanager.api.JpaManager;
 import org.itechkenya.leavemanager.api.MessageManager;
 import org.itechkenya.leavemanager.domain.Organization;
@@ -22,7 +17,7 @@ import org.itechkenya.leavemanager.domain.Organization;
  *
  * @author gitahi
  */
-public class OrganizationFrame extends javax.swing.JInternalFrame {
+public class OrganizationFrame extends LeaveManagerFrame {
 
     private Organization organization;
 
@@ -134,41 +129,6 @@ public class OrganizationFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void configureButtons() {
-        getRootPane().setDefaultButton(saveButton);
-        addEscapeListener(this);
-    }
-
-    private void loadData() {
-        List<Organization> organizationsList = JpaManager.getOjc().findOrganizationEntities();
-        if (!organizationsList.isEmpty()) {
-            organization = organizationsList.get(0);
-            nameTextField.setText(organization.getName());
-            addressTextField.setText(organization.getAddress());
-        } else {
-            organization = null;
-        }
-    }
-
-    private void fleshOutOrganization(Organization organization) {
-        organization.setName(nameTextField.getText());
-        organization.setAddress(addressTextField.getText());
-    }
-
-    public static void addEscapeListener(final JInternalFrame jif) {
-
-        ActionListener escListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                jif.dispose();
-            }
-        };
-
-        jif.getRootPane().registerKeyboardAction(escListener,
-                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-                JComponent.WHEN_IN_FOCUSED_WINDOW);
-    }
-
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         if (nameTextField.getText().equals("")) {
             MessageManager.showWarningMessage(this, "Enter name.", nameTextField);
@@ -207,4 +167,26 @@ public class OrganizationFrame extends javax.swing.JInternalFrame {
     private javax.swing.JPanel panel;
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public final void loadData() {
+        List<Organization> organizationsList = JpaManager.getOjc().findOrganizationEntities();
+        if (!organizationsList.isEmpty()) {
+            organization = organizationsList.get(0);
+            nameTextField.setText(organization.getName());
+            addressTextField.setText(organization.getAddress());
+        } else {
+            organization = null;
+        }
+    }
+
+    private void fleshOutOrganization(Organization organization) {
+        organization.setName(nameTextField.getText());
+        organization.setAddress(addressTextField.getText());
+    }
+
+    @Override
+    public JButton getSaveButton() {
+        return saveButton;
+    }
 }
