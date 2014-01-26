@@ -3,10 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.itechkenya.leavemanager.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import org.itechkenya.leavemanager.api.JpaManager;
+import org.itechkenya.leavemanager.api.MessageManager;
+import org.itechkenya.leavemanager.domain.Employee;
+import org.itechkenya.leavemanager.jpa.exceptions.IllegalOrphanException;
+import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
 
 /**
  *
@@ -18,9 +29,14 @@ public class EmployeeFrame extends LeaveManagerFrame {
      * Creates new form EmployeeFrame
      */
     public EmployeeFrame() {
-        initComponents();
-        configureButtons();
-        loadData();
+        try {
+            initComponents();
+            configureComponents();
+            loadData();
+        } catch (Exception ex) {
+            MessageManager.showErrorMessage(this.getContentPane(), ex.getMessage());
+            Logger.getLogger(OrganizationFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -101,12 +117,32 @@ public class EmployeeFrame extends LeaveManagerFrame {
         );
 
         newButton.setText("New");
+        newButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButtonActionPerformed(evt);
+            }
+        });
 
         saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         closeButton.setText("Close");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -160,6 +196,50 @@ public class EmployeeFrame extends LeaveManagerFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        clear();
+    }//GEN-LAST:event_newButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        Employee employee = (Employee) getSelectedItem();
+        try {
+            if (employee == null) {
+                employee = new Employee();
+                flesh(employee);
+                JpaManager.getEjc().create(employee);
+                updateTable(employee, UpdateType.CREATE);
+            } else {
+                flesh(employee);
+                JpaManager.getEjc().edit(employee);
+                updateTable(employee, UpdateType.EDIT);
+            }
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        for (Object item : getSelectedItems()) {
+            Employee employee = (Employee) item;
+            try {
+                JpaManager.getEjc().destroy(employee.getId());
+                updateTable(employee, UpdateType.DESTROY);
+            } catch (IllegalOrphanException ex) {
+                MessageManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
+                Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NonexistentEntityException ex) {
+                MessageManager.showErrorMessage(this, ex.getMessage());
+                Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_closeButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox activeCheckBox;
@@ -180,11 +260,86 @@ public class EmployeeFrame extends LeaveManagerFrame {
 
     @Override
     public final void loadData() {
-        
+        List<Employee> organizationsList = JpaManager.getEjc().findEmployeeEntities();
+        EmployeeTableModel model = new EmployeeTableModel();
+        for (Employee employee : organizationsList) {
+            model.createRow(employee);
+        }
+        table.setModel(model);
     }
 
     @Override
     public JButton getOkButton() {
         return saveButton;
+    }
+
+    @Override
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    @Override
+    public JTable getTable() {
+        return table;
+    }
+
+    @Override
+    public void clearFields() {
+        codeTextField.setText("");
+        lastNameTextField.setText("");
+        otherNamesTextField.setText("");
+        activeCheckBox.setSelected(false);
+    }
+
+    @Override
+    public void showSelectedItem(Object item) {
+        Employee employee = (Employee) item;
+        codeTextField.setText(employee.getCode());
+        lastNameTextField.setText(employee.getLastName());
+        otherNamesTextField.setText(employee.getOtherNames());
+        activeCheckBox.setSelected(employee.getActive());
+    }
+
+    @Override
+    public void flesh(Object item) {
+        Employee employee = (Employee) item;
+        employee.setCode(codeTextField.getText());
+        employee.setLastName(lastNameTextField.getText());
+        employee.setOtherNames(otherNamesTextField.getText());
+        employee.setActive(activeCheckBox.isSelected());
+    }
+
+    private class EmployeeTableModel extends LeaveManagerTableModel {
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if (rowIndex >= getRows().size()) {
+                return null;
+            }
+            Employee employee = (Employee) getRow(rowIndex);
+            switch (columnIndex) {
+                case 0:
+                    return employee.getCode();
+                case 1:
+                    return employee.getLastName();
+                case 2:
+                    return employee.getOtherNames();
+                case 3:
+                    return employee.getActive();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public Class getColumnClass(int column) {
+            return getValueAt(0, column).getClass();
+        }
+
+        @Override
+        public String[] getColumns() {
+            String[] columns = {"Code", "Last Name", "Other Names", "Active"};
+            return columns;
+        }
     }
 }

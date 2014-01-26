@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.JpaManager;
 import org.itechkenya.leavemanager.api.MessageManager;
 import org.itechkenya.leavemanager.domain.Organization;
@@ -25,9 +26,14 @@ public class OrganizationFrame extends LeaveManagerFrame {
      * Creates new form OrganizationInternalFrame
      */
     public OrganizationFrame() {
-        initComponents();
-        configureButtons();
-        loadData();
+        try {
+            initComponents();
+            configureComponents();
+            loadData();
+        } catch (Exception ex) {
+            MessageManager.showErrorMessage(this.getContentPane(), ex.getMessage());
+            Logger.getLogger(OrganizationFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -141,10 +147,10 @@ public class OrganizationFrame extends LeaveManagerFrame {
         try {
             if (organization == null) {
                 organization = new Organization();
-                fleshOutOrganization(organization);
+                flesh(organization);
                 JpaManager.getOjc().create(organization);
             } else {
-                fleshOutOrganization(organization);
+                flesh(organization);
                 JpaManager.getOjc().edit(organization);
             }
             this.dispose();
@@ -180,13 +186,35 @@ public class OrganizationFrame extends LeaveManagerFrame {
         }
     }
 
-    private void fleshOutOrganization(Organization organization) {
-        organization.setName(nameTextField.getText());
-        organization.setAddress(addressTextField.getText());
-    }
-
     @Override
     public JButton getOkButton() {
         return saveButton;
+    }
+
+    @Override
+    public JButton getDeleteButton() {
+        return null;
+    }
+
+    @Override
+    public JTable getTable() {
+        return null;
+    }
+
+    @Override
+    public void clearFields() {
+        nameTextField.setText("");
+        addressTextField.setText("");
+    }
+
+    @Override
+    public void showSelectedItem(Object item) {
+    }
+
+    @Override
+    public void flesh(Object item) {
+        Organization org = (Organization) item;
+        org.setName(nameTextField.getText());
+        org.setAddress(addressTextField.getText());
     }
 }

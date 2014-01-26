@@ -24,4 +24,8 @@ public class MessageManager {
     public static void showWarningMessage(Component source, String message) {
         showWarningMessage(source, message, null);
     }
+
+    public static void showErrorMessage(Component source, String message) {
+        JOptionPane.showMessageDialog(source, message, "Error!", JOptionPane.ERROR_MESSAGE, null);
+    }
 }
