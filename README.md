@@ -1,4 +1,4 @@
 leave-manager
 =============
 
-A basic desktop-based employee leave management program written in Java SE.
+A basic desktop-based employee leave management application written in Java SE.
