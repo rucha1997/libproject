@@ -1,0 +1,204 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package org.itechkenya.leavemanager.jpa;
+
+import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import org.itechkenya.leavemanager.domain.Contract;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import org.itechkenya.leavemanager.domain.Employee;
+import org.itechkenya.leavemanager.jpa.exceptions.IllegalOrphanException;
+import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
+
+/**
+ *
+ * @author gitahi
+ */
+public class EmployeeJpaController implements Serializable {
+
+    public EmployeeJpaController(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public void create(Employee employee) {
+        if (employee.getContractList() == null) {
+            employee.setContractList(new ArrayList<Contract>());
+        }
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            List<Contract> attachedContractList = new ArrayList<Contract>();
+            for (Contract contractListContractToAttach : employee.getContractList()) {
+                contractListContractToAttach = em.getReference(contractListContractToAttach.getClass(), contractListContractToAttach.getId());
+                attachedContractList.add(contractListContractToAttach);
+            }
+            employee.setContractList(attachedContractList);
+            em.persist(employee);
+            for (Contract contractListContract : employee.getContractList()) {
+                Employee oldEmployeeIdOfContractListContract = contractListContract.getEmployeeId();
+                contractListContract.setEmployeeId(employee);
+                contractListContract = em.merge(contractListContract);
+                if (oldEmployeeIdOfContractListContract != null) {
+                    oldEmployeeIdOfContractListContract.getContractList().remove(contractListContract);
+                    oldEmployeeIdOfContractListContract = em.merge(oldEmployeeIdOfContractListContract);
+                }
+            }
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void edit(Employee employee) throws IllegalOrphanException, NonexistentEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Employee persistentEmployee = em.find(Employee.class, employee.getId());
+            List<Contract> contractListOld = persistentEmployee.getContractList();
+            List<Contract> contractListNew = employee.getContractList();
+            List<String> illegalOrphanMessages = null;
+            for (Contract contractListOldContract : contractListOld) {
+                if (!contractListNew.contains(contractListOldContract)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Contract " + contractListOldContract + " since its employeeId field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Contract> attachedContractListNew = new ArrayList<Contract>();
+            for (Contract contractListNewContractToAttach : contractListNew) {
+                contractListNewContractToAttach = em.getReference(contractListNewContractToAttach.getClass(), contractListNewContractToAttach.getId());
+                attachedContractListNew.add(contractListNewContractToAttach);
+            }
+            contractListNew = attachedContractListNew;
+            employee.setContractList(contractListNew);
+            employee = em.merge(employee);
+            for (Contract contractListNewContract : contractListNew) {
+                if (!contractListOld.contains(contractListNewContract)) {
+                    Employee oldEmployeeIdOfContractListNewContract = contractListNewContract.getEmployeeId();
+                    contractListNewContract.setEmployeeId(employee);
+                    contractListNewContract = em.merge(contractListNewContract);
+                    if (oldEmployeeIdOfContractListNewContract != null && !oldEmployeeIdOfContractListNewContract.equals(employee)) {
+                        oldEmployeeIdOfContractListNewContract.getContractList().remove(contractListNewContract);
+                        oldEmployeeIdOfContractListNewContract = em.merge(oldEmployeeIdOfContractListNewContract);
+                    }
+                }
+            }
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Integer id = employee.getId();
+                if (findEmployee(id) == null) {
+                    throw new NonexistentEntityException("The employee with id " + id + " no longer exists.");
+                }
+            }
+            throw ex;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            Employee employee;
+            try {
+                employee = em.getReference(Employee.class, id);
+                employee.getId();
+            } catch (EntityNotFoundException enfe) {
+                throw new NonexistentEntityException("The employee with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Contract> contractListOrphanCheck = employee.getContractList();
+            for (Contract contractListOrphanCheckContract : contractListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Employee (" + employee + ") cannot be destroyed since the Contract " + contractListOrphanCheckContract + " in its contractList field has a non-nullable employeeId field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            em.remove(employee);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public List<Employee> findEmployeeEntities() {
+        return findEmployeeEntities(true, -1, -1);
+    }
+
+    public List<Employee> findEmployeeEntities(int maxResults, int firstResult) {
+        return findEmployeeEntities(false, maxResults, firstResult);
+    }
+
+    private List<Employee> findEmployeeEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            cq.select(cq.from(Employee.class));
+            Query q = em.createQuery(cq);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public Employee findEmployee(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(Employee.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    public int getEmployeeCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<Employee> rt = cq.from(Employee.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+}
