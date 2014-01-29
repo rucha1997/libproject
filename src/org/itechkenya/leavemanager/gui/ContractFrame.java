@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.itechkenya.leavemanager.gui;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.JpaManager;
+import org.itechkenya.leavemanager.api.MessageManager;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.Employee;
+import org.itechkenya.leavemanager.jpa.exceptions.IllegalOrphanException;
+import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
 
 /**
  *
@@ -41,6 +45,10 @@ public class ContractFrame extends LeaveManagerFrame {
         employeeLabel = new javax.swing.JLabel();
         employeeComboBox = new javax.swing.JComboBox();
         startDateLabel = new javax.swing.JLabel();
+        startDateChooser = new com.toedter.calendar.JDateChooser();
+        endDateLabel = new javax.swing.JLabel();
+        endDateChooser = new com.toedter.calendar.JDateChooser();
+        activeCheckBox = new javax.swing.JCheckBox();
         newButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
@@ -48,13 +56,19 @@ public class ContractFrame extends LeaveManagerFrame {
         scrollPane = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
+        setClosable(true);
+        setMaximizable(true);
+        setTitle("Contracts");
+
         panel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         employeeLabel.setText("Employee");
 
-        employeeComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         startDateLabel.setText("Start Date");
+
+        endDateLabel.setText("End Date");
+
+        activeCheckBox.setText("Active");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -63,34 +77,66 @@ public class ContractFrame extends LeaveManagerFrame {
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(employeeLabel)
+                    .addComponent(startDateLabel)
+                    .addComponent(endDateLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(employeeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(employeeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(startDateLabel)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(activeCheckBox)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(employeeComboBox, 0, 558, Short.MAX_VALUE)
+                    .addComponent(startDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(endDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(employeeLabel)
                     .addComponent(employeeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(startDateLabel)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(startDateLabel)
+                    .addComponent(startDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(endDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(endDateLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(activeCheckBox)
+                .addContainerGap())
         );
 
         newButton.setText("New");
+        newButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newButtonActionPerformed(evt);
+            }
+        });
 
         saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         closeButton.setText("Close");
+        closeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeButtonActionPerformed(evt);
+            }
+        });
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -137,30 +183,83 @@ public class ContractFrame extends LeaveManagerFrame {
                     .addComponent(deleteButton)
                     .addComponent(closeButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
+        clear();
+    }//GEN-LAST:event_newButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        Contract contract = (Contract) getSelectedItem();
+        try {
+            if (contract == null) {
+                contract = new Contract();
+                flesh(contract);
+                JpaManager.getCjc().create(contract);
+                updateTable(contract, UpdateType.CREATE);
+            } else {
+                flesh(contract);
+                JpaManager.getCjc().edit(contract);
+                updateTable(contract, UpdateType.EDIT);
+            }
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        for (Object item : getSelectedItems()) {
+            Contract contract = (Contract) item;
+            try {
+                JpaManager.getCjc().destroy(contract.getId());
+                updateTable(contract, UpdateType.DESTROY);
+            } catch (IllegalOrphanException ex) {
+                MessageManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
+                Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NonexistentEntityException ex) {
+                MessageManager.showErrorMessage(this, ex.getMessage());
+                Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_closeButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox activeCheckBox;
     private javax.swing.JButton closeButton;
     private javax.swing.JButton deleteButton;
     private javax.swing.JComboBox employeeComboBox;
     private javax.swing.JLabel employeeLabel;
+    private com.toedter.calendar.JDateChooser endDateChooser;
+    private javax.swing.JLabel endDateLabel;
     private javax.swing.JButton newButton;
     private javax.swing.JPanel panel;
     private javax.swing.JButton saveButton;
     private javax.swing.JScrollPane scrollPane;
+    private com.toedter.calendar.JDateChooser startDateChooser;
     private javax.swing.JLabel startDateLabel;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
-
-      @Override
+    @Override
     public final void loadData() {
+        List<Employee> employeeList = JpaManager.getEjc().findEmployeeEntities();
+        for (Employee employee : employeeList) {
+            employeeComboBox.addItem(employee);
+        }
+        employeeComboBox.setSelectedItem(null);
+
         List<Contract> organizationsList = JpaManager.getCjc().findContractEntities();
         ContractTableModel model = new ContractTableModel();
         for (Contract contract : organizationsList) {
@@ -187,13 +286,19 @@ public class ContractFrame extends LeaveManagerFrame {
     @Override
     public void clearFields() {
         employeeComboBox.setSelectedItem(null);
+        startDateChooser.setDate(null);
+        endDateChooser.setDate(null);
+        activeCheckBox.setSelected(false);
     }
 
     @Override
     public void showSelectedItem(Object item) {
         Contract contract = (Contract) item;
         if (contract != null) {
-            employeeComboBox.setSelectedItem(contract.getEmployeeId());
+            employeeComboBox.setSelectedItem(contract.getEmployee());
+            startDateChooser.setDate(contract.getStartDate());
+            endDateChooser.setDate(contract.getEndDate());
+            activeCheckBox.setSelected(contract.getActive());
         }
     }
 
@@ -201,7 +306,10 @@ public class ContractFrame extends LeaveManagerFrame {
     public void flesh(Object item) {
         Contract contract = (Contract) item;
         if (contract != null) {
-            contract.setEmployeeId((Employee) employeeComboBox.getSelectedItem());
+            contract.setEmployee((Employee) employeeComboBox.getSelectedItem());
+            contract.setStartDate(startDateChooser.getDate());
+            contract.setEndDate(endDateChooser.getDate());
+            contract.setActive(activeCheckBox.isSelected());
         }
     }
 
@@ -215,7 +323,11 @@ public class ContractFrame extends LeaveManagerFrame {
             Contract contract = (Contract) getRow(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    return contract.getEmployeeId();
+                    return contract.getEmployee();
+                case 1:
+                    return contract.getStartDate();
+                case 2:
+                    return contract.getEndDate();
                 case 3:
                     return contract.getActive();
                 default:
@@ -230,7 +342,7 @@ public class ContractFrame extends LeaveManagerFrame {
 
         @Override
         public String[] getColumns() {
-            String[] columns = {"Code", "Last Name", "Other Names", "Active"};
+            String[] columns = {"Employee", "Start Date", "End Date", "Active"};
             return columns;
         }
     }

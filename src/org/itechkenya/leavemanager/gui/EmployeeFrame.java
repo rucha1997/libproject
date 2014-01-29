@@ -257,9 +257,9 @@ public class EmployeeFrame extends LeaveManagerFrame {
 
     @Override
     public final void loadData() {
-        List<Employee> organizationsList = JpaManager.getEjc().findEmployeeEntities();
+        List<Employee> employeeList = JpaManager.getEjc().findEmployeeEntities();
         EmployeeTableModel model = new EmployeeTableModel();
-        for (Employee employee : organizationsList) {
+        for (Employee employee : employeeList) {
             model.createRow(employee);
         }
         table.setModel(model);

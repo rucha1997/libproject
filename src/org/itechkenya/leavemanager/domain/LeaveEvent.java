@@ -42,33 +42,33 @@ public class LeaveEvent implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "contract_year")
+    @Column(name = "contract_year", nullable = false)
     private int contractYear;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @Column(name = "days_earned")
+    @Column(name = "days_earned", nullable = false, precision = 3, scale = 2)
     private BigDecimal daysEarned;
     @Basic(optional = false)
-    @Column(name = "days_spent")
+    @Column(name = "days_spent", nullable = false, precision = 3, scale = 2)
     private BigDecimal daysSpent;
     @Basic(optional = false)
-    @Column(name = "start_date")
+    @Column(name = "start_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    @Column(name = "comment")
+    @Column(name = "comment", length = 140)
     private String comment;
-    @JoinColumn(name = "contract_id", referencedColumnName = "id")
+    @JoinColumn(name = "contract", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
-    private Contract contractId;
-    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    private Contract contract;
+    @JoinColumn(name = "leave_type", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
-    private LeaveType typeId;
+    private LeaveType leaveType;
 
     public LeaveEvent() {
     }
@@ -141,20 +141,20 @@ public class LeaveEvent implements Serializable {
         this.comment = comment;
     }
 
-    public Contract getContractId() {
-        return contractId;
+    public Contract getContract() {
+        return contract;
     }
 
-    public void setContractId(Contract contractId) {
-        this.contractId = contractId;
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
 
-    public LeaveType getTypeId() {
-        return typeId;
+    public LeaveType getLeaveType() {
+        return leaveType;
     }
 
-    public void setTypeId(LeaveType typeId) {
-        this.typeId = typeId;
+    public void setLeaveType(LeaveType leaveType) {
+        this.leaveType = leaveType;
     }
 
     @Override

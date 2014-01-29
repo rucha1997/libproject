@@ -249,7 +249,9 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_employeeButtonActionPerformed
 
     private void contractButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contractButtonActionPerformed
-        // TODO add your handling code here:
+        ContractFrame cf = new ContractFrame();
+        desktopPane.add(cf);
+        cf.setVisible(true);
     }//GEN-LAST:event_contractButtonActionPerformed
 
     private void organizationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationButtonActionPerformed

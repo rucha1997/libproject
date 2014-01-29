@@ -41,19 +41,19 @@ public class LeaveType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 45)
     private String name;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @Column(name = "days_per_month")
+    @Column(name = "days_per_month", nullable = false, precision = 3, scale = 2)
     private BigDecimal daysPerMonth;
     @Basic(optional = false)
-    @Column(name = "active")
+    @Column(name = "active", nullable = false)
     private boolean active;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "leaveType")
     private List<LeaveEvent> leaveEventList;
 
     public LeaveType() {

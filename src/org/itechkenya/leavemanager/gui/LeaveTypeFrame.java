@@ -57,6 +57,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Leave Types");
 
         panel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 

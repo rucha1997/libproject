@@ -35,12 +35,12 @@ public class Organization implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 45)
     private String name;
-    @Column(name = "address")
+    @Column(name = "address", length = 45)
     private String address;
 
     public Organization() {

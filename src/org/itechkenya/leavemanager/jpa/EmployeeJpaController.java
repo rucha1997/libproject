@@ -51,12 +51,12 @@ public class EmployeeJpaController implements Serializable {
             employee.setContractList(attachedContractList);
             em.persist(employee);
             for (Contract contractListContract : employee.getContractList()) {
-                Employee oldEmployeeIdOfContractListContract = contractListContract.getEmployeeId();
-                contractListContract.setEmployeeId(employee);
+                Employee oldEmployeeOfContractListContract = contractListContract.getEmployee();
+                contractListContract.setEmployee(employee);
                 contractListContract = em.merge(contractListContract);
-                if (oldEmployeeIdOfContractListContract != null) {
-                    oldEmployeeIdOfContractListContract.getContractList().remove(contractListContract);
-                    oldEmployeeIdOfContractListContract = em.merge(oldEmployeeIdOfContractListContract);
+                if (oldEmployeeOfContractListContract != null) {
+                    oldEmployeeOfContractListContract.getContractList().remove(contractListContract);
+                    oldEmployeeOfContractListContract = em.merge(oldEmployeeOfContractListContract);
                 }
             }
             em.getTransaction().commit();
@@ -81,7 +81,7 @@ public class EmployeeJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Contract " + contractListOldContract + " since its employeeId field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Contract " + contractListOldContract + " since its employee field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -97,12 +97,12 @@ public class EmployeeJpaController implements Serializable {
             employee = em.merge(employee);
             for (Contract contractListNewContract : contractListNew) {
                 if (!contractListOld.contains(contractListNewContract)) {
-                    Employee oldEmployeeIdOfContractListNewContract = contractListNewContract.getEmployeeId();
-                    contractListNewContract.setEmployeeId(employee);
+                    Employee oldEmployeeOfContractListNewContract = contractListNewContract.getEmployee();
+                    contractListNewContract.setEmployee(employee);
                     contractListNewContract = em.merge(contractListNewContract);
-                    if (oldEmployeeIdOfContractListNewContract != null && !oldEmployeeIdOfContractListNewContract.equals(employee)) {
-                        oldEmployeeIdOfContractListNewContract.getContractList().remove(contractListNewContract);
-                        oldEmployeeIdOfContractListNewContract = em.merge(oldEmployeeIdOfContractListNewContract);
+                    if (oldEmployeeOfContractListNewContract != null && !oldEmployeeOfContractListNewContract.equals(employee)) {
+                        oldEmployeeOfContractListNewContract.getContractList().remove(contractListNewContract);
+                        oldEmployeeOfContractListNewContract = em.merge(oldEmployeeOfContractListNewContract);
                     }
                 }
             }
@@ -141,7 +141,7 @@ public class EmployeeJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Employee (" + employee + ") cannot be destroyed since the Contract " + contractListOrphanCheckContract + " in its contractList field has a non-nullable employeeId field.");
+                illegalOrphanMessages.add("This Employee (" + employee + ") cannot be destroyed since the Contract " + contractListOrphanCheckContract + " in its contractList field has a non-nullable employee field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

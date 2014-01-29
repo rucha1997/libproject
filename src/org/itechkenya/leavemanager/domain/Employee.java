@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -27,7 +28,8 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author gitahi
  */
 @Entity
-@Table(name = "employee")
+@Table(name = "employee", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"code"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
@@ -41,21 +43,21 @@ public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "code")
+    @Column(name = "code", nullable = false, length = 45)
     private String code;
     @Basic(optional = false)
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false, length = 45)
     private String lastName;
     @Basic(optional = false)
-    @Column(name = "other_names")
+    @Column(name = "other_names", nullable = false, length = 45)
     private String otherNames;
     @Basic(optional = false)
-    @Column(name = "active")
+    @Column(name = "active", nullable = false)
     private boolean active;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employeeId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<Contract> contractList;
 
     public Employee() {

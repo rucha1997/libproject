@@ -7,6 +7,7 @@
 package org.itechkenya.leavemanager.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -21,6 +22,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -42,20 +45,22 @@ public class Contract implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "start_date")
-    private String startDate;
+    @Column(name = "start_date", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
     @Column(name = "end_date")
-    private String endDate;
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
     @Basic(optional = false)
-    @Column(name = "active")
+    @Column(name = "active", nullable = false)
     private boolean active;
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    @JoinColumn(name = "employee", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
-    private Employee employeeId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contractId")
+    private Employee employee;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contract")
     private List<LeaveEvent> leaveEventList;
 
     public Contract() {
@@ -65,7 +70,7 @@ public class Contract implements Serializable {
         this.id = id;
     }
 
-    public Contract(Integer id, String startDate, boolean active) {
+    public Contract(Integer id, Date startDate, boolean active) {
         this.id = id;
         this.startDate = startDate;
         this.active = active;
@@ -79,19 +84,19 @@ public class Contract implements Serializable {
         this.id = id;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -103,12 +108,12 @@ public class Contract implements Serializable {
         this.active = active;
     }
 
-    public Employee getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @XmlTransient

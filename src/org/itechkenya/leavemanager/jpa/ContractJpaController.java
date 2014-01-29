@@ -44,10 +44,10 @@ public class ContractJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Employee employeeId = contract.getEmployeeId();
-            if (employeeId != null) {
-                employeeId = em.getReference(employeeId.getClass(), employeeId.getId());
-                contract.setEmployeeId(employeeId);
+            Employee employee = contract.getEmployee();
+            if (employee != null) {
+                employee = em.getReference(employee.getClass(), employee.getId());
+                contract.setEmployee(employee);
             }
             List<LeaveEvent> attachedLeaveEventList = new ArrayList<LeaveEvent>();
             for (LeaveEvent leaveEventListLeaveEventToAttach : contract.getLeaveEventList()) {
@@ -56,17 +56,17 @@ public class ContractJpaController implements Serializable {
             }
             contract.setLeaveEventList(attachedLeaveEventList);
             em.persist(contract);
-            if (employeeId != null) {
-                employeeId.getContractList().add(contract);
-                employeeId = em.merge(employeeId);
+            if (employee != null) {
+                employee.getContractList().add(contract);
+                employee = em.merge(employee);
             }
             for (LeaveEvent leaveEventListLeaveEvent : contract.getLeaveEventList()) {
-                Contract oldContractIdOfLeaveEventListLeaveEvent = leaveEventListLeaveEvent.getContractId();
-                leaveEventListLeaveEvent.setContractId(contract);
+                Contract oldContractOfLeaveEventListLeaveEvent = leaveEventListLeaveEvent.getContract();
+                leaveEventListLeaveEvent.setContract(contract);
                 leaveEventListLeaveEvent = em.merge(leaveEventListLeaveEvent);
-                if (oldContractIdOfLeaveEventListLeaveEvent != null) {
-                    oldContractIdOfLeaveEventListLeaveEvent.getLeaveEventList().remove(leaveEventListLeaveEvent);
-                    oldContractIdOfLeaveEventListLeaveEvent = em.merge(oldContractIdOfLeaveEventListLeaveEvent);
+                if (oldContractOfLeaveEventListLeaveEvent != null) {
+                    oldContractOfLeaveEventListLeaveEvent.getLeaveEventList().remove(leaveEventListLeaveEvent);
+                    oldContractOfLeaveEventListLeaveEvent = em.merge(oldContractOfLeaveEventListLeaveEvent);
                 }
             }
             em.getTransaction().commit();
@@ -83,8 +83,8 @@ public class ContractJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Contract persistentContract = em.find(Contract.class, contract.getId());
-            Employee employeeIdOld = persistentContract.getEmployeeId();
-            Employee employeeIdNew = contract.getEmployeeId();
+            Employee employeeOld = persistentContract.getEmployee();
+            Employee employeeNew = contract.getEmployee();
             List<LeaveEvent> leaveEventListOld = persistentContract.getLeaveEventList();
             List<LeaveEvent> leaveEventListNew = contract.getLeaveEventList();
             List<String> illegalOrphanMessages = null;
@@ -93,15 +93,15 @@ public class ContractJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain LeaveEvent " + leaveEventListOldLeaveEvent + " since its contractId field is not nullable.");
+                    illegalOrphanMessages.add("You must retain LeaveEvent " + leaveEventListOldLeaveEvent + " since its contract field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            if (employeeIdNew != null) {
-                employeeIdNew = em.getReference(employeeIdNew.getClass(), employeeIdNew.getId());
-                contract.setEmployeeId(employeeIdNew);
+            if (employeeNew != null) {
+                employeeNew = em.getReference(employeeNew.getClass(), employeeNew.getId());
+                contract.setEmployee(employeeNew);
             }
             List<LeaveEvent> attachedLeaveEventListNew = new ArrayList<LeaveEvent>();
             for (LeaveEvent leaveEventListNewLeaveEventToAttach : leaveEventListNew) {
@@ -111,22 +111,22 @@ public class ContractJpaController implements Serializable {
             leaveEventListNew = attachedLeaveEventListNew;
             contract.setLeaveEventList(leaveEventListNew);
             contract = em.merge(contract);
-            if (employeeIdOld != null && !employeeIdOld.equals(employeeIdNew)) {
-                employeeIdOld.getContractList().remove(contract);
-                employeeIdOld = em.merge(employeeIdOld);
+            if (employeeOld != null && !employeeOld.equals(employeeNew)) {
+                employeeOld.getContractList().remove(contract);
+                employeeOld = em.merge(employeeOld);
             }
-            if (employeeIdNew != null && !employeeIdNew.equals(employeeIdOld)) {
-                employeeIdNew.getContractList().add(contract);
-                employeeIdNew = em.merge(employeeIdNew);
+            if (employeeNew != null && !employeeNew.equals(employeeOld)) {
+                employeeNew.getContractList().add(contract);
+                employeeNew = em.merge(employeeNew);
             }
             for (LeaveEvent leaveEventListNewLeaveEvent : leaveEventListNew) {
                 if (!leaveEventListOld.contains(leaveEventListNewLeaveEvent)) {
-                    Contract oldContractIdOfLeaveEventListNewLeaveEvent = leaveEventListNewLeaveEvent.getContractId();
-                    leaveEventListNewLeaveEvent.setContractId(contract);
+                    Contract oldContractOfLeaveEventListNewLeaveEvent = leaveEventListNewLeaveEvent.getContract();
+                    leaveEventListNewLeaveEvent.setContract(contract);
                     leaveEventListNewLeaveEvent = em.merge(leaveEventListNewLeaveEvent);
-                    if (oldContractIdOfLeaveEventListNewLeaveEvent != null && !oldContractIdOfLeaveEventListNewLeaveEvent.equals(contract)) {
-                        oldContractIdOfLeaveEventListNewLeaveEvent.getLeaveEventList().remove(leaveEventListNewLeaveEvent);
-                        oldContractIdOfLeaveEventListNewLeaveEvent = em.merge(oldContractIdOfLeaveEventListNewLeaveEvent);
+                    if (oldContractOfLeaveEventListNewLeaveEvent != null && !oldContractOfLeaveEventListNewLeaveEvent.equals(contract)) {
+                        oldContractOfLeaveEventListNewLeaveEvent.getLeaveEventList().remove(leaveEventListNewLeaveEvent);
+                        oldContractOfLeaveEventListNewLeaveEvent = em.merge(oldContractOfLeaveEventListNewLeaveEvent);
                     }
                 }
             }
@@ -165,15 +165,15 @@ public class ContractJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Contract (" + contract + ") cannot be destroyed since the LeaveEvent " + leaveEventListOrphanCheckLeaveEvent + " in its leaveEventList field has a non-nullable contractId field.");
+                illegalOrphanMessages.add("This Contract (" + contract + ") cannot be destroyed since the LeaveEvent " + leaveEventListOrphanCheckLeaveEvent + " in its leaveEventList field has a non-nullable contract field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Employee employeeId = contract.getEmployeeId();
-            if (employeeId != null) {
-                employeeId.getContractList().remove(contract);
-                employeeId = em.merge(employeeId);
+            Employee employee = contract.getEmployee();
+            if (employee != null) {
+                employee.getContractList().remove(contract);
+                employee = em.merge(employee);
             }
             em.remove(contract);
             em.getTransaction().commit();

@@ -51,12 +51,12 @@ public class LeaveTypeJpaController implements Serializable {
             leaveType.setLeaveEventList(attachedLeaveEventList);
             em.persist(leaveType);
             for (LeaveEvent leaveEventListLeaveEvent : leaveType.getLeaveEventList()) {
-                LeaveType oldTypeIdOfLeaveEventListLeaveEvent = leaveEventListLeaveEvent.getTypeId();
-                leaveEventListLeaveEvent.setTypeId(leaveType);
+                LeaveType oldLeaveTypeOfLeaveEventListLeaveEvent = leaveEventListLeaveEvent.getLeaveType();
+                leaveEventListLeaveEvent.setLeaveType(leaveType);
                 leaveEventListLeaveEvent = em.merge(leaveEventListLeaveEvent);
-                if (oldTypeIdOfLeaveEventListLeaveEvent != null) {
-                    oldTypeIdOfLeaveEventListLeaveEvent.getLeaveEventList().remove(leaveEventListLeaveEvent);
-                    oldTypeIdOfLeaveEventListLeaveEvent = em.merge(oldTypeIdOfLeaveEventListLeaveEvent);
+                if (oldLeaveTypeOfLeaveEventListLeaveEvent != null) {
+                    oldLeaveTypeOfLeaveEventListLeaveEvent.getLeaveEventList().remove(leaveEventListLeaveEvent);
+                    oldLeaveTypeOfLeaveEventListLeaveEvent = em.merge(oldLeaveTypeOfLeaveEventListLeaveEvent);
                 }
             }
             em.getTransaction().commit();
@@ -81,7 +81,7 @@ public class LeaveTypeJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain LeaveEvent " + leaveEventListOldLeaveEvent + " since its typeId field is not nullable.");
+                    illegalOrphanMessages.add("You must retain LeaveEvent " + leaveEventListOldLeaveEvent + " since its leaveType field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -97,12 +97,12 @@ public class LeaveTypeJpaController implements Serializable {
             leaveType = em.merge(leaveType);
             for (LeaveEvent leaveEventListNewLeaveEvent : leaveEventListNew) {
                 if (!leaveEventListOld.contains(leaveEventListNewLeaveEvent)) {
-                    LeaveType oldTypeIdOfLeaveEventListNewLeaveEvent = leaveEventListNewLeaveEvent.getTypeId();
-                    leaveEventListNewLeaveEvent.setTypeId(leaveType);
+                    LeaveType oldLeaveTypeOfLeaveEventListNewLeaveEvent = leaveEventListNewLeaveEvent.getLeaveType();
+                    leaveEventListNewLeaveEvent.setLeaveType(leaveType);
                     leaveEventListNewLeaveEvent = em.merge(leaveEventListNewLeaveEvent);
-                    if (oldTypeIdOfLeaveEventListNewLeaveEvent != null && !oldTypeIdOfLeaveEventListNewLeaveEvent.equals(leaveType)) {
-                        oldTypeIdOfLeaveEventListNewLeaveEvent.getLeaveEventList().remove(leaveEventListNewLeaveEvent);
-                        oldTypeIdOfLeaveEventListNewLeaveEvent = em.merge(oldTypeIdOfLeaveEventListNewLeaveEvent);
+                    if (oldLeaveTypeOfLeaveEventListNewLeaveEvent != null && !oldLeaveTypeOfLeaveEventListNewLeaveEvent.equals(leaveType)) {
+                        oldLeaveTypeOfLeaveEventListNewLeaveEvent.getLeaveEventList().remove(leaveEventListNewLeaveEvent);
+                        oldLeaveTypeOfLeaveEventListNewLeaveEvent = em.merge(oldLeaveTypeOfLeaveEventListNewLeaveEvent);
                     }
                 }
             }
@@ -141,7 +141,7 @@ public class LeaveTypeJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This LeaveType (" + leaveType + ") cannot be destroyed since the LeaveEvent " + leaveEventListOrphanCheckLeaveEvent + " in its leaveEventList field has a non-nullable typeId field.");
+                illegalOrphanMessages.add("This LeaveType (" + leaveType + ") cannot be destroyed since the LeaveEvent " + leaveEventListOrphanCheckLeaveEvent + " in its leaveEventList field has a non-nullable leaveType field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
