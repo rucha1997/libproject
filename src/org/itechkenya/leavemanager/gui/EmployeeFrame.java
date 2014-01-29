@@ -291,10 +291,12 @@ public class EmployeeFrame extends LeaveManagerFrame {
     @Override
     public void showSelectedItem(Object item) {
         Employee employee = (Employee) item;
-        codeTextField.setText(employee.getCode());
-        lastNameTextField.setText(employee.getLastName());
-        otherNamesTextField.setText(employee.getOtherNames());
-        activeCheckBox.setSelected(employee.getActive());
+        if (employee != null) {
+            codeTextField.setText(employee.getCode());
+            lastNameTextField.setText(employee.getLastName());
+            otherNamesTextField.setText(employee.getOtherNames());
+            activeCheckBox.setSelected(employee.getActive());
+        }
     }
 
     @Override
