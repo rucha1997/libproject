@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.JpaManager;
-import org.itechkenya.leavemanager.api.MessageManager;
+import org.itechkenya.leavemanager.api.UiManager;
 import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.jpa.exceptions.IllegalOrphanException;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
@@ -222,10 +222,10 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                 JpaManager.getLtjc().destroy(leaveType.getId());
                 updateTable(leaveType, UpdateType.DESTROY);
             } catch (IllegalOrphanException ex) {
-                MessageManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
+                UiManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
                 Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NonexistentEntityException ex) {
-                MessageManager.showErrorMessage(this, ex.getMessage());
+                UiManager.showErrorMessage(this, ex.getMessage());
                 Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

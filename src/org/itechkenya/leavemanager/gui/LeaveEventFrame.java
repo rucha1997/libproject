@@ -5,6 +5,7 @@
  */
 package org.itechkenya.leavemanager.gui;
 
+import java.awt.event.ItemEvent;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,7 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.JpaManager;
-import org.itechkenya.leavemanager.api.MessageManager;
+import org.itechkenya.leavemanager.api.UiManager;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.Employee;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
@@ -42,6 +43,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         eventButtonGroup = new javax.swing.ButtonGroup();
         outerPanel = new javax.swing.JPanel();
@@ -87,7 +89,22 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
         employeeLabel.setText("Employee");
 
+        employeeComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                employeeComboBoxItemStateChanged(evt);
+            }
+        });
+
         contractLabel.setText("Contract");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, employeeComboBox, org.jdesktop.beansbinding.ELProperty.create("${selectedItem != null}"), contractComboBox, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        contractComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                contractComboBoxItemStateChanged(evt);
+            }
+        });
 
         innerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Summary"));
 
@@ -183,6 +200,12 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         );
 
         endDateLabel.setText("End Date");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, spendRadioButton, org.jdesktop.beansbinding.ELProperty.create("${selected}"), endDateLabel, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, spendRadioButton, org.jdesktop.beansbinding.ELProperty.create("${selected}"), endDateChooser, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout outerPanelLayout = new javax.swing.GroupLayout(outerPanel);
         outerPanel.setLayout(outerPanelLayout);
@@ -331,6 +354,8 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 .addContainerGap())
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -369,11 +394,56 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 JpaManager.getLejc().destroy(leaveEvent.getId());
                 updateTable(leaveEvent, UpdateType.DESTROY);
             } catch (NonexistentEntityException ex) {
-                MessageManager.showErrorMessage(this, ex.getMessage());
+                UiManager.showErrorMessage(this, ex.getMessage());
                 Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void employeeComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_employeeComboBoxItemStateChanged
+        Employee employee = (Employee) employeeComboBox.getSelectedItem();
+        if (employee != null) {
+            List<Contract> contractList = JpaManager.getCjc().findContractEntities();
+            contractComboBox.removeAllItems();
+            for (Contract contract : contractList) {
+                if (employee.equals(contract.getEmployee())) {
+                    contractComboBox.addItem(contract);
+                    if (contract.getActive()) {
+                        contractComboBox.setSelectedItem(contract);
+                    } else {
+                        contractComboBox.setSelectedItem(null);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_employeeComboBoxItemStateChanged
+
+    private void contractComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_contractComboBoxItemStateChanged
+        Contract contract = (Contract) contractComboBox.getSelectedItem();
+        LeaveEventTableModel model = new LeaveEventTableModel();
+        if (contract != null) {
+            List<LeaveEvent> leaveEventList = JpaManager.getLejc().findLeaveEventEntities();
+            BigDecimal daysEarned = BigDecimal.ZERO;
+            BigDecimal daysSpent = BigDecimal.ZERO;
+            BigDecimal balance = BigDecimal.ZERO;
+            for (LeaveEvent leaveEvent : leaveEventList) {
+                if (contract.equals(leaveEvent.getContract())) {
+                    model.createRow(leaveEvent);
+                    if (leaveEvent.getDaysEarned() != null) {
+                        daysEarned = daysEarned.add(leaveEvent.getDaysEarned());
+                    }
+                    if (leaveEvent.getDaysSpent()!= null) {
+                        daysSpent = daysSpent.add(leaveEvent.getDaysSpent());
+                    }
+                }
+            }
+            balance = daysEarned.add(daysSpent.negate());
+            daysEarnedTextField.setText(daysEarned.toString());
+            daysSpentTextField.setText(daysSpent.toString());
+            balanceTextField.setText(balance.toString());
+        }
+        table.setModel(model);
+    }//GEN-LAST:event_contractComboBoxItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -411,6 +481,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     private com.toedter.calendar.JDateChooser startDateChooser;
     private javax.swing.JLabel startDateLabel;
     private javax.swing.JTable table;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -421,23 +492,13 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         }
         employeeComboBox.setSelectedItem(null);
 
-        List<Contract> contractList = JpaManager.getCjc().findContractEntities();
-        for (Contract contract : contractList) {
-            contractComboBox.addItem(contract);
-        }
-        contractComboBox.setSelectedItem(null);
-
         List<LeaveType> leaveTypeList = JpaManager.getLtjc().findLeaveTypeEntities();
         for (LeaveType leaveType : leaveTypeList) {
             leaveTypeComboBox.addItem(leaveType);
         }
         leaveTypeComboBox.setSelectedItem(null);
 
-        List<LeaveEvent> leaveEventList = JpaManager.getLejc().findLeaveEventEntities();
         LeaveEventTableModel model = new LeaveEventTableModel();
-        for (LeaveEvent leaveEvent : leaveEventList) {
-            model.createRow(leaveEvent);
-        }
         table.setModel(model);
     }
 
@@ -481,7 +542,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
     @Override
     public void clearFields() {
-        
+
     }
 
     @Override

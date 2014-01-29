@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.JpaManager;
-import org.itechkenya.leavemanager.api.MessageManager;
+import org.itechkenya.leavemanager.api.UiManager;
 import org.itechkenya.leavemanager.domain.Organization;
 
 /**
@@ -31,7 +31,7 @@ public class OrganizationFrame extends LeaveManagerFrame {
             configureComponents();
             loadData();
         } catch (Exception ex) {
-            MessageManager.showErrorMessage(this.getContentPane(), ex.getMessage());
+            UiManager.showErrorMessage(this.getContentPane(), ex.getMessage());
             Logger.getLogger(OrganizationFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -137,11 +137,11 @@ public class OrganizationFrame extends LeaveManagerFrame {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         if (nameTextField.getText().equals("")) {
-            MessageManager.showWarningMessage(this, "Enter name.", nameTextField);
+            UiManager.showWarningMessage(this, "Enter name.", nameTextField);
             return;
         }
         if (addressTextField.getText().equals("")) {
-            MessageManager.showWarningMessage(this, "Enter address.", addressTextField);
+            UiManager.showWarningMessage(this, "Enter address.", addressTextField);
             return;
         }
         try {

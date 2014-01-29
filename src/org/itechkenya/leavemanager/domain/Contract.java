@@ -26,6 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.itechkenya.leavemanager.api.UiManager;
 
 /**
  *
@@ -147,7 +148,7 @@ public class Contract implements Serializable {
 
     @Override
     public String toString() {
-        return "org.itechkenya.leavemanager.domain.Contract[ id=" + id + " ]";
+        return UiManager.formatDate(startDate) + " - " + UiManager.formatDate(endDate) + " (" + employee.getCode() + ")";
     }
     
 }

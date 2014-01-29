@@ -6,13 +6,15 @@
 package org.itechkenya.leavemanager.api;
 
 import java.awt.Component;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author gitahi
  */
-public class MessageManager {
+public class UiManager {
 
     public static void showWarningMessage(Component source, String message, Component toFocus) {
         JOptionPane.showMessageDialog(source, message, "Warning!", JOptionPane.WARNING_MESSAGE, null);
@@ -27,5 +29,9 @@ public class MessageManager {
 
     public static void showErrorMessage(Component source, String message) {
         JOptionPane.showMessageDialog(source, message, "Error!", JOptionPane.ERROR_MESSAGE, null);
+    }
+    
+    public static String formatDate(Date date) {
+        return new SimpleDateFormat("MMM dd, yyyy").format(date);
     }
 }

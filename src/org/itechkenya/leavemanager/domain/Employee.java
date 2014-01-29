@@ -144,7 +144,7 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return lastName + " " + otherNames + "(" + code + ")";
+        return lastName + " " + otherNames + " (" + code + ")";
     }
     
 }

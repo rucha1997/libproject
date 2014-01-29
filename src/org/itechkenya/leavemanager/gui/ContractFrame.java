@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.JpaManager;
-import org.itechkenya.leavemanager.api.MessageManager;
+import org.itechkenya.leavemanager.api.UiManager;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.Employee;
 import org.itechkenya.leavemanager.jpa.exceptions.IllegalOrphanException;
@@ -218,10 +218,10 @@ public class ContractFrame extends LeaveManagerFrame {
                 JpaManager.getCjc().destroy(contract.getId());
                 updateTable(contract, UpdateType.DESTROY);
             } catch (IllegalOrphanException ex) {
-                MessageManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
+                UiManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
                 Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NonexistentEntityException ex) {
-                MessageManager.showErrorMessage(this, ex.getMessage());
+                UiManager.showErrorMessage(this, ex.getMessage());
                 Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
