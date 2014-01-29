@@ -5,6 +5,7 @@
  */
 package org.itechkenya.leavemanager.gui;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.JpaManager;
 import org.itechkenya.leavemanager.api.MessageManager;
-import org.itechkenya.leavemanager.domain.Employee;
+import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.jpa.exceptions.IllegalOrphanException;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
 
@@ -20,20 +21,15 @@ import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
  *
  * @author gitahi
  */
-public class EmployeeFrame extends LeaveManagerFrame {
+public class LeaveTypeFrame extends LeaveManagerFrame {
 
     /**
-     * Creates new form EmployeeFrame
+     * Creates new form LeaveTypeFrame
      */
-    public EmployeeFrame() {
-        try {
-            initComponents();
-            configureComponents();
-            loadData();
-        } catch (Exception ex) {
-            MessageManager.showErrorMessage(this.getContentPane(), ex.getMessage());
-            Logger.getLogger(OrganizationFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public LeaveTypeFrame() {
+        initComponents();
+        configureComponents();
+        loadData();
     }
 
     /**
@@ -46,12 +42,10 @@ public class EmployeeFrame extends LeaveManagerFrame {
     private void initComponents() {
 
         panel = new javax.swing.JPanel();
-        codeLabel = new javax.swing.JLabel();
-        codeTextField = new javax.swing.JTextField();
-        lastNameLabel = new javax.swing.JLabel();
-        lastNameTextField = new javax.swing.JTextField();
-        otherNamesLabel = new javax.swing.JLabel();
-        otherNamesTextField = new javax.swing.JTextField();
+        nameLabel = new javax.swing.JLabel();
+        nameTextField = new javax.swing.JTextField();
+        daysPerMonthLabel = new javax.swing.JLabel();
+        daysPerMonthTextField = new javax.swing.JTextField();
         activeCheckBox = new javax.swing.JCheckBox();
         newButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
@@ -63,15 +57,12 @@ public class EmployeeFrame extends LeaveManagerFrame {
         setClosable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Employees");
 
         panel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        codeLabel.setText("Code");
+        nameLabel.setText("Name");
 
-        lastNameLabel.setText("Last Name");
-
-        otherNamesLabel.setText("Other Names");
+        daysPerMonthLabel.setText("Days per Month");
 
         activeCheckBox.setText("Active");
 
@@ -82,15 +73,15 @@ public class EmployeeFrame extends LeaveManagerFrame {
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(otherNamesLabel)
-                    .addComponent(activeCheckBox)
-                    .addComponent(lastNameLabel)
-                    .addComponent(codeLabel))
+                    .addComponent(daysPerMonthLabel)
+                    .addComponent(nameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(codeTextField)
-                    .addComponent(otherNamesTextField)
-                    .addComponent(lastNameTextField))
+                    .addComponent(nameTextField)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(activeCheckBox)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(daysPerMonthTextField))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
@@ -98,16 +89,12 @@ public class EmployeeFrame extends LeaveManagerFrame {
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(codeLabel)
-                    .addComponent(codeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nameLabel)
+                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lastNameLabel)
-                    .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(otherNamesLabel)
-                    .addComponent(otherNamesTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(daysPerMonthLabel)
+                    .addComponent(daysPerMonthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(activeCheckBox)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -171,7 +158,7 @@ public class EmployeeFrame extends LeaveManagerFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(closeButton)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
+                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -186,7 +173,7 @@ public class EmployeeFrame extends LeaveManagerFrame {
                     .addComponent(deleteButton)
                     .addComponent(closeButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -198,37 +185,37 @@ public class EmployeeFrame extends LeaveManagerFrame {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        Employee employee = (Employee) getSelectedItem();
+        LeaveType leaveType = (LeaveType) getSelectedItem();
         try {
-            if (employee == null) {
-                employee = new Employee();
-                flesh(employee);
-                JpaManager.getEjc().create(employee);
-                updateTable(employee, UpdateType.CREATE);
+            if (leaveType == null) {
+                leaveType = new LeaveType();
+                flesh(leaveType);
+                JpaManager.getLtjc().create(leaveType);
+                updateTable(leaveType, UpdateType.CREATE);
             } else {
-                flesh(employee);
-                JpaManager.getEjc().edit(employee);
-                updateTable(employee, UpdateType.EDIT);
+                flesh(leaveType);
+                JpaManager.getLtjc().edit(leaveType);
+                updateTable(leaveType, UpdateType.EDIT);
             }
         } catch (NonexistentEntityException ex) {
-            Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         for (Object item : getSelectedItems()) {
-            Employee employee = (Employee) item;
+            LeaveType leaveType = (LeaveType) item;
             try {
-                JpaManager.getEjc().destroy(employee.getId());
-                updateTable(employee, UpdateType.DESTROY);
+                JpaManager.getLtjc().destroy(leaveType.getId());
+                updateTable(leaveType, UpdateType.DESTROY);
             } catch (IllegalOrphanException ex) {
                 MessageManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
-                Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
             } catch (NonexistentEntityException ex) {
                 MessageManager.showErrorMessage(this, ex.getMessage());
-                Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
@@ -241,14 +228,12 @@ public class EmployeeFrame extends LeaveManagerFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox activeCheckBox;
     private javax.swing.JButton closeButton;
-    private javax.swing.JLabel codeLabel;
-    private javax.swing.JTextField codeTextField;
+    private javax.swing.JLabel daysPerMonthLabel;
+    private javax.swing.JTextField daysPerMonthTextField;
     private javax.swing.JButton deleteButton;
-    private javax.swing.JLabel lastNameLabel;
-    private javax.swing.JTextField lastNameTextField;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JTextField nameTextField;
     private javax.swing.JButton newButton;
-    private javax.swing.JLabel otherNamesLabel;
-    private javax.swing.JTextField otherNamesTextField;
     private javax.swing.JPanel panel;
     private javax.swing.JButton saveButton;
     private javax.swing.JScrollPane scrollPane;
@@ -257,12 +242,22 @@ public class EmployeeFrame extends LeaveManagerFrame {
 
     @Override
     public final void loadData() {
-        List<Employee> organizationsList = JpaManager.getEjc().findEmployeeEntities();
-        EmployeeTableModel model = new EmployeeTableModel();
-        for (Employee employee : organizationsList) {
-            model.createRow(employee);
+        List<LeaveType> organizationsList = JpaManager.getLtjc().findLeaveTypeEntities();
+        LeaveTypeTableModel model = new LeaveTypeTableModel();
+        for (LeaveType leaveType : organizationsList) {
+            model.createRow(leaveType);
         }
         table.setModel(model);
+    }
+
+    @Override
+    public void flesh(Object item) {
+        LeaveType leaveType = (LeaveType) item;
+        if (leaveType != null) {
+            leaveType.setName(nameTextField.getText());
+            leaveType.setDaysPerMonth(new BigDecimal(daysPerMonthTextField.getText()));
+            leaveType.setActive(activeCheckBox.isSelected());
+        }
     }
 
     @Override
@@ -282,49 +277,36 @@ public class EmployeeFrame extends LeaveManagerFrame {
 
     @Override
     public void clearFields() {
-        codeTextField.setText("");
-        lastNameTextField.setText("");
-        otherNamesTextField.setText("");
+        nameTextField.setText("");
+        daysPerMonthTextField.setText("");
         activeCheckBox.setSelected(false);
     }
 
     @Override
     public void showSelectedItem(Object item) {
-        Employee employee = (Employee) item;
-        codeTextField.setText(employee.getCode());
-        lastNameTextField.setText(employee.getLastName());
-        otherNamesTextField.setText(employee.getOtherNames());
-        activeCheckBox.setSelected(employee.getActive());
-    }
-
-    @Override
-    public void flesh(Object item) {
-        Employee employee = (Employee) item;
-        if (employee != null) {
-            employee.setCode(codeTextField.getText());
-            employee.setLastName(lastNameTextField.getText());
-            employee.setOtherNames(otherNamesTextField.getText());
-            employee.setActive(activeCheckBox.isSelected());
+        LeaveType leaveType = (LeaveType) item;
+        if (leaveType != null) {
+            nameTextField.setText(leaveType.getName());
+            daysPerMonthTextField.setText(leaveType.getDaysPerMonth().toPlainString());
+            activeCheckBox.setSelected(leaveType.getActive());
         }
     }
 
-    private class EmployeeTableModel extends LeaveManagerTableModel {
+    private class LeaveTypeTableModel extends LeaveManagerTableModel {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             if (rowIndex >= getRows().size()) {
                 return null;
             }
-            Employee employee = (Employee) getRow(rowIndex);
+            LeaveType leaveType = (LeaveType) getRow(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    return employee.getCode();
+                    return leaveType.getName();
                 case 1:
-                    return employee.getLastName();
+                    return leaveType.getDaysPerMonth();
                 case 2:
-                    return employee.getOtherNames();
-                case 3:
-                    return employee.getActive();
+                    return leaveType.getActive();
                 default:
                     return null;
             }
@@ -337,7 +319,7 @@ public class EmployeeFrame extends LeaveManagerFrame {
 
         @Override
         public String[] getColumns() {
-            String[] columns = {"Code", "Last Name", "Other Names", "Active"};
+            String[] columns = {"Name", "Days per Month", "Active"};
             return columns;
         }
     }

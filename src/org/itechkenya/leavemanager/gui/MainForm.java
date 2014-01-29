@@ -30,11 +30,13 @@ public class MainForm extends javax.swing.JFrame {
         splitPane = new javax.swing.JSplitPane();
         desktopPane = new javax.swing.JDesktopPane();
         navigationPanel = new javax.swing.JPanel();
-        leaveEventButton = new javax.swing.JButton();
+        spendLeaveButton = new javax.swing.JButton();
+        earnLeaveButton = new javax.swing.JButton();
         separator1 = new javax.swing.JSeparator();
         employeeButton = new javax.swing.JButton();
         contractButton = new javax.swing.JButton();
         separator2 = new javax.swing.JSeparator();
+        leaveTypeButton = new javax.swing.JButton();
         organizationButton = new javax.swing.JButton();
         separator3 = new javax.swing.JSeparator();
         menuBar = new javax.swing.JMenuBar();
@@ -69,10 +71,17 @@ public class MainForm extends javax.swing.JFrame {
 
         splitPane.setRightComponent(desktopPane);
 
-        leaveEventButton.setText("Leave Event");
-        leaveEventButton.addActionListener(new java.awt.event.ActionListener() {
+        spendLeaveButton.setText("Spend Leave");
+        spendLeaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                leaveEventButtonActionPerformed(evt);
+                spendLeaveButtonActionPerformed(evt);
+            }
+        });
+
+        earnLeaveButton.setText("Earn Leave");
+        earnLeaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                earnLeaveButtonActionPerformed(evt);
             }
         });
 
@@ -90,6 +99,13 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        leaveTypeButton.setText("Leave Type");
+        leaveTypeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaveTypeButtonActionPerformed(evt);
+            }
+        });
+
         organizationButton.setText("Organization");
         organizationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,20 +120,24 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(navigationPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(navigationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(leaveEventButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(spendLeaveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(separator1)
                     .addComponent(employeeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(contractButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(separator2)
                     .addComponent(organizationButton, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                    .addComponent(separator3))
+                    .addComponent(separator3)
+                    .addComponent(leaveTypeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(earnLeaveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         navigationPanelLayout.setVerticalGroup(
             navigationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navigationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(leaveEventButton)
+                .addComponent(spendLeaveButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(earnLeaveButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -127,10 +147,12 @@ public class MainForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(leaveTypeButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(organizationButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(344, Short.MAX_VALUE))
+                .addContainerGap(282, Short.MAX_VALUE))
         );
 
         splitPane.setLeftComponent(navigationPanel);
@@ -216,9 +238,9 @@ public class MainForm extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void leaveEventButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveEventButtonActionPerformed
+    private void spendLeaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spendLeaveButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_leaveEventButtonActionPerformed
+    }//GEN-LAST:event_spendLeaveButtonActionPerformed
 
     private void employeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeButtonActionPerformed
         EmployeeFrame ef = new EmployeeFrame();
@@ -235,6 +257,16 @@ public class MainForm extends javax.swing.JFrame {
         desktopPane.add(of);
         of.setVisible(true);
     }//GEN-LAST:event_organizationButtonActionPerformed
+
+    private void earnLeaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_earnLeaveButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_earnLeaveButtonActionPerformed
+
+    private void leaveTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveTypeButtonActionPerformed
+        LeaveTypeFrame ltf = new LeaveTypeFrame();
+        desktopPane.add(ltf);
+        ltf.setVisible(true);
+    }//GEN-LAST:event_leaveTypeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -279,12 +311,13 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JButton earnLeaveButton;
     private javax.swing.JMenu editMenu;
     private javax.swing.JButton employeeButton;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JButton leaveEventButton;
+    private javax.swing.JButton leaveTypeButton;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JPanel navigationPanel;
     private javax.swing.JMenuItem openMenuItem;
@@ -295,6 +328,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JSeparator separator1;
     private javax.swing.JSeparator separator2;
     private javax.swing.JSeparator separator3;
+    private javax.swing.JButton spendLeaveButton;
     private javax.swing.JSplitPane splitPane;
     // End of variables declaration//GEN-END:variables
 

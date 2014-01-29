@@ -6,6 +6,7 @@
     <class>org.itechkenya.leavemanager.domain.LeaveEvent</class>
     <class>org.itechkenya.leavemanager.domain.Employee</class>
     <class>org.itechkenya.leavemanager.domain.Contract</class>
+    <class>org.itechkenya.leavemanager.domain.LeaveType</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/leave_manager?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.password" value="2806"/>

@@ -7,6 +7,7 @@
 package org.itechkenya.leavemanager.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -15,8 +16,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -29,15 +28,15 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author gitahi
  */
 @Entity
-@Table(name = "contract")
+@Table(name = "leave_type")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Contract.findAll", query = "SELECT c FROM Contract c"),
-    @NamedQuery(name = "Contract.findById", query = "SELECT c FROM Contract c WHERE c.id = :id"),
-    @NamedQuery(name = "Contract.findByStartDate", query = "SELECT c FROM Contract c WHERE c.startDate = :startDate"),
-    @NamedQuery(name = "Contract.findByEndDate", query = "SELECT c FROM Contract c WHERE c.endDate = :endDate"),
-    @NamedQuery(name = "Contract.findByActive", query = "SELECT c FROM Contract c WHERE c.active = :active")})
-public class Contract implements Serializable {
+    @NamedQuery(name = "LeaveType.findAll", query = "SELECT l FROM LeaveType l"),
+    @NamedQuery(name = "LeaveType.findById", query = "SELECT l FROM LeaveType l WHERE l.id = :id"),
+    @NamedQuery(name = "LeaveType.findByName", query = "SELECT l FROM LeaveType l WHERE l.name = :name"),
+    @NamedQuery(name = "LeaveType.findByDaysPerMonth", query = "SELECT l FROM LeaveType l WHERE l.daysPerMonth = :daysPerMonth"),
+    @NamedQuery(name = "LeaveType.findByActive", query = "SELECT l FROM LeaveType l WHERE l.active = :active")})
+public class LeaveType implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,29 +44,29 @@ public class Contract implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "start_date")
-    private String startDate;
-    @Column(name = "end_date")
-    private String endDate;
+    @Column(name = "name")
+    private String name;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @Column(name = "days_per_month")
+    private BigDecimal daysPerMonth;
     @Basic(optional = false)
     @Column(name = "active")
     private boolean active;
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Employee employeeId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contractId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "typeId")
     private List<LeaveEvent> leaveEventList;
 
-    public Contract() {
+    public LeaveType() {
     }
 
-    public Contract(Integer id) {
+    public LeaveType(Integer id) {
         this.id = id;
     }
 
-    public Contract(Integer id, String startDate, boolean active) {
+    public LeaveType(Integer id, String name, BigDecimal daysPerMonth, boolean active) {
         this.id = id;
-        this.startDate = startDate;
+        this.name = name;
+        this.daysPerMonth = daysPerMonth;
         this.active = active;
     }
 
@@ -79,20 +78,20 @@ public class Contract implements Serializable {
         this.id = id;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public String getName() {
+        return name;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public BigDecimal getDaysPerMonth() {
+        return daysPerMonth;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setDaysPerMonth(BigDecimal daysPerMonth) {
+        this.daysPerMonth = daysPerMonth;
     }
 
     public boolean getActive() {
@@ -101,14 +100,6 @@ public class Contract implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public Employee getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
     }
 
     @XmlTransient
@@ -130,10 +121,10 @@ public class Contract implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Contract)) {
+        if (!(object instanceof LeaveType)) {
             return false;
         }
-        Contract other = (Contract) object;
+        LeaveType other = (LeaveType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -142,7 +133,7 @@ public class Contract implements Serializable {
 
     @Override
     public String toString() {
-        return "org.itechkenya.leavemanager.domain.Contract[ id=" + id + " ]";
+        return "org.itechkenya.leavemanager.domain.LeaveType[ id=" + id + " ]";
     }
     
 }

@@ -168,13 +168,15 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="leaveEventButton" max="32767" attributes="0"/>
+                          <Component id="spendLeaveButton" max="32767" attributes="0"/>
                           <Component id="separator1" max="32767" attributes="0"/>
                           <Component id="employeeButton" alignment="0" max="32767" attributes="0"/>
                           <Component id="contractButton" alignment="0" max="32767" attributes="0"/>
                           <Component id="separator2" alignment="0" max="32767" attributes="0"/>
                           <Component id="organizationButton" alignment="0" pref="175" max="32767" attributes="0"/>
                           <Component id="separator3" alignment="0" max="32767" attributes="0"/>
+                          <Component id="leaveTypeButton" alignment="0" max="32767" attributes="0"/>
+                          <Component id="earnLeaveButton" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -184,7 +186,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="leaveEventButton" min="-2" max="-2" attributes="0"/>
+                      <Component id="spendLeaveButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="earnLeaveButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="separator1" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -194,21 +198,31 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="separator2" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="leaveTypeButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="organizationButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="separator3" min="-2" pref="10" max="-2" attributes="0"/>
-                      <EmptySpace pref="344" max="32767" attributes="0"/>
+                      <EmptySpace pref="282" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="leaveEventButton">
+            <Component class="javax.swing.JButton" name="spendLeaveButton">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Leave Event"/>
+                <Property name="text" type="java.lang.String" value="Spend Leave"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="leaveEventButtonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="spendLeaveButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="earnLeaveButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Earn Leave"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="earnLeaveButtonActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="separator1">
@@ -230,6 +244,14 @@
               </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="separator2">
+            </Component>
+            <Component class="javax.swing.JButton" name="leaveTypeButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Leave Type"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="leaveTypeButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="organizationButton">
               <Properties>

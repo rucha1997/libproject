@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
+import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
 import org.itechkenya.leavemanager.jpa.exceptions.PreexistingEntityException;
 
@@ -44,10 +45,19 @@ public class LeaveEventJpaController implements Serializable {
                 contractId = em.getReference(contractId.getClass(), contractId.getId());
                 leaveEvent.setContractId(contractId);
             }
+            LeaveType typeId = leaveEvent.getTypeId();
+            if (typeId != null) {
+                typeId = em.getReference(typeId.getClass(), typeId.getId());
+                leaveEvent.setTypeId(typeId);
+            }
             em.persist(leaveEvent);
             if (contractId != null) {
                 contractId.getLeaveEventList().add(leaveEvent);
                 contractId = em.merge(contractId);
+            }
+            if (typeId != null) {
+                typeId.getLeaveEventList().add(leaveEvent);
+                typeId = em.merge(typeId);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -70,9 +80,15 @@ public class LeaveEventJpaController implements Serializable {
             LeaveEvent persistentLeaveEvent = em.find(LeaveEvent.class, leaveEvent.getId());
             Contract contractIdOld = persistentLeaveEvent.getContractId();
             Contract contractIdNew = leaveEvent.getContractId();
+            LeaveType typeIdOld = persistentLeaveEvent.getTypeId();
+            LeaveType typeIdNew = leaveEvent.getTypeId();
             if (contractIdNew != null) {
                 contractIdNew = em.getReference(contractIdNew.getClass(), contractIdNew.getId());
                 leaveEvent.setContractId(contractIdNew);
+            }
+            if (typeIdNew != null) {
+                typeIdNew = em.getReference(typeIdNew.getClass(), typeIdNew.getId());
+                leaveEvent.setTypeId(typeIdNew);
             }
             leaveEvent = em.merge(leaveEvent);
             if (contractIdOld != null && !contractIdOld.equals(contractIdNew)) {
@@ -82,6 +98,14 @@ public class LeaveEventJpaController implements Serializable {
             if (contractIdNew != null && !contractIdNew.equals(contractIdOld)) {
                 contractIdNew.getLeaveEventList().add(leaveEvent);
                 contractIdNew = em.merge(contractIdNew);
+            }
+            if (typeIdOld != null && !typeIdOld.equals(typeIdNew)) {
+                typeIdOld.getLeaveEventList().remove(leaveEvent);
+                typeIdOld = em.merge(typeIdOld);
+            }
+            if (typeIdNew != null && !typeIdNew.equals(typeIdOld)) {
+                typeIdNew.getLeaveEventList().add(leaveEvent);
+                typeIdNew = em.merge(typeIdNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -116,6 +140,11 @@ public class LeaveEventJpaController implements Serializable {
             if (contractId != null) {
                 contractId.getLeaveEventList().remove(leaveEvent);
                 contractId = em.merge(contractId);
+            }
+            LeaveType typeId = leaveEvent.getTypeId();
+            if (typeId != null) {
+                typeId.getLeaveEventList().remove(leaveEvent);
+                typeId = em.merge(typeId);
             }
             em.remove(leaveEvent);
             em.getTransaction().commit();

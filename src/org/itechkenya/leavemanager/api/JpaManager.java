@@ -8,6 +8,7 @@ package org.itechkenya.leavemanager.api;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.itechkenya.leavemanager.jpa.EmployeeJpaController;
+import org.itechkenya.leavemanager.jpa.LeaveTypeJpaController;
 import org.itechkenya.leavemanager.jpa.OrganizationJpaController;
 
 /**
@@ -19,6 +20,7 @@ public class JpaManager {
     private static EntityManagerFactory emf;
 
     private static EmployeeJpaController ejc;
+    private static LeaveTypeJpaController ltjc;
     private static OrganizationJpaController ojc;
 
     public static EntityManagerFactory getEmf() {
@@ -40,5 +42,12 @@ public class JpaManager {
             ojc = new OrganizationJpaController(getEmf());
         }
         return ojc;
+    }
+
+    public static LeaveTypeJpaController getLtjc() {
+        if (ltjc == null) {
+            ltjc = new LeaveTypeJpaController(getEmf());
+        }
+        return ltjc;
     }
 }

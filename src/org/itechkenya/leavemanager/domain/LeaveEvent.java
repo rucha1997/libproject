@@ -42,29 +42,33 @@ public class LeaveEvent implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "contract_year", nullable = false)
+    @Column(name = "contract_year")
     private int contractYear;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
-    @Column(name = "days_earned", nullable = false, precision = 3, scale = 2)
+    @Column(name = "days_earned")
     private BigDecimal daysEarned;
     @Basic(optional = false)
-    @Column(name = "days_spent", nullable = false, precision = 3, scale = 2)
+    @Column(name = "days_spent")
     private BigDecimal daysSpent;
+    @Basic(optional = false)
     @Column(name = "start_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    @Column(name = "comment", length = 140)
+    @Column(name = "comment")
     private String comment;
-    @JoinColumn(name = "contract_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "contract_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Contract contractId;
+    @JoinColumn(name = "type_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private LeaveType typeId;
 
     public LeaveEvent() {
     }
@@ -73,11 +77,12 @@ public class LeaveEvent implements Serializable {
         this.id = id;
     }
 
-    public LeaveEvent(Integer id, int contractYear, BigDecimal daysEarned, BigDecimal daysSpent) {
+    public LeaveEvent(Integer id, int contractYear, BigDecimal daysEarned, BigDecimal daysSpent, Date startDate) {
         this.id = id;
         this.contractYear = contractYear;
         this.daysEarned = daysEarned;
         this.daysSpent = daysSpent;
+        this.startDate = startDate;
     }
 
     public Integer getId() {
@@ -142,6 +147,14 @@ public class LeaveEvent implements Serializable {
 
     public void setContractId(Contract contractId) {
         this.contractId = contractId;
+    }
+
+    public LeaveType getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(LeaveType typeId) {
+        this.typeId = typeId;
     }
 
     @Override
