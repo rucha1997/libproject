@@ -12,6 +12,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -41,6 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class LeaveEvent implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id", nullable = false)
     private Integer id;
@@ -48,11 +51,9 @@ public class LeaveEvent implements Serializable {
     @Column(name = "contract_year", nullable = false)
     private int contractYear;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Basic(optional = false)
-    @Column(name = "days_earned", nullable = false, precision = 3, scale = 2)
+    @Column(name = "days_earned", precision = 3, scale = 2)
     private BigDecimal daysEarned;
-    @Basic(optional = false)
-    @Column(name = "days_spent", nullable = false, precision = 3, scale = 2)
+    @Column(name = "days_spent", precision = 3, scale = 2)
     private BigDecimal daysSpent;
     @Basic(optional = false)
     @Column(name = "start_date", nullable = false)
@@ -63,12 +64,12 @@ public class LeaveEvent implements Serializable {
     private Date endDate;
     @Column(name = "comment", length = 140)
     private String comment;
-    @JoinColumn(name = "contract", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false)
-    private Contract contract;
     @JoinColumn(name = "leave_type", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false)
     private LeaveType leaveType;
+    @JoinColumn(name = "contract", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
+    private Contract contract;
 
     public LeaveEvent() {
     }
@@ -77,11 +78,9 @@ public class LeaveEvent implements Serializable {
         this.id = id;
     }
 
-    public LeaveEvent(Integer id, int contractYear, BigDecimal daysEarned, BigDecimal daysSpent, Date startDate) {
+    public LeaveEvent(Integer id, int contractYear, Date startDate) {
         this.id = id;
         this.contractYear = contractYear;
-        this.daysEarned = daysEarned;
-        this.daysSpent = daysSpent;
         this.startDate = startDate;
     }
 
@@ -141,20 +140,20 @@ public class LeaveEvent implements Serializable {
         this.comment = comment;
     }
 
-    public Contract getContract() {
-        return contract;
-    }
-
-    public void setContract(Contract contract) {
-        this.contract = contract;
-    }
-
     public LeaveType getLeaveType() {
         return leaveType;
     }
 
     public void setLeaveType(LeaveType leaveType) {
         this.leaveType = leaveType;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
 
     @Override

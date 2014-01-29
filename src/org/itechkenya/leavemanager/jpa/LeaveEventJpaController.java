@@ -14,11 +14,10 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
-import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
-import org.itechkenya.leavemanager.jpa.exceptions.PreexistingEntityException;
 
 /**
  *
@@ -35,36 +34,31 @@ public class LeaveEventJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(LeaveEvent leaveEvent) throws PreexistingEntityException, Exception {
+    public void create(LeaveEvent leaveEvent) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Contract contract = leaveEvent.getContract();
-            if (contract != null) {
-                contract = em.getReference(contract.getClass(), contract.getId());
-                leaveEvent.setContract(contract);
-            }
             LeaveType leaveType = leaveEvent.getLeaveType();
             if (leaveType != null) {
                 leaveType = em.getReference(leaveType.getClass(), leaveType.getId());
                 leaveEvent.setLeaveType(leaveType);
             }
-            em.persist(leaveEvent);
+            Contract contract = leaveEvent.getContract();
             if (contract != null) {
-                contract.getLeaveEventList().add(leaveEvent);
-                contract = em.merge(contract);
+                contract = em.getReference(contract.getClass(), contract.getId());
+                leaveEvent.setContract(contract);
             }
+            em.persist(leaveEvent);
             if (leaveType != null) {
                 leaveType.getLeaveEventList().add(leaveEvent);
                 leaveType = em.merge(leaveType);
             }
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findLeaveEvent(leaveEvent.getId()) != null) {
-                throw new PreexistingEntityException("LeaveEvent " + leaveEvent + " already exists.", ex);
+            if (contract != null) {
+                contract.getLeaveEventList().add(leaveEvent);
+                contract = em.merge(contract);
             }
-            throw ex;
+            em.getTransaction().commit();
         } finally {
             if (em != null) {
                 em.close();
@@ -78,27 +72,19 @@ public class LeaveEventJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             LeaveEvent persistentLeaveEvent = em.find(LeaveEvent.class, leaveEvent.getId());
-            Contract contractOld = persistentLeaveEvent.getContract();
-            Contract contractNew = leaveEvent.getContract();
             LeaveType leaveTypeOld = persistentLeaveEvent.getLeaveType();
             LeaveType leaveTypeNew = leaveEvent.getLeaveType();
-            if (contractNew != null) {
-                contractNew = em.getReference(contractNew.getClass(), contractNew.getId());
-                leaveEvent.setContract(contractNew);
-            }
+            Contract contractOld = persistentLeaveEvent.getContract();
+            Contract contractNew = leaveEvent.getContract();
             if (leaveTypeNew != null) {
                 leaveTypeNew = em.getReference(leaveTypeNew.getClass(), leaveTypeNew.getId());
                 leaveEvent.setLeaveType(leaveTypeNew);
             }
+            if (contractNew != null) {
+                contractNew = em.getReference(contractNew.getClass(), contractNew.getId());
+                leaveEvent.setContract(contractNew);
+            }
             leaveEvent = em.merge(leaveEvent);
-            if (contractOld != null && !contractOld.equals(contractNew)) {
-                contractOld.getLeaveEventList().remove(leaveEvent);
-                contractOld = em.merge(contractOld);
-            }
-            if (contractNew != null && !contractNew.equals(contractOld)) {
-                contractNew.getLeaveEventList().add(leaveEvent);
-                contractNew = em.merge(contractNew);
-            }
             if (leaveTypeOld != null && !leaveTypeOld.equals(leaveTypeNew)) {
                 leaveTypeOld.getLeaveEventList().remove(leaveEvent);
                 leaveTypeOld = em.merge(leaveTypeOld);
@@ -106,6 +92,14 @@ public class LeaveEventJpaController implements Serializable {
             if (leaveTypeNew != null && !leaveTypeNew.equals(leaveTypeOld)) {
                 leaveTypeNew.getLeaveEventList().add(leaveEvent);
                 leaveTypeNew = em.merge(leaveTypeNew);
+            }
+            if (contractOld != null && !contractOld.equals(contractNew)) {
+                contractOld.getLeaveEventList().remove(leaveEvent);
+                contractOld = em.merge(contractOld);
+            }
+            if (contractNew != null && !contractNew.equals(contractOld)) {
+                contractNew.getLeaveEventList().add(leaveEvent);
+                contractNew = em.merge(contractNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -136,15 +130,15 @@ public class LeaveEventJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The leaveEvent with id " + id + " no longer exists.", enfe);
             }
-            Contract contract = leaveEvent.getContract();
-            if (contract != null) {
-                contract.getLeaveEventList().remove(leaveEvent);
-                contract = em.merge(contract);
-            }
             LeaveType leaveType = leaveEvent.getLeaveType();
             if (leaveType != null) {
                 leaveType.getLeaveEventList().remove(leaveEvent);
                 leaveType = em.merge(leaveType);
+            }
+            Contract contract = leaveEvent.getContract();
+            if (contract != null) {
+                contract.getLeaveEventList().remove(leaveEvent);
+                contract = em.merge(contract);
             }
             em.remove(leaveEvent);
             em.getTransaction().commit();

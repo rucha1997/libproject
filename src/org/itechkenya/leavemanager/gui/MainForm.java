@@ -30,13 +30,12 @@ public class MainForm extends javax.swing.JFrame {
         splitPane = new javax.swing.JSplitPane();
         desktopPane = new javax.swing.JDesktopPane();
         navigationPanel = new javax.swing.JPanel();
-        spendLeaveButton = new javax.swing.JButton();
-        earnLeaveButton = new javax.swing.JButton();
+        leaveEventsButton = new javax.swing.JButton();
         separator1 = new javax.swing.JSeparator();
-        employeeButton = new javax.swing.JButton();
-        contractButton = new javax.swing.JButton();
+        employeesButton = new javax.swing.JButton();
+        contractsButton = new javax.swing.JButton();
         separator2 = new javax.swing.JSeparator();
-        leaveTypeButton = new javax.swing.JButton();
+        leaveTypesButton = new javax.swing.JButton();
         organizationButton = new javax.swing.JButton();
         separator3 = new javax.swing.JSeparator();
         menuBar = new javax.swing.JMenuBar();
@@ -71,38 +70,31 @@ public class MainForm extends javax.swing.JFrame {
 
         splitPane.setRightComponent(desktopPane);
 
-        spendLeaveButton.setText("Spend Leave");
-        spendLeaveButton.addActionListener(new java.awt.event.ActionListener() {
+        leaveEventsButton.setText("Leave Events");
+        leaveEventsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                spendLeaveButtonActionPerformed(evt);
+                leaveEventsButtonActionPerformed(evt);
             }
         });
 
-        earnLeaveButton.setText("Earn Leave");
-        earnLeaveButton.addActionListener(new java.awt.event.ActionListener() {
+        employeesButton.setText("Employees");
+        employeesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                earnLeaveButtonActionPerformed(evt);
+                employeesButtonActionPerformed(evt);
             }
         });
 
-        employeeButton.setText("Employee");
-        employeeButton.addActionListener(new java.awt.event.ActionListener() {
+        contractsButton.setText("Contracts");
+        contractsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                employeeButtonActionPerformed(evt);
+                contractsButtonActionPerformed(evt);
             }
         });
 
-        contractButton.setText("Contract");
-        contractButton.addActionListener(new java.awt.event.ActionListener() {
+        leaveTypesButton.setText("Leave Types");
+        leaveTypesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contractButtonActionPerformed(evt);
-            }
-        });
-
-        leaveTypeButton.setText("Leave Type");
-        leaveTypeButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                leaveTypeButtonActionPerformed(evt);
+                leaveTypesButtonActionPerformed(evt);
             }
         });
 
@@ -120,39 +112,36 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(navigationPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(navigationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spendLeaveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(separator1)
-                    .addComponent(employeeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(contractButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(employeesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(contractsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(separator2)
                     .addComponent(organizationButton, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                     .addComponent(separator3)
-                    .addComponent(leaveTypeButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(earnLeaveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(leaveTypesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(leaveEventsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         navigationPanelLayout.setVerticalGroup(
             navigationPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(navigationPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(spendLeaveButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(earnLeaveButton)
+                .addComponent(leaveEventsButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(employeeButton)
+                .addComponent(employeesButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contractButton)
+                .addComponent(contractsButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(leaveTypeButton)
+                .addComponent(leaveTypesButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(organizationButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(282, Short.MAX_VALUE))
+                .addContainerGap(313, Short.MAX_VALUE))
         );
 
         splitPane.setLeftComponent(navigationPanel);
@@ -238,21 +227,17 @@ public class MainForm extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void spendLeaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_spendLeaveButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_spendLeaveButtonActionPerformed
-
-    private void employeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeButtonActionPerformed
+    private void employeesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesButtonActionPerformed
         EmployeeFrame ef = new EmployeeFrame();
         desktopPane.add(ef);
         ef.setVisible(true);
-    }//GEN-LAST:event_employeeButtonActionPerformed
+    }//GEN-LAST:event_employeesButtonActionPerformed
 
-    private void contractButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contractButtonActionPerformed
+    private void contractsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contractsButtonActionPerformed
         ContractFrame cf = new ContractFrame();
         desktopPane.add(cf);
         cf.setVisible(true);
-    }//GEN-LAST:event_contractButtonActionPerformed
+    }//GEN-LAST:event_contractsButtonActionPerformed
 
     private void organizationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationButtonActionPerformed
         OrganizationFrame of = new OrganizationFrame();
@@ -260,15 +245,17 @@ public class MainForm extends javax.swing.JFrame {
         of.setVisible(true);
     }//GEN-LAST:event_organizationButtonActionPerformed
 
-    private void earnLeaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_earnLeaveButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_earnLeaveButtonActionPerformed
+    private void leaveEventsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveEventsButtonActionPerformed
+        EarnLeaveFrame elf = new EarnLeaveFrame();
+        desktopPane.add(elf);
+        elf.setVisible(true);
+    }//GEN-LAST:event_leaveEventsButtonActionPerformed
 
-    private void leaveTypeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveTypeButtonActionPerformed
+    private void leaveTypesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveTypesButtonActionPerformed
         LeaveTypeFrame ltf = new LeaveTypeFrame();
         desktopPane.add(ltf);
         ltf.setVisible(true);
-    }//GEN-LAST:event_leaveTypeButtonActionPerformed
+    }//GEN-LAST:event_leaveTypesButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -308,18 +295,18 @@ public class MainForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentMenuItem;
-    private javax.swing.JButton contractButton;
+    private javax.swing.JButton contractsButton;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
     private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JButton earnLeaveButton;
     private javax.swing.JMenu editMenu;
-    private javax.swing.JButton employeeButton;
+    private javax.swing.JButton employeesButton;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JButton leaveTypeButton;
+    private javax.swing.JButton leaveEventsButton;
+    private javax.swing.JButton leaveTypesButton;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JPanel navigationPanel;
     private javax.swing.JMenuItem openMenuItem;
@@ -330,7 +317,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JSeparator separator1;
     private javax.swing.JSeparator separator2;
     private javax.swing.JSeparator separator3;
-    private javax.swing.JButton spendLeaveButton;
     private javax.swing.JSplitPane splitPane;
     // End of variables declaration//GEN-END:variables
 

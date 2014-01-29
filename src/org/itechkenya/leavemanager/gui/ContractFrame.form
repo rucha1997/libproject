@@ -106,12 +106,12 @@
                       <Component id="employeeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="startDateLabel" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="startDateChooser" min="-2" max="-2" attributes="0"/>
+                      <Component id="startDateLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="endDateChooser" min="-2" max="-2" attributes="0"/>
                       <Component id="endDateLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
