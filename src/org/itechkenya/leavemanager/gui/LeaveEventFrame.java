@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.JpaManager;
+import org.itechkenya.leavemanager.api.MessageManager;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.Employee;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
@@ -22,12 +23,12 @@ import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
  *
  * @author gitahi
  */
-public class EarnLeaveFrame extends LeaveManagerFrame {
+public class LeaveEventFrame extends LeaveManagerFrame {
 
     /**
      * Creates new form EarnLeaveFrame
      */
-    public EarnLeaveFrame() {
+    public LeaveEventFrame() {
         initComponents();
         configureComponents();
         loadData();
@@ -57,8 +58,8 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
         daysSpentTextField = new javax.swing.JTextField();
         balanceLabel = new javax.swing.JLabel();
         balanceTextField = new javax.swing.JTextField();
-        dateLabel = new javax.swing.JLabel();
-        dateChooser = new com.toedter.calendar.JDateChooser();
+        startDateLabel = new javax.swing.JLabel();
+        startDateChooser = new com.toedter.calendar.JDateChooser();
         leaveTypeLabel = new javax.swing.JLabel();
         leaveTypeComboBox = new javax.swing.JComboBox();
         daysLabel = new javax.swing.JLabel();
@@ -144,7 +145,7 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        dateLabel.setText("Start Date");
+        startDateLabel.setText("Start Date");
 
         leaveTypeLabel.setText("Leave Type");
 
@@ -161,25 +162,16 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
         spendRadioButton.setSelected(true);
         spendRadioButton.setText("Spend");
 
-        endDateLabel.setText("End Date");
-
         javax.swing.GroupLayout eventTypePanelLayout = new javax.swing.GroupLayout(eventTypePanel);
         eventTypePanel.setLayout(eventTypePanelLayout);
         eventTypePanelLayout.setHorizontalGroup(
             eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(eventTypePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(eventTypePanelLayout.createSequentialGroup()
-                        .addComponent(earnRadioButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spendRadioButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(eventTypePanelLayout.createSequentialGroup()
-                        .addComponent(endDateLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(endDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(earnRadioButton)
+                .addGap(18, 18, 18)
+                .addComponent(spendRadioButton)
+                .addContainerGap(732, Short.MAX_VALUE))
         );
         eventTypePanelLayout.setVerticalGroup(
             eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,12 +179,10 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
                 .addGroup(eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(earnRadioButton)
                     .addComponent(spendRadioButton))
-                .addGap(3, 3, 3)
-                .addGroup(eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(endDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(endDateLabel))
-                .addGap(0, 10, Short.MAX_VALUE))
+                .addGap(0, 6, Short.MAX_VALUE))
         );
+
+        endDateLabel.setText("End Date");
 
         javax.swing.GroupLayout outerPanelLayout = new javax.swing.GroupLayout(outerPanel);
         outerPanel.setLayout(outerPanelLayout);
@@ -216,13 +206,17 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
                             .addComponent(daysLabel)
                             .addComponent(commentsLabel)
                             .addComponent(leaveTypeLabel)
-                            .addComponent(dateLabel))
+                            .addComponent(startDateLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(startDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(leaveTypeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(commentsTextField)
-                            .addComponent(daysTextField))))
+                            .addComponent(daysTextField)))
+                    .addGroup(outerPanelLayout.createSequentialGroup()
+                        .addComponent(endDateLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(endDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 819, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         outerPanelLayout.setVerticalGroup(
@@ -240,8 +234,8 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
                 .addComponent(innerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(dateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateLabel))
+                    .addComponent(startDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startDateLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(leaveTypeLabel)
@@ -256,6 +250,10 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
                     .addComponent(commentsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(eventTypePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(endDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(endDateLabel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -274,6 +272,11 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
         });
 
         deleteButton.setText("Delete");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         closeButton.setText("Close");
         closeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -284,13 +287,10 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         scrollPane.setViewportView(table);
@@ -327,7 +327,7 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
                     .addComponent(closeButton)
                     .addComponent(deleteButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -335,22 +335,45 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void newButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newButtonActionPerformed
-        // TODO add your handling code here:
+        clear();
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        LeaveEvent leaveEvent = (LeaveEvent) getSelectedItem();
         try {
-            LeaveEvent leaveEvent = new LeaveEvent();
-            flesh(leaveEvent);
-            JpaManager.getLejc().create(leaveEvent);
+            if (leaveEvent == null) {
+                leaveEvent = new LeaveEvent();
+                flesh(leaveEvent);
+                JpaManager.getLejc().create(leaveEvent);
+                updateTable(leaveEvent, UpdateType.CREATE);
+            } else {
+                flesh(leaveEvent);
+                JpaManager.getLejc().edit(leaveEvent);
+                updateTable(leaveEvent, UpdateType.EDIT);
+            }
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        for (Object item : getSelectedItems()) {
+            LeaveEvent leaveEvent = (LeaveEvent) item;
+            try {
+                JpaManager.getLejc().destroy(leaveEvent.getId());
+                updateTable(leaveEvent, UpdateType.DESTROY);
+            } catch (NonexistentEntityException ex) {
+                MessageManager.showErrorMessage(this, ex.getMessage());
+                Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -363,8 +386,6 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
     private javax.swing.JLabel contractLabel;
     private javax.swing.JLabel contractYearLabel;
     private javax.swing.JTextField contractYearTextField;
-    private com.toedter.calendar.JDateChooser dateChooser;
-    private javax.swing.JLabel dateLabel;
     private javax.swing.JLabel daysEarnedLabel;
     private javax.swing.JTextField daysEarnedTextField;
     private javax.swing.JLabel daysLabel;
@@ -387,6 +408,8 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
     private javax.swing.JButton saveButton;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JRadioButton spendRadioButton;
+    private com.toedter.calendar.JDateChooser startDateChooser;
+    private javax.swing.JLabel startDateLabel;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 
@@ -425,8 +448,16 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
             leaveEvent.setContract((Contract) contractComboBox.getSelectedItem());
             leaveEvent.setContractYear(new Integer(contractYearTextField.getText()));
             leaveEvent.setLeaveType((LeaveType) leaveTypeComboBox.getSelectedItem());
-            leaveEvent.setDaysEarned(new BigDecimal(daysTextField.getText()));
-            leaveEvent.setStartDate(dateChooser.getDate());
+            leaveEvent.setStartDate(startDateChooser.getDate());
+            if (earnRadioButton.isSelected()) {
+                leaveEvent.setDaysEarned(new BigDecimal(daysTextField.getText()));
+                leaveEvent.setDaysSpent(null);
+                leaveEvent.setEndDate(null);
+            } else if (spendRadioButton.isSelected()) {
+                leaveEvent.setDaysSpent(new BigDecimal(daysTextField.getText()));
+                leaveEvent.setDaysEarned(null);
+                leaveEvent.setEndDate(endDateChooser.getDate());
+            }
             if (!commentsTextField.getText().equals("")) {
                 leaveEvent.setComment(commentsTextField.getText());
             }
@@ -440,7 +471,7 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
 
     @Override
     public JButton getDeleteButton() {
-        return null;
+        return deleteButton;
     }
 
     @Override
@@ -450,7 +481,7 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
 
     @Override
     public void clearFields() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
@@ -459,11 +490,64 @@ public class EarnLeaveFrame extends LeaveManagerFrame {
         if (leaveEvent != null) {
             employeeComboBox.setSelectedItem(leaveEvent.getContract().getEmployee());
             contractComboBox.setSelectedItem(leaveEvent.getContract());
-
-            dateChooser.setDate(leaveEvent.getStartDate());
+            startDateChooser.setDate(leaveEvent.getStartDate());
             leaveTypeComboBox.setSelectedItem(leaveEvent.getLeaveType());
-            daysTextField.setText(leaveEvent.getDaysEarned().toString());
+            daysTextField.setText(leaveEvent.getDaysEarned() != null
+                    ? leaveEvent.getDaysEarned().toString() : leaveEvent.getDaysSpent().toString());
+            earnRadioButton.setSelected(leaveEvent.getDaysEarned() != null);
+            spendRadioButton.setSelected(leaveEvent.getDaysSpent() != null);
+            endDateChooser.setDate(leaveEvent.getEndDate());
             commentsTextField.setText(leaveEvent.getComment());
+        }
+    }
+
+    private class LeaveEventTableModel extends LeaveManagerTableModel {
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            if (rowIndex >= getRows().size()) {
+                return null;
+            }
+            LeaveEvent leaveEvent = (LeaveEvent) getRow(rowIndex);
+            switch (columnIndex) {
+                case 0:
+                    return leaveEvent.getContract().getEmployee();
+                case 1:
+                    return leaveEvent.getContract();
+                case 2:
+                    return leaveEvent.getContractYear();
+                case 3:
+                    return leaveEvent.getLeaveType();
+                case 4:
+                    return leaveEvent.getStartDate();
+                case 5:
+                    return leaveEvent.getDaysEarned();
+                case 6:
+                    return leaveEvent.getDaysSpent();
+                case 7:
+                    return leaveEvent.getEndDate();
+                case 8:
+                    return leaveEvent.getComment();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public Class getColumnClass(int column) {
+            for (int i = 0; i < getRows().size(); i++) {
+                Object value = getValueAt(i, column);
+                if (value != null) {
+                    return value.getClass();
+                }
+            }
+            return Object.class;
+        }
+
+        @Override
+        public String[] getColumns() {
+            String[] columns = {"Employee", "Contract", "Contract Year", "Leave Type", "Start Date", "Days Earned", "Days Spent", "End Date", "Comment"};
+            return columns;
         }
     }
 }

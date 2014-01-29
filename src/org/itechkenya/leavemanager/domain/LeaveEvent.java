@@ -39,35 +39,38 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LeaveEvent.findByDaysSpent", query = "SELECT l FROM LeaveEvent l WHERE l.daysSpent = :daysSpent"),
     @NamedQuery(name = "LeaveEvent.findByStartDate", query = "SELECT l FROM LeaveEvent l WHERE l.startDate = :startDate"),
     @NamedQuery(name = "LeaveEvent.findByEndDate", query = "SELECT l FROM LeaveEvent l WHERE l.endDate = :endDate"),
-    @NamedQuery(name = "LeaveEvent.findByComment", query = "SELECT l FROM LeaveEvent l WHERE l.comment = :comment")})
+    @NamedQuery(name = "LeaveEvent.findByComment", query = "SELECT l FROM LeaveEvent l WHERE l.comment = :comment"),
+    @NamedQuery(name = "LeaveEvent.findByMonth", query = "SELECT l FROM LeaveEvent l WHERE l.month = :month")})
 public class LeaveEvent implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "contract_year", nullable = false)
+    @Column(name = "contract_year")
     private int contractYear;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "days_earned", precision = 3, scale = 2)
+    @Column(name = "days_earned")
     private BigDecimal daysEarned;
-    @Column(name = "days_spent", precision = 3, scale = 2)
+    @Column(name = "days_spent")
     private BigDecimal daysSpent;
     @Basic(optional = false)
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
-    @Column(name = "comment", length = 140)
+    @Column(name = "comment")
     private String comment;
-    @JoinColumn(name = "leave_type", referencedColumnName = "id", nullable = false)
+    @Column(name = "month")
+    private String month;
+    @JoinColumn(name = "leave_type", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private LeaveType leaveType;
-    @JoinColumn(name = "contract", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "contract", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Contract contract;
 
@@ -138,6 +141,14 @@ public class LeaveEvent implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
     }
 
     public LeaveType getLeaveType() {

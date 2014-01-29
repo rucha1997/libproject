@@ -246,7 +246,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_organizationButtonActionPerformed
 
     private void leaveEventsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveEventsButtonActionPerformed
-        EarnLeaveFrame elf = new EarnLeaveFrame();
+        LeaveEventFrame elf = new LeaveEventFrame();
         desktopPane.add(elf);
         elf.setVisible(true);
     }//GEN-LAST:event_leaveEventsButtonActionPerformed

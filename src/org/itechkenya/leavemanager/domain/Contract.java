@@ -45,19 +45,19 @@ public class Contract implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Column(name = "end_date")
     @Temporal(TemporalType.DATE)
     private Date endDate;
     @Basic(optional = false)
-    @Column(name = "active", nullable = false)
+    @Column(name = "active")
     private boolean active;
-    @JoinColumn(name = "employee", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "employee", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Employee employee;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contract")

@@ -46,6 +46,8 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
         nameTextField = new javax.swing.JTextField();
         daysPerMonthLabel = new javax.swing.JLabel();
         daysPerMonthTextField = new javax.swing.JTextField();
+        regularCheckBox = new javax.swing.JCheckBox();
+        absoluteCheckBox = new javax.swing.JCheckBox();
         activeCheckBox = new javax.swing.JCheckBox();
         newButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
@@ -65,6 +67,10 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
 
         daysPerMonthLabel.setText("Days per Month");
 
+        regularCheckBox.setText("Regular (check to set as default leave type)");
+
+        absoluteCheckBox.setText("Absolute (check if leave type includes weekends and holidays)");
+
         activeCheckBox.setText("Active");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
@@ -79,10 +85,13 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nameTextField)
+                    .addComponent(daysPerMonthTextField)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(activeCheckBox)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(daysPerMonthTextField))
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(absoluteCheckBox)
+                            .addComponent(regularCheckBox)
+                            .addComponent(activeCheckBox))
+                        .addGap(0, 35, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelLayout.setVerticalGroup(
@@ -96,6 +105,10 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(daysPerMonthLabel)
                     .addComponent(daysPerMonthTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(regularCheckBox)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(absoluteCheckBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(activeCheckBox)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -131,13 +144,10 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         scrollPane.setViewportView(table);
@@ -159,7 +169,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(closeButton)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE))
+                    .addComponent(scrollPane))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -174,7 +184,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                     .addComponent(deleteButton)
                     .addComponent(closeButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -227,6 +237,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox absoluteCheckBox;
     private javax.swing.JCheckBox activeCheckBox;
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel daysPerMonthLabel;
@@ -236,6 +247,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton newButton;
     private javax.swing.JPanel panel;
+    private javax.swing.JCheckBox regularCheckBox;
     private javax.swing.JButton saveButton;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTable table;
@@ -257,6 +269,8 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
         if (leaveType != null) {
             leaveType.setName(nameTextField.getText());
             leaveType.setDaysPerMonth(new BigDecimal(daysPerMonthTextField.getText()));
+            leaveType.setRegular(regularCheckBox.isSelected());
+            leaveType.setAbsolute(absoluteCheckBox.isSelected());
             leaveType.setActive(activeCheckBox.isSelected());
         }
     }
@@ -280,6 +294,8 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
     public void clearFields() {
         nameTextField.setText("");
         daysPerMonthTextField.setText("");
+        regularCheckBox.setSelected(false);
+        absoluteCheckBox.setSelected(false);
         activeCheckBox.setSelected(false);
     }
 
@@ -289,6 +305,8 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
         if (leaveType != null) {
             nameTextField.setText(leaveType.getName());
             daysPerMonthTextField.setText(leaveType.getDaysPerMonth().toPlainString());
+            regularCheckBox.setSelected(leaveType.getRegular());
+            absoluteCheckBox.setSelected(leaveType.getAbsolute());
             activeCheckBox.setSelected(leaveType.getActive());
         }
     }
@@ -307,6 +325,10 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                 case 1:
                     return leaveType.getDaysPerMonth();
                 case 2:
+                    return leaveType.getRegular();
+                case 3:
+                    return leaveType.getAbsolute();
+                case 4:
                     return leaveType.getActive();
                 default:
                     return null;
@@ -320,7 +342,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
 
         @Override
         public String[] getColumns() {
-            String[] columns = {"Name", "Days per Month", "Active"};
+            String[] columns = {"Name", "Days per Month", "Regular", "Absolute", "Active"};
             return columns;
         }
     }
