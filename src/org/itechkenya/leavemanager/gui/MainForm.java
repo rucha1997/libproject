@@ -5,6 +5,8 @@
  */
 package org.itechkenya.leavemanager.gui;
 
+import org.itechkenya.leavemanager.api.LeaveManager;
+
 /**
  *
  * @author gitahi
@@ -16,6 +18,8 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
+        Thread leaveManager = new Thread(new LeaveManager());
+        leaveManager.start();
     }
 
     /**

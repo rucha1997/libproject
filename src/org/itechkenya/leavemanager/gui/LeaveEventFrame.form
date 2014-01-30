@@ -62,7 +62,7 @@
                   <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="scrollPane" pref="211" max="32767" attributes="0"/>
+              <Component id="scrollPane" pref="210" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -268,6 +268,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="contractYearTextField">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="daysEarnedLabel">
               <Properties>

@@ -5,20 +5,24 @@
  */
 package org.itechkenya.leavemanager.gui;
 
-import java.awt.event.ItemEvent;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.JpaManager;
+import org.itechkenya.leavemanager.api.LeaveManager;
 import org.itechkenya.leavemanager.api.UiManager;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.Employee;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
 import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 
 /**
  *
@@ -109,6 +113,8 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         innerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Summary"));
 
         contractYearLabel.setText("Contract Year");
+
+        contractYearTextField.setEditable(false);
 
         daysEarnedLabel.setText("Days Earned");
 
@@ -350,7 +356,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     .addComponent(closeButton)
                     .addComponent(deleteButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -423,24 +429,16 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         LeaveEventTableModel model = new LeaveEventTableModel();
         if (contract != null) {
             List<LeaveEvent> leaveEventList = JpaManager.getLejc().findLeaveEventEntities();
+            List<LeaveEvent> contractLeaveEventList = new ArrayList<>();
             BigDecimal daysEarned = BigDecimal.ZERO;
             BigDecimal daysSpent = BigDecimal.ZERO;
-            BigDecimal balance = BigDecimal.ZERO;
             for (LeaveEvent leaveEvent : leaveEventList) {
                 if (contract.equals(leaveEvent.getContract())) {
                     model.createRow(leaveEvent);
-                    if (leaveEvent.getDaysEarned() != null) {
-                        daysEarned = daysEarned.add(leaveEvent.getDaysEarned());
-                    }
-                    if (leaveEvent.getDaysSpent()!= null) {
-                        daysSpent = daysSpent.add(leaveEvent.getDaysSpent());
-                    }
+                    contractLeaveEventList.add(leaveEvent);
                 }
             }
-            balance = daysEarned.add(daysSpent.negate());
-            daysEarnedTextField.setText(daysEarned.toString());
-            daysSpentTextField.setText(daysSpent.toString());
-            balanceTextField.setText(balance.toString());
+            updateSummary(contractLeaveEventList, contract);
         }
         table.setModel(model);
     }//GEN-LAST:event_contractComboBoxItemStateChanged
@@ -484,6 +482,27 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
+    private void updateSummary(List<LeaveEvent> leaveEventList, Contract contract) {
+
+        int contractYear = LeaveManager.getContractYear(contract);
+
+        BigDecimal daysEarned = BigDecimal.ZERO;
+        BigDecimal daysSpent = BigDecimal.ZERO;
+        for (LeaveEvent leaveEvent : leaveEventList) {
+            if (leaveEvent.getDaysEarned() != null) {
+                daysEarned = daysEarned.add(leaveEvent.getDaysEarned());
+            }
+            if (leaveEvent.getDaysSpent() != null) {
+                daysSpent = daysSpent.add(leaveEvent.getDaysSpent());
+            }
+        }
+        BigDecimal balance = daysEarned.add(daysSpent.negate());
+        contractYearTextField.setText(String.valueOf(contractYear));
+        daysEarnedTextField.setText(daysEarned.toString());
+        daysSpentTextField.setText(daysSpent.toString());
+        balanceTextField.setText(balance.toString());
+    }
+
     @Override
     public final void loadData() {
         List<Employee> employeeList = JpaManager.getEjc().findEmployeeEntities();
@@ -507,7 +526,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         LeaveEvent leaveEvent = (LeaveEvent) item;
         if (leaveEvent != null) {
             leaveEvent.setContract((Contract) contractComboBox.getSelectedItem());
-            leaveEvent.setContractYear(new Integer(contractYearTextField.getText()));
+            leaveEvent.setContractYear(LeaveManager.getContractYear(leaveEvent.getContract()));
             leaveEvent.setLeaveType((LeaveType) leaveTypeComboBox.getSelectedItem());
             leaveEvent.setStartDate(startDateChooser.getDate());
             if (earnRadioButton.isSelected()) {
