@@ -44,9 +44,12 @@ public class LeaveManager implements Runnable {
                             leaveEvent.setComment("Auto-created for: " + previousCompletedMonth);
                             leaveEvent.setMonth(previousCompletedMonth);
                             counter++;
-                            mainForm.showAutoCreatedLeaveEventCount(counter);
+                            mainForm.showAutoCreatedLeaveEventMessage("Auto-created new leave event for: " + leaveEvent.getContract().getEmployee().toString());
                         }
                     }
+                }
+                if (counter > 1) {
+                    mainForm.showAutoCreatedLeaveEventMessage("Auto-created " + counter + " new leave event(s).");
                 }
             }
         }

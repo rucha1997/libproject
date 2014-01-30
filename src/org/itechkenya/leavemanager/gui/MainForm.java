@@ -1,15 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.itechkenya.leavemanager.gui;
+
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
 
 /**
  *
  * @author gitahi
  */
 public class MainForm extends javax.swing.JFrame {
+
+    LeaveManagerFrame leaveEventFrame = new LeaveEventFrame();
+    LeaveManagerFrame employeeFrame = new EmployeeFrame();
+    LeaveManagerFrame contractFrame = new ContractFrame();
+    LeaveManagerFrame leaveTypeFrame = new LeaveTypeFrame();
+    LeaveManagerFrame organizationFrame = new OrganizationFrame();
 
     /**
      * Creates new form MainForm
@@ -38,6 +44,8 @@ public class MainForm extends javax.swing.JFrame {
         leaveTypesButton = new javax.swing.JButton();
         organizationButton = new javax.swing.JButton();
         separator3 = new javax.swing.JSeparator();
+        statusPanel = new javax.swing.JPanel();
+        statusLabel = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -54,6 +62,7 @@ public class MainForm extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Leave Manager");
 
         splitPane.setDividerLocation(200);
 
@@ -65,7 +74,7 @@ public class MainForm extends javax.swing.JFrame {
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
+            .addGap(0, 486, Short.MAX_VALUE)
         );
 
         splitPane.setRightComponent(desktopPane);
@@ -141,10 +150,29 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(organizationButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addContainerGap(277, Short.MAX_VALUE))
         );
 
         splitPane.setLeftComponent(navigationPanel);
+
+        statusPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout statusPanelLayout = new javax.swing.GroupLayout(statusPanel);
+        statusPanel.setLayout(statusPanelLayout);
+        statusPanelLayout.setHorizontalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(statusPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        statusPanelLayout.setVerticalGroup(
+            statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statusPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(statusLabel)
+                .addContainerGap())
+        );
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -214,10 +242,14 @@ public class MainForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(splitPane)
+            .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(splitPane)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(splitPane)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -228,33 +260,23 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
     private void employeesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesButtonActionPerformed
-        EmployeeFrame ef = new EmployeeFrame();
-        desktopPane.add(ef);
-        ef.setVisible(true);
+        showLeaveManagerFrame(employeeFrame);
     }//GEN-LAST:event_employeesButtonActionPerformed
 
     private void contractsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contractsButtonActionPerformed
-        ContractFrame cf = new ContractFrame();
-        desktopPane.add(cf);
-        cf.setVisible(true);
+        showLeaveManagerFrame(contractFrame);
     }//GEN-LAST:event_contractsButtonActionPerformed
 
     private void organizationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationButtonActionPerformed
-        OrganizationFrame of = new OrganizationFrame();
-        desktopPane.add(of);
-        of.setVisible(true);
+        showLeaveManagerFrame(organizationFrame, false);
     }//GEN-LAST:event_organizationButtonActionPerformed
 
     private void leaveEventsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveEventsButtonActionPerformed
-        LeaveEventFrame elf = new LeaveEventFrame();
-        desktopPane.add(elf);
-        elf.setVisible(true);
+        showLeaveManagerFrame(leaveEventFrame);
     }//GEN-LAST:event_leaveEventsButtonActionPerformed
 
     private void leaveTypesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveTypesButtonActionPerformed
-        LeaveTypeFrame ltf = new LeaveTypeFrame();
-        desktopPane.add(ltf);
-        ltf.setVisible(true);
+        showLeaveManagerFrame(leaveTypeFrame);
     }//GEN-LAST:event_leaveTypesButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -283,10 +305,37 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JSeparator separator2;
     private javax.swing.JSeparator separator3;
     private javax.swing.JSplitPane splitPane;
+    private javax.swing.JLabel statusLabel;
+    private javax.swing.JPanel statusPanel;
     // End of variables declaration//GEN-END:variables
 
-    
-    public void showAutoCreatedLeaveEventCount(int count) {
-        leaveEventsButton.setText("Auto-created " + count + " new leave event(s).");
+    public void showAutoCreatedLeaveEventMessage(String message) {
+        statusLabel.setText(message);
+    }
+
+    private void showLeaveManagerFrame(LeaveManagerFrame frame, boolean maximize) {
+        try {
+            if (!has(desktopPane.getAllFrames(), frame)) {
+                desktopPane.add(frame);
+                frame.setMaximum(maximize);
+                frame.setVisible(true);
+            }
+            frame.setSelected(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void showLeaveManagerFrame(LeaveManagerFrame frame) {
+        showLeaveManagerFrame(frame, true);
+    }
+
+    private boolean has(JInternalFrame[] frames, JInternalFrame frame) {
+        for (JInternalFrame jInternalFrame : frames) {
+            if (jInternalFrame.equals(frame)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

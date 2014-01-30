@@ -1,5 +1,6 @@
 package org.itechkenya.leavemanager.api;
 
+import javax.swing.JFrame;
 import org.itechkenya.leavemanager.gui.MainForm;
 
 /**
@@ -27,9 +28,10 @@ public class Main {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                 MainForm mainForm = new MainForm();
+                MainForm mainForm = new MainForm();
+                mainForm.setExtendedState(JFrame.MAXIMIZED_BOTH);
                 mainForm.setVisible(true);
-
+                
                 Thread leaveManagerThread = new Thread(new LeaveManager(mainForm));
                 leaveManagerThread.start();
             }
