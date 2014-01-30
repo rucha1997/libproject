@@ -138,10 +138,13 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="daysPerMonthTextField">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="0.00"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="regularCheckBox">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Regular (check to set as default leave type)"/>
+            <Property name="text" type="java.lang.String" value="Default (typically for annual leave)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="absoluteCheckBox">
@@ -151,6 +154,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="activeCheckBox">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Active"/>
           </Properties>
         </Component>

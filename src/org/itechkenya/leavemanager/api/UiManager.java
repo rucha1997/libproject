@@ -30,7 +30,12 @@ public class UiManager {
     public static void showErrorMessage(Component source, String message) {
         JOptionPane.showMessageDialog(source, message, "Error!", JOptionPane.ERROR_MESSAGE, null);
     }
-    
+
+    public static boolean showConfirmationMessage(Component source, String message) {
+        return JOptionPane.showConfirmDialog(source, message, "Confirm!", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION;
+    }
+
     public static String formatDate(Date date) {
         return new SimpleDateFormat("MMM dd, yyyy").format(date);
     }

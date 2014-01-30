@@ -67,10 +67,13 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
 
         daysPerMonthLabel.setText("Days per Month");
 
-        regularCheckBox.setText("Regular (check to set as default leave type)");
+        daysPerMonthTextField.setText("0.00");
+
+        regularCheckBox.setText("Default (typically for annual leave)");
 
         absoluteCheckBox.setText("Absolute (check if leave type includes weekends and holidays)");
 
+        activeCheckBox.setSelected(true);
         activeCheckBox.setText("Active");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
@@ -196,6 +199,25 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        if (nameTextField.getText().equals("")) {
+            UiManager.showWarningMessage(this, "Enter name.", nameTextField);
+            return;
+        }
+        if (daysPerMonthTextField.getText().equals("")) {
+            UiManager.showWarningMessage(this, "Enter days to be earned per month.", daysPerMonthTextField);
+            return;
+        }
+        try {
+            BigDecimal test = new BigDecimal(daysPerMonthTextField.getText());
+            if (test.compareTo(new BigDecimal("999.99")) == 1) {
+                UiManager.showWarningMessage(this, "Days to be earned cannot exceed 999.99.", daysPerMonthTextField);
+                return;
+            }
+        } catch (NumberFormatException ex) {
+            UiManager.showWarningMessage(this, "Days to be earned per month must be a decimal number with the format ###.##.", daysPerMonthTextField);
+            Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
         LeaveType leaveType = (LeaveType) getSelectedItem();
         try {
             if (leaveType == null) {
@@ -209,24 +231,29 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                 updateTable(leaveType, UpdateType.EDIT);
             }
         } catch (NonexistentEntityException ex) {
+            UiManager.showErrorMessage(this, ex.getMessage());
             Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
+            UiManager.showErrorMessage(this, ex.getMessage());
             Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        for (Object item : getSelectedItems()) {
-            LeaveType leaveType = (LeaveType) item;
-            try {
-                JpaManager.getLtjc().destroy(leaveType.getId());
-                updateTable(leaveType, UpdateType.DESTROY);
-            } catch (IllegalOrphanException ex) {
-                UiManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
-                Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NonexistentEntityException ex) {
-                UiManager.showErrorMessage(this, ex.getMessage());
-                Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        List<Object> selectedItems = getSelectedItems();
+        if (UiManager.showConfirmationMessage(this, "Are you sure you want to delete the " + selectedItems.size() + " selected record(s)?")) {
+            for (Object item : selectedItems) {
+                LeaveType leaveType = (LeaveType) item;
+                try {
+                    JpaManager.getLtjc().destroy(leaveType.getId());
+                    updateTable(leaveType, UpdateType.DESTROY);
+                } catch (IllegalOrphanException ex) {
+                    UiManager.showErrorMessage(this, "Some records depend on this record. Please delete those first.");
+                    Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    UiManager.showErrorMessage(this, ex.getMessage());
+                    Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
@@ -293,10 +320,10 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
     @Override
     public void clearFields() {
         nameTextField.setText("");
-        daysPerMonthTextField.setText("");
+        daysPerMonthTextField.setText("0.00");
         regularCheckBox.setSelected(false);
         absoluteCheckBox.setSelected(false);
-        activeCheckBox.setSelected(false);
+        activeCheckBox.setSelected(true);
     }
 
     @Override
