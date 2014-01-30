@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.itechkenya.leavemanager.jpa;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.jpa.exceptions.IllegalOrphanException;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
@@ -200,5 +201,12 @@ public class LeaveTypeJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<LeaveType> findAutoIncrementableLeaveTypes() {
+        EntityManager em = getEntityManager();
+        TypedQuery<LeaveType> query
+                = em.createNamedQuery("LeaveType.findByDaysPerMonth", LeaveType.class);
+        query.setParameter("daysPerMonth", BigDecimal.ZERO);
+        return query.getResultList();
+    }
 }

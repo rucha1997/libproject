@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.itechkenya.leavemanager.jpa;
 
 import java.io.Serializable;
@@ -14,9 +13,11 @@ import javax.persistence.criteria.Root;
 import org.itechkenya.leavemanager.domain.Employee;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.jpa.exceptions.IllegalOrphanException;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
@@ -229,5 +230,13 @@ public class ContractJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Contract> findActiveContracts() {
+        EntityManager em = getEntityManager();
+        TypedQuery<Contract> query
+                = em.createNamedQuery("Contract.findActive", Contract.class);
+        query.setParameter("active", Boolean.TRUE);
+        query.setParameter("today", new Date());
+        return query.getResultList();
+    }
 }

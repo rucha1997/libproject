@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.itechkenya.leavemanager.jpa;
 
 import java.io.Serializable;
@@ -12,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.itechkenya.leavemanager.domain.LeaveType;
@@ -194,5 +194,21 @@ public class LeaveEventJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public LeaveEvent findLeaveEvent(Contract contract, LeaveType leaveType, String month) {
+        LeaveEvent leaveEvent = null;
+
+        EntityManager em = getEntityManager();
+        TypedQuery<LeaveEvent> query
+                = em.createNamedQuery("LeaveEvent.findByContractLeaveTypeAndMonth", LeaveEvent.class);
+        query.setParameter("contract", contract);
+        query.setParameter("leaveType", leaveType);
+        query.setParameter("month", month);
+        List<LeaveEvent> leaveEvents = query.getResultList();
+        if (leaveEvents != null && !leaveEvents.isEmpty()) {
+            leaveEvent = leaveEvents.get(0);
+        }
+
+        return leaveEvent;
+    }
 }

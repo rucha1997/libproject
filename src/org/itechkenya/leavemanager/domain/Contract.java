@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.itechkenya.leavemanager.domain;
 
 import java.io.Serializable;
@@ -40,8 +39,10 @@ import org.itechkenya.leavemanager.api.UiManager;
     @NamedQuery(name = "Contract.findById", query = "SELECT c FROM Contract c WHERE c.id = :id"),
     @NamedQuery(name = "Contract.findByStartDate", query = "SELECT c FROM Contract c WHERE c.startDate = :startDate"),
     @NamedQuery(name = "Contract.findByEndDate", query = "SELECT c FROM Contract c WHERE c.endDate = :endDate"),
-    @NamedQuery(name = "Contract.findByActive", query = "SELECT c FROM Contract c WHERE c.active = :active")})
+    @NamedQuery(name = "Contract.findByActive", query = "SELECT c FROM Contract c WHERE c.active = :active"),
+    @NamedQuery(name = "Contract.findActive", query = "SELECT c FROM Contract c WHERE c.active = :active AND c.startDate <= :today AND c.endDate >= :today")})
 public class Contract implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -150,5 +151,5 @@ public class Contract implements Serializable {
     public String toString() {
         return UiManager.formatDate(startDate) + " - " + UiManager.formatDate(endDate) + " (" + employee.getCode() + ")";
     }
-    
+
 }

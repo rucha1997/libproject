@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package org.itechkenya.leavemanager.domain;
 
 import java.io.Serializable;
@@ -40,8 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LeaveEvent.findByStartDate", query = "SELECT l FROM LeaveEvent l WHERE l.startDate = :startDate"),
     @NamedQuery(name = "LeaveEvent.findByEndDate", query = "SELECT l FROM LeaveEvent l WHERE l.endDate = :endDate"),
     @NamedQuery(name = "LeaveEvent.findByComment", query = "SELECT l FROM LeaveEvent l WHERE l.comment = :comment"),
-    @NamedQuery(name = "LeaveEvent.findByMonth", query = "SELECT l FROM LeaveEvent l WHERE l.month = :month")})
+    @NamedQuery(name = "LeaveEvent.findByMonth", query = "SELECT l FROM LeaveEvent l WHERE l.month = :month"),
+    @NamedQuery(name = "LeaveEvent.findByContractLeaveTypeAndMonth", query = "SELECT l FROM LeaveEvent l WHERE l.contract = :contract AND l.leaveType = :leaveType AND l.month = :month")})
 public class LeaveEvent implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -191,5 +192,5 @@ public class LeaveEvent implements Serializable {
     public String toString() {
         return "org.itechkenya.leavemanager.domain.LeaveEvent[ id=" + id + " ]";
     }
-    
+
 }

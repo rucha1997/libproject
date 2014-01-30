@@ -18,8 +18,10 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
-        Thread leaveManager = new Thread(new LeaveManager());
-        leaveManager.start();
+        LeaveManager leaveManager = new LeaveManager();
+        leaveManager.setMainForm(this);
+        Thread leaveManagerThread = new Thread(leaveManager);
+        leaveManagerThread.start();
     }
 
     /**
@@ -324,4 +326,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JSplitPane splitPane;
     // End of variables declaration//GEN-END:variables
 
+    
+    public void showAutoCreatedLeaveEventCount(int count) {
+        leaveEventsButton.setText("Auto-created " + count + " new leave event(s).");
+    }
 }

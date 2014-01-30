@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "LeaveType.findAll", query = "SELECT l FROM LeaveType l"),
     @NamedQuery(name = "LeaveType.findById", query = "SELECT l FROM LeaveType l WHERE l.id = :id"),
     @NamedQuery(name = "LeaveType.findByName", query = "SELECT l FROM LeaveType l WHERE l.name = :name"),
-    @NamedQuery(name = "LeaveType.findByDaysPerMonth", query = "SELECT l FROM LeaveType l WHERE l.daysPerMonth = :daysPerMonth"),
+    @NamedQuery(name = "LeaveType.findByDaysPerMonth", query = "SELECT l FROM LeaveType l WHERE l.daysPerMonth > :daysPerMonth"),
     @NamedQuery(name = "LeaveType.findByRegular", query = "SELECT l FROM LeaveType l WHERE l.regular = :regular"),
     @NamedQuery(name = "LeaveType.findByAbsolute", query = "SELECT l FROM LeaveType l WHERE l.absolute = :absolute"),
     @NamedQuery(name = "LeaveType.findByActive", query = "SELECT l FROM LeaveType l WHERE l.active = :active")})
