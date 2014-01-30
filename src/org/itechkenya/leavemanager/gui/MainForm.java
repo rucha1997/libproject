@@ -1,5 +1,6 @@
 package org.itechkenya.leavemanager.gui;
 
+import java.awt.Dimension;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -315,9 +316,10 @@ public class MainForm extends javax.swing.JFrame {
 
     private void showLeaveManagerFrame(LeaveManagerFrame frame, boolean maximize) {
         try {
-            if (!has(desktopPane.getAllFrames(), frame)) {
+            if (!frameAlreadyLoaded(desktopPane.getAllFrames(), frame)) {
                 desktopPane.add(frame);
                 frame.setMaximum(maximize);
+                centerFrame(frame);
                 frame.setVisible(true);
             }
             frame.setSelected(true);
@@ -330,12 +332,20 @@ public class MainForm extends javax.swing.JFrame {
         showLeaveManagerFrame(frame, true);
     }
 
-    private boolean has(JInternalFrame[] frames, JInternalFrame frame) {
+    private boolean frameAlreadyLoaded(JInternalFrame[] frames, JInternalFrame frame) {
         for (JInternalFrame jInternalFrame : frames) {
             if (jInternalFrame.equals(frame)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public void centerFrame(JInternalFrame jif) {
+        Dimension desktopSize = desktopPane.getSize();
+        Dimension jInternalFrameSize = jif.getSize();
+        int width = (desktopSize.width - jInternalFrameSize.width) / 2;
+        int height = (desktopSize.height - jInternalFrameSize.height) / 2;
+        jif.setLocation(width, height);
     }
 }
