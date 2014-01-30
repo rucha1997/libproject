@@ -1,8 +1,6 @@
 package org.itechkenya.leavemanager.api;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.itechkenya.leavemanager.domain.Contract;
@@ -20,7 +18,7 @@ public class LeaveManager implements Runnable {
 
     private MainForm mainForm;
 
-    public void setMainForm(MainForm mainForm) {
+    public LeaveManager(MainForm mainForm) {
         this.mainForm = mainForm;
     }
 
