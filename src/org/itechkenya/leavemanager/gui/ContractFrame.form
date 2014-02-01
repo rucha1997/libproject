@@ -134,6 +134,9 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="employeeComboBoxItemStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="startDateLabel">
           <Properties>
@@ -151,6 +154,7 @@
         </Component>
         <Component class="javax.swing.JCheckBox" name="activeCheckBox">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Active"/>
           </Properties>
         </Component>

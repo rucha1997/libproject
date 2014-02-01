@@ -230,6 +230,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                 JpaManager.getLtjc().edit(leaveType);
                 updateTable(leaveType, UpdateType.EDIT);
             }
+            clear();
         } catch (NonexistentEntityException ex) {
             UiManager.showErrorMessage(this, ex.getMessage());
             Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -241,14 +242,14 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         List<Object> selectedItems = getSelectedItems();
-        if (UiManager.showConfirmationMessage(this, "Are you sure you want to delete the " + selectedItems.size() + " selected record(s)?")) {
+        if (UiManager.showDeleteConfirmationMessage(this, selectedItems.size())) {
             for (Object item : selectedItems) {
                 LeaveType leaveType = (LeaveType) item;
                 try {
                     JpaManager.getLtjc().destroy(leaveType.getId());
                     updateTable(leaveType, UpdateType.DESTROY);
                 } catch (IllegalOrphanException ex) {
-                    UiManager.showErrorMessage(this, "Some records depend on this record. Please delete those first.");
+                    UiManager.showConstraintViolationMessage(this, leaveType.toString());
                     Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NonexistentEntityException ex) {
                     UiManager.showErrorMessage(this, ex.getMessage());
@@ -360,11 +361,6 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                 default:
                     return null;
             }
-        }
-
-        @Override
-        public Class getColumnClass(int column) {
-            return getValueAt(0, column).getClass();
         }
 
         @Override

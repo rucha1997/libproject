@@ -40,7 +40,8 @@ import org.itechkenya.leavemanager.api.UiManager;
     @NamedQuery(name = "Contract.findByStartDate", query = "SELECT c FROM Contract c WHERE c.startDate = :startDate"),
     @NamedQuery(name = "Contract.findByEndDate", query = "SELECT c FROM Contract c WHERE c.endDate = :endDate"),
     @NamedQuery(name = "Contract.findByActive", query = "SELECT c FROM Contract c WHERE c.active = :active"),
-    @NamedQuery(name = "Contract.findActive", query = "SELECT c FROM Contract c WHERE c.active = :active AND c.startDate <= :today AND c.endDate >= :today")})
+    @NamedQuery(name = "Contract.findActive", query = "SELECT c FROM Contract c WHERE c.active = :active AND c.startDate <= :today AND (c.endDate IS NULL OR c.endDate >= :today)"),
+    @NamedQuery(name = "Contract.findByEmployee", query = "SELECT c FROM Contract c WHERE c.employee = :employee")})
 public class Contract implements Serializable {
 
     private static final long serialVersionUID = 1L;

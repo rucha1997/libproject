@@ -73,6 +73,7 @@ public class EmployeeFrame extends LeaveManagerFrame {
 
         otherNamesLabel.setText("Other Names");
 
+        activeCheckBox.setSelected(true);
         activeCheckBox.setText("Active");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
@@ -327,11 +328,6 @@ public class EmployeeFrame extends LeaveManagerFrame {
                 default:
                     return null;
             }
-        }
-
-        @Override
-        public Class getColumnClass(int column) {
-            return getValueAt(0, column).getClass();
         }
 
         @Override

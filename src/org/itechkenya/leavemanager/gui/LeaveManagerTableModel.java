@@ -65,7 +65,25 @@ public abstract class LeaveManagerTableModel extends AbstractTableModel {
 
     public abstract String[] getColumns();
 
+    @Override
+    public Class getColumnClass(int column) {
+        for (int i = 0; i < getRows().size(); i++) {
+            Object value = getValueAt(i, column);
+            if (value != null) {
+                return value.getClass();
+            }
+        }
+        return Object.class;
+    }
+
     public Object getRow(int rowIndex) {
         return rows.get(rowIndex);
+    }
+
+    public void clear() {
+        int firstRow = 0;
+        int lastRow = getRows().isEmpty() ? 0 : getRows().size() - 1;
+        getRows().clear();
+        fireTableRowsDeleted(firstRow, lastRow);
     }
 }

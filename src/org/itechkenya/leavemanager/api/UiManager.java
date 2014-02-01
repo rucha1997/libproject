@@ -32,11 +32,22 @@ public class UiManager {
     }
 
     public static boolean showConfirmationMessage(Component source, String message) {
-        return JOptionPane.showConfirmDialog(source, message, "Confirm!", 
+        return JOptionPane.showConfirmDialog(source, message, "Confirm!",
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION;
     }
 
+    public static boolean showDeleteConfirmationMessage(Component source, int recordCount) {
+        return showConfirmationMessage(source, "Are you sure you want to delete the " + recordCount + " record(s) selected?");
+    }
+
+    public static void showConstraintViolationMessage(Component source, String record) {
+        showErrorMessage(source, "Some other records depend on the record: " + record + ". Please delete those first.");
+    }
+
     public static String formatDate(Date date) {
-        return new SimpleDateFormat("MMM dd, yyyy").format(date);
+        if (date != null) {
+            return new SimpleDateFormat("MMM dd, yyyy").format(date);
+        }
+        return "None";
     }
 }

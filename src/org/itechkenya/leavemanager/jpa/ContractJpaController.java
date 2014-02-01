@@ -231,6 +231,14 @@ public class ContractJpaController implements Serializable {
         }
     }
 
+    public List<Contract> findContracts(Employee employee) {
+        EntityManager em = getEntityManager();
+        TypedQuery<Contract> query
+                = em.createNamedQuery("Contract.findByEmployee", Contract.class);
+        query.setParameter("employee", employee);
+        return query.getResultList();
+    }
+
     public List<Contract> findActiveContracts() {
         EntityManager em = getEntityManager();
         TypedQuery<Contract> query

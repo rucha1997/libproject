@@ -611,17 +611,6 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         }
 
         @Override
-        public Class getColumnClass(int column) {
-            for (int i = 0; i < getRows().size(); i++) {
-                Object value = getValueAt(i, column);
-                if (value != null) {
-                    return value.getClass();
-                }
-            }
-            return Object.class;
-        }
-
-        @Override
         public String[] getColumns() {
             String[] columns = {"Employee", "Contract", "Contract Year", "Leave Type", "Start Date", "Days Earned", "Days Spent", "End Date", "Comment"};
             return columns;

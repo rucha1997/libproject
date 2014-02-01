@@ -64,10 +64,17 @@ public class ContractFrame extends LeaveManagerFrame {
 
         employeeLabel.setText("Employee");
 
+        employeeComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                employeeComboBoxItemStateChanged(evt);
+            }
+        });
+
         startDateLabel.setText("Start Date");
 
         endDateLabel.setText("End Date");
 
+        activeCheckBox.setSelected(true);
         activeCheckBox.setText("Active");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
@@ -192,6 +199,14 @@ public class ContractFrame extends LeaveManagerFrame {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        if (employeeComboBox.getSelectedItem() == null) {
+            UiManager.showWarningMessage(this, "Select employee.", employeeComboBox);
+            return;
+        }
+        if (startDateChooser.getDate() == null) {
+            UiManager.showWarningMessage(this, "Enter contract start date.", startDateChooser);
+            return;
+        }
         Contract contract = (Contract) getSelectedItem();
         try {
             if (contract == null) {
@@ -205,24 +220,30 @@ public class ContractFrame extends LeaveManagerFrame {
                 updateTable(contract, UpdateType.EDIT);
             }
         } catch (NonexistentEntityException ex) {
+            UiManager.showErrorMessage(this, ex.getMessage());
             Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
+            UiManager.showErrorMessage(this, ex.getMessage());
             Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+        clear();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        for (Object item : getSelectedItems()) {
-            Contract contract = (Contract) item;
-            try {
-                JpaManager.getCjc().destroy(contract.getId());
-                updateTable(contract, UpdateType.DESTROY);
-            } catch (IllegalOrphanException ex) {
-                UiManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
-                Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NonexistentEntityException ex) {
-                UiManager.showErrorMessage(this, ex.getMessage());
-                Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
+        List<Object> selectedItems = getSelectedItems();
+        if (UiManager.showDeleteConfirmationMessage(this, selectedItems.size())) {
+            for (Object item : selectedItems) {
+                Contract contract = (Contract) item;
+                try {
+                    JpaManager.getCjc().destroy(contract.getId());
+                    updateTable(contract, UpdateType.DESTROY);
+                } catch (IllegalOrphanException ex) {
+                    UiManager.showConstraintViolationMessage(this, contract.toString());
+                    Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    UiManager.showErrorMessage(this, ex.getMessage());
+                    Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
@@ -230,6 +251,24 @@ public class ContractFrame extends LeaveManagerFrame {
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void employeeComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_employeeComboBoxItemStateChanged
+        Employee employee = (Employee) employeeComboBox.getSelectedItem();
+        if (employee != null) {
+            List<Contract> contractList = JpaManager.getCjc().findContracts(employee);
+            ContractTableModel model;
+            if (table.getModel() instanceof ContractTableModel) {
+                model = (ContractTableModel) table.getModel();
+                model.clear();
+            } else {
+                model = new ContractTableModel();
+            }
+            for (Contract contract : contractList) {
+                model.createRow(contract);
+            }
+            table.setModel(model);
+        }
+    }//GEN-LAST:event_employeeComboBoxItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -257,11 +296,7 @@ public class ContractFrame extends LeaveManagerFrame {
         }
         employeeComboBox.setSelectedItem(null);
 
-        List<Contract> organizationsList = JpaManager.getCjc().findContractEntities();
         ContractTableModel model = new ContractTableModel();
-        for (Contract contract : organizationsList) {
-            model.createRow(contract);
-        }
         table.setModel(model);
     }
 
@@ -282,10 +317,15 @@ public class ContractFrame extends LeaveManagerFrame {
 
     @Override
     public void clearFields() {
-        employeeComboBox.setSelectedItem(null);
+        if (employeeComboBox.getSelectedItem() == null) {
+            if (table.getModel() != null && table.getModel() instanceof ContractTableModel) {
+                ContractTableModel model = (ContractTableModel) table.getModel();
+                model.clear();
+            }
+        }
         startDateChooser.setDate(null);
         endDateChooser.setDate(null);
-        activeCheckBox.setSelected(false);
+        activeCheckBox.setSelected(true);
     }
 
     @Override
@@ -330,11 +370,6 @@ public class ContractFrame extends LeaveManagerFrame {
                 default:
                     return null;
             }
-        }
-
-        @Override
-        public Class getColumnClass(int column) {
-            return getValueAt(0, column).getClass();
         }
 
         @Override
