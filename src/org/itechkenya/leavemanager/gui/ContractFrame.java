@@ -207,6 +207,12 @@ public class ContractFrame extends LeaveManagerFrame {
             UiManager.showWarningMessage(this, "Enter contract start date.", startDateChooser);
             return;
         }
+        if (endDateChooser.getDate() != null) {
+            if (startDateChooser.getDate().compareTo(endDateChooser.getDate()) == 1) {
+                UiManager.showWarningMessage(this, "Contract end date must be greated than contract start date.", endDateChooser);
+                return;
+            }
+        }
         Contract contract = (Contract) getSelectedItem();
         try {
             if (contract == null) {
