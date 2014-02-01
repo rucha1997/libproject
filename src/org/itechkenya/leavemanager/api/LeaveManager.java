@@ -56,9 +56,13 @@ public class LeaveManager implements Runnable {
         }
     }
 
-    public static int getContractYear(Contract contract) {
+    public static int getContractYear(Contract contract, Date asOf) {
         return Years.yearsBetween(new DateTime(contract.getStartDate()),
-                new DateTime(new Date())).getYears() + 1;
+                new DateTime(asOf)).getYears() + 1;
+    }
+
+    public static int getContractYear(Contract contract) {
+        return getContractYear(contract, new Date());
     }
 
     private String getPreviousCompletedMonth(Contract contract) {
