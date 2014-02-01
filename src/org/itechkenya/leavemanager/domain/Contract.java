@@ -150,7 +150,8 @@ public class Contract implements Serializable {
 
     @Override
     public String toString() {
-        return UiManager.formatDate(startDate) + " - " + UiManager.formatDate(endDate) + " (" + employee.getCode() + ")";
+        String active = this.getActive() ? "Active" : "Inactive";
+        return UiManager.formatDate(startDate) + " - " + UiManager.formatDate(endDate) + " (" + active + ")";
     }
 
 }

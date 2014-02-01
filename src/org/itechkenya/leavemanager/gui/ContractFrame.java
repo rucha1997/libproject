@@ -360,12 +360,10 @@ public class ContractFrame extends LeaveManagerFrame {
             Contract contract = (Contract) getRow(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    return contract.getEmployee();
-                case 1:
                     return contract.getStartDate();
-                case 2:
+                case 1:
                     return contract.getEndDate();
-                case 3:
+                case 2:
                     return contract.getActive();
                 default:
                     return null;
@@ -374,7 +372,7 @@ public class ContractFrame extends LeaveManagerFrame {
 
         @Override
         public String[] getColumns() {
-            String[] columns = {"Employee", "Start Date", "End Date", "Active"};
+            String[] columns = {"Start Date", "End Date", "Active"};
             return columns;
         }
     }

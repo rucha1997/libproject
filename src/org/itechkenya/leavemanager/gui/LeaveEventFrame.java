@@ -586,22 +586,20 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             LeaveEvent leaveEvent = (LeaveEvent) getRow(rowIndex);
             switch (columnIndex) {
                 case 0:
-                    return leaveEvent.getContract().getEmployee();
-                case 1:
-                    return leaveEvent.getContract();
-                case 2:
                     return leaveEvent.getContractYear();
-                case 3:
+                case 1:
                     return leaveEvent.getLeaveType();
-                case 4:
+                case 2:
                     return leaveEvent.getStartDate();
-                case 5:
+                case 3:
                     return leaveEvent.getDaysEarned();
-                case 6:
+                case 4:
                     return leaveEvent.getDaysSpent();
-                case 7:
+                case 5:
+                    return leaveEvent.getDaysSpent();
+                case 6:
                     return leaveEvent.getEndDate();
-                case 8:
+                case 7:
                     return leaveEvent.getComment();
                 default:
                     return null;
@@ -610,7 +608,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
         @Override
         public String[] getColumns() {
-            String[] columns = {"Employee", "Contract", "Contract Year", "Leave Type", "Start Date", "Days Earned", "Days Spent", "End Date", "Comment"};
+            String[] columns = {"Contract Year", "Leave Type", "Start Date", "Days Earned", "Days Spent", "Balance", "End Date", "Comment"};
             return columns;
         }
     }
