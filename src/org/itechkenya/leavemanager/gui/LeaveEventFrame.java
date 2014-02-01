@@ -1,5 +1,6 @@
 package org.itechkenya.leavemanager.gui;
 
+import java.awt.Color;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -148,6 +149,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         balanceLabel.setText("Balance");
 
         balanceTextField.setEditable(false);
+        balanceTextField.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
 
         javax.swing.GroupLayout innerPanelLayout = new javax.swing.GroupLayout(innerPanel);
         innerPanel.setLayout(innerPanelLayout);
@@ -346,7 +348,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     .addComponent(closeButton)
                     .addComponent(deleteButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -360,6 +362,59 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        if (employeeComboBox.getSelectedItem() == null) {
+            UiManager.showWarningMessage(this, "Select employee.", employeeComboBox);
+            return;
+        }
+        if (contractComboBox.getSelectedItem() == null) {
+            UiManager.showWarningMessage(this, "Select contract.", contractComboBox);
+            return;
+        }
+        if (leaveTypeComboBox.getSelectedItem() == null) {
+            UiManager.showWarningMessage(this, "Select leave type.", leaveTypeComboBox);
+            return;
+        }
+        if (startDateChooser.getDate() == null) {
+            UiManager.showWarningMessage(this, "Enter leave event start date.", startDateChooser);
+            return;
+        }
+        if (daysTextField.getText().equals("")) {
+            UiManager.showWarningMessage(this, "Enter days to be earned or spent.", daysTextField);
+            return;
+        }
+        try {
+            BigDecimal test = new BigDecimal(daysTextField.getText());
+            if (test.compareTo(new BigDecimal("999.99")) == 1) {
+                UiManager.showWarningMessage(this, "Days to be earned or spent cannot exceed 999.99.", daysTextField);
+                return;
+            }
+        } catch (NumberFormatException ex) {
+            UiManager.showWarningMessage(this, "Days to be earned per month must be a decimal number with the format ###.##.", daysTextField);
+            Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        if (startDateChooser.getDate().compareTo(((Contract) contractComboBox.getSelectedItem()).getStartDate()) == -1) {
+            UiManager.showWarningMessage(this, "Leave event start date must be within contract period.", startDateChooser);
+            return;
+        }
+        if (spendRadioButton.isSelected()) {
+            if (endDateChooser.getDate() != null) {
+                if (startDateChooser.getDate().compareTo(endDateChooser.getDate()) == 1) {
+                    UiManager.showWarningMessage(this, "Leave event end date must be greated than start date.", endDateChooser);
+                    return;
+                }
+                Contract contract = (Contract) contractComboBox.getSelectedItem();
+                if (contract.getEndDate() != null) {
+                    if (endDateChooser.getDate().compareTo(contract.getEndDate()) == 1) {
+                        UiManager.showWarningMessage(this, "Leave event end date must be within contract period.", endDateChooser);
+                        return;
+                    }
+                }
+            } else {
+                UiManager.showWarningMessage(this, "End date must be specified for 'spend' leave events.", endDateChooser);
+                return;
+            }
+        }
         LeaveEvent leaveEvent = (LeaveEvent) getSelectedItem();
         try {
             if (leaveEvent == null) {
@@ -372,7 +427,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 JpaManager.getLejc().edit(leaveEvent);
                 updateTable(leaveEvent, UpdateType.EDIT);
             }
-            updateLeaveEvents(null);
+            updateLeaveEvents(null, leaveEvent.getContract());
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -385,15 +440,18 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     }//GEN-LAST:event_closeButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        for (Object item : getSelectedItems()) {
-            LeaveEvent leaveEvent = (LeaveEvent) item;
-            try {
-                JpaManager.getLejc().destroy(leaveEvent.getId());
-                updateTable(leaveEvent, UpdateType.DESTROY);
-                updateLeaveEvents(null);
-            } catch (NonexistentEntityException ex) {
-                UiManager.showErrorMessage(this, ex.getMessage());
-                Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
+        List<Object> selectedItems = getSelectedItems();
+        if (UiManager.showDeleteConfirmationMessage(this, selectedItems.size())) {
+            for (Object item : selectedItems) {
+                LeaveEvent leaveEvent = (LeaveEvent) item;
+                try {
+                    JpaManager.getLejc().destroy(leaveEvent.getId());
+                    updateTable(leaveEvent, UpdateType.DESTROY);
+                    updateLeaveEvents(null, leaveEvent.getContract());
+                } catch (NonexistentEntityException ex) {
+                    UiManager.showErrorMessage(this, ex.getMessage());
+                    Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
@@ -411,6 +469,8 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     contractComboBox.setSelectedItem(null);
                 }
             }
+        } else {
+            contractComboBox.setSelectedItem(null);
         }
     }//GEN-LAST:event_employeeComboBoxItemStateChanged
 
@@ -422,7 +482,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             for (LeaveEvent leaveEvent : leaveEventList) {
                 model.createRow(leaveEvent);
             }
-            updateLeaveEvents(leaveEventList);
+            updateLeaveEvents(leaveEventList, contract);
         }
         table.setModel(model);
     }//GEN-LAST:event_contractComboBoxItemStateChanged
@@ -524,7 +584,18 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
     @Override
     public void clearFields() {
-
+        if (contractComboBox.getSelectedItem() == null) {
+            if (table.getModel() != null && table.getModel() instanceof LeaveEventTableModel) {
+                LeaveEventTableModel model = (LeaveEventTableModel) table.getModel();
+                model.clear();
+            }
+        }
+        spendRadioButton.setSelected(true);
+        leaveTypeComboBox.setSelectedItem(null);
+        startDateChooser.setDate(null);
+        daysTextField.setText("");
+        endDateChooser.setDate(null);
+        commentsTextField.setText("");
     }
 
     @Override
@@ -575,15 +646,46 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         }
 
         @Override
+        public void createRow(Object row) {
+            LeaveEvent newLeaveEvent = (LeaveEvent) row;
+            if (!getRows().contains(row)) {
+                if (!getRows().isEmpty()) {
+                    boolean inserted = false;
+                    for (Object item : getRows()) {
+                        LeaveEvent leaveEvent = (LeaveEvent) item;
+                        if (newLeaveEvent.compareTo(leaveEvent) == -1) {
+                            int rowIndex = getRows().indexOf(item);
+                            getRows().add(rowIndex, row);
+                            inserted = true;
+                            fireTableRowsInserted(rowIndex, rowIndex);
+                            break;
+                        }
+                    }
+                    if (!inserted) {
+                        super.createRow(row);
+                    }
+                } else {
+                    super.createRow(row);
+                }
+            }
+        }
+
+        @Override
+        public void editRow(Object row) {
+            super.destroyRow(row);
+            this.createRow(row);
+        }
+        
+        @Override
         public String[] getColumns() {
             String[] columns = {"Contract Year", "Leave Type", "Start Date", "Days Earned", "Days Spent", "Balance", "End Date", "Comment"};
             return columns;
         }
     }
 
-    private void updateLeaveEvents(List<LeaveEvent> leaveEvents) {
+    private void updateLeaveEvents(List<LeaveEvent> leaveEvents, Contract contract) {
         if (leaveEvents != null) {
-            updateSummaryAndBalances(leaveEvents);
+            updateSummary(leaveEvents, contract);
             setLeaveEventBalances(leaveEvents);
         } else {
             if (table.getModel() != null && table.getModel() instanceof LeaveEventTableModel) {
@@ -592,17 +694,16 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 for (Object item : model.getRows()) {
                     leaveEvents.add((LeaveEvent) item);
                 }
-                updateSummaryAndBalances(leaveEvents);
+                updateSummary(leaveEvents, contract);
+                setLeaveEventBalances(leaveEvents);
             }
         }
     }
 
-    private void updateSummaryAndBalances(List<LeaveEvent> leaveEventList) {
-        int contractYear = -1;
+    private void updateSummary(List<LeaveEvent> leaveEventList, Contract contract) {
         BigDecimal daysEarned = BigDecimal.ZERO;
         BigDecimal daysSpent = BigDecimal.ZERO;
         if (leaveEventList != null && !leaveEventList.isEmpty()) {
-            contractYear = LeaveManager.getContractYear(leaveEventList.get(0).getContract());
             for (LeaveEvent leaveEvent : leaveEventList) {
                 if (leaveEvent.getDaysEarned() != null) {
                     daysEarned = daysEarned.add(leaveEvent.getDaysEarned());
@@ -612,11 +713,18 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 }
             }
         }
+        int contractYear = LeaveManager.getContractYear(contract);
         BigDecimal balance = daysEarned.add(daysSpent.negate());
         contractYearTextField.setText(String.valueOf(contractYear));
         daysEarnedTextField.setText(daysEarned.toString());
         daysSpentTextField.setText(daysSpent.toString());
         balanceTextField.setText(balance.toString());
+
+        if (balance.compareTo(BigDecimal.ZERO) == -1) {
+            balanceTextField.setForeground(Color.RED);
+        } else {
+            balanceTextField.setForeground(new Color(0, 100, 0));
+        }
     }
 
     private void setLeaveEventBalances(List<LeaveEvent> leaveEvents) {

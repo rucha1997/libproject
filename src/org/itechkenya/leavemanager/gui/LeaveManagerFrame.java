@@ -110,6 +110,7 @@ public abstract class LeaveManagerFrame extends JInternalFrame {
             } else if (updateType == UpdateType.DESTROY) {
                 model.destroyRow(item);
             }
+            clear();
         }
     }
 

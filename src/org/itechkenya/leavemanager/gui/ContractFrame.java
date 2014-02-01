@@ -377,6 +377,37 @@ public class ContractFrame extends LeaveManagerFrame {
         }
 
         @Override
+        public void createRow(Object row) {
+            Contract newContract = (Contract) row;
+            if (!getRows().contains(row)) {
+                if (!getRows().isEmpty()) {
+                    boolean inserted = false;
+                    for (Object item : getRows()) {
+                        Contract contract = (Contract) item;
+                        if (newContract.compareTo(contract) == 1) {
+                            int rowIndex = getRows().indexOf(item);
+                            getRows().add(rowIndex, row);
+                            inserted = true;
+                            fireTableRowsInserted(rowIndex, rowIndex);
+                            break;
+                        }
+                    }
+                    if (!inserted) {
+                        super.createRow(row);
+                    }
+                } else {
+                    super.createRow(row);
+                }
+            }
+        }
+
+        @Override
+        public void editRow(Object row) {
+            super.destroyRow(row);
+            this.createRow(row);
+        }
+
+        @Override
         public String[] getColumns() {
             String[] columns = {"Start Date", "End Date", "Active"};
             return columns;

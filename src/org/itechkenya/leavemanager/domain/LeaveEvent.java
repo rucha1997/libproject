@@ -32,18 +32,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "leave_event")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LeaveEvent.findAll", query = "SELECT l FROM LeaveEvent l"),
-    @NamedQuery(name = "LeaveEvent.findById", query = "SELECT l FROM LeaveEvent l WHERE l.id = :id"),
-    @NamedQuery(name = "LeaveEvent.findByContractYear", query = "SELECT l FROM LeaveEvent l WHERE l.contractYear = :contractYear"),
-    @NamedQuery(name = "LeaveEvent.findByDaysEarned", query = "SELECT l FROM LeaveEvent l WHERE l.daysEarned = :daysEarned"),
-    @NamedQuery(name = "LeaveEvent.findByDaysSpent", query = "SELECT l FROM LeaveEvent l WHERE l.daysSpent = :daysSpent"),
-    @NamedQuery(name = "LeaveEvent.findByStartDate", query = "SELECT l FROM LeaveEvent l WHERE l.startDate = :startDate"),
-    @NamedQuery(name = "LeaveEvent.findByEndDate", query = "SELECT l FROM LeaveEvent l WHERE l.endDate = :endDate"),
-    @NamedQuery(name = "LeaveEvent.findByComment", query = "SELECT l FROM LeaveEvent l WHERE l.comment = :comment"),
-    @NamedQuery(name = "LeaveEvent.findByMonth", query = "SELECT l FROM LeaveEvent l WHERE l.month = :month"),
-    @NamedQuery(name = "LeaveEvent.findByContract", query = "SELECT l FROM LeaveEvent l WHERE l.contract = :contract"),
-    @NamedQuery(name = "LeaveEvent.findByContractLeaveTypeAndMonth", query = "SELECT l FROM LeaveEvent l WHERE l.contract = :contract AND l.leaveType = :leaveType AND l.month = :month")})
-public class LeaveEvent implements Serializable {
+    @NamedQuery(name = "LeaveEvent.findAll", query = "SELECT l FROM LeaveEvent l ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findById", query = "SELECT l FROM LeaveEvent l WHERE l.id = :id ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findByContractYear", query = "SELECT l FROM LeaveEvent l WHERE l.contractYear = :contractYear ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findByDaysEarned", query = "SELECT l FROM LeaveEvent l WHERE l.daysEarned = :daysEarned ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findByDaysSpent", query = "SELECT l FROM LeaveEvent l WHERE l.daysSpent = :daysSpent ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findByStartDate", query = "SELECT l FROM LeaveEvent l WHERE l.startDate = :startDate ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findByEndDate", query = "SELECT l FROM LeaveEvent l WHERE l.endDate = :endDate ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findByComment", query = "SELECT l FROM LeaveEvent l WHERE l.comment = :comment ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findByMonth", query = "SELECT l FROM LeaveEvent l WHERE l.month = :month ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findByContract", query = "SELECT l FROM LeaveEvent l WHERE l.contract = :contract ORDER BY l.startDate ASC"),
+    @NamedQuery(name = "LeaveEvent.findByContractLeaveTypeAndMonth", query = "SELECT l FROM LeaveEvent l WHERE l.contract = :contract AND l.leaveType = :leaveType AND l.month = :month ORDER BY l.startDate ASC")})
+public class LeaveEvent implements Serializable, Comparable<LeaveEvent> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -206,4 +206,8 @@ public class LeaveEvent implements Serializable {
         this.balance = balance;
     }
 
+    @Override
+    public int compareTo(LeaveEvent leaveEvent) {
+        return this.getStartDate().compareTo(leaveEvent.getStartDate());
+    }
 }

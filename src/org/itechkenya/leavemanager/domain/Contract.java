@@ -35,14 +35,14 @@ import org.itechkenya.leavemanager.api.UiManager;
 @Table(name = "contract")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Contract.findAll", query = "SELECT c FROM Contract c"),
-    @NamedQuery(name = "Contract.findById", query = "SELECT c FROM Contract c WHERE c.id = :id"),
-    @NamedQuery(name = "Contract.findByStartDate", query = "SELECT c FROM Contract c WHERE c.startDate = :startDate"),
-    @NamedQuery(name = "Contract.findByEndDate", query = "SELECT c FROM Contract c WHERE c.endDate = :endDate"),
-    @NamedQuery(name = "Contract.findByActive", query = "SELECT c FROM Contract c WHERE c.active = :active"),
-    @NamedQuery(name = "Contract.findActive", query = "SELECT c FROM Contract c WHERE c.active = :active AND c.startDate <= :today AND (c.endDate IS NULL OR c.endDate >= :today)"),
-    @NamedQuery(name = "Contract.findByEmployee", query = "SELECT c FROM Contract c WHERE c.employee = :employee")})
-public class Contract implements Serializable {
+    @NamedQuery(name = "Contract.findAll", query = "SELECT c FROM Contract c ORDER BY c.startDate DESC"),
+    @NamedQuery(name = "Contract.findById", query = "SELECT c FROM Contract c WHERE c.id = :id ORDER BY c.startDate DESC"),
+    @NamedQuery(name = "Contract.findByStartDate", query = "SELECT c FROM Contract c WHERE c.startDate = :startDate ORDER BY c.startDate DESC"),
+    @NamedQuery(name = "Contract.findByEndDate", query = "SELECT c FROM Contract c WHERE c.endDate = :endDate ORDER BY c.startDate DESC"),
+    @NamedQuery(name = "Contract.findByActive", query = "SELECT c FROM Contract c WHERE c.active = :active ORDER BY c.startDate DESC"),
+    @NamedQuery(name = "Contract.findActive", query = "SELECT c FROM Contract c WHERE c.active = :active AND c.startDate <= :today AND (c.endDate IS NULL OR c.endDate >= :today) ORDER BY c.startDate DESC"),
+    @NamedQuery(name = "Contract.findByEmployee", query = "SELECT c FROM Contract c WHERE c.employee = :employee ORDER BY c.startDate DESC")})
+public class Contract implements Serializable, Comparable<Contract> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -152,6 +152,11 @@ public class Contract implements Serializable {
     public String toString() {
         String active = this.getActive() ? "Active" : "Inactive";
         return UiManager.formatDate(startDate) + " - " + UiManager.formatDate(endDate) + " (" + active + ")";
+    }
+
+    @Override
+    public int compareTo(Contract contract) {
+        return this.getStartDate().compareTo(contract.getStartDate());
     }
 
 }
