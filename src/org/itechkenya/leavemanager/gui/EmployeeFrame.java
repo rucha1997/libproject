@@ -196,6 +196,18 @@ public class EmployeeFrame extends LeaveManagerFrame {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        if (codeTextField.getText().equals("")) {
+            UiManager.showWarningMessage(this, "Enter code.", codeTextField);
+            return;
+        }
+        if (lastNameTextField.getText().equals("")) {
+            UiManager.showWarningMessage(this, "Enter last name.", lastNameTextField);
+            return;
+        }
+        if (otherNamesTextField.getText().equals("")) {
+            UiManager.showWarningMessage(this, "Enter other names.", otherNamesTextField);
+            return;
+        }
         Employee employee = (Employee) getSelectedItem();
         try {
             if (employee == null) {
@@ -209,24 +221,29 @@ public class EmployeeFrame extends LeaveManagerFrame {
                 updateTable(employee, UpdateType.EDIT);
             }
         } catch (NonexistentEntityException ex) {
+            UiManager.showErrorMessage(this, ex.getMessage());
             Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
+            UiManager.showErrorMessage(this, ex.getMessage());
             Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        for (Object item : getSelectedItems()) {
-            Employee employee = (Employee) item;
-            try {
-                JpaManager.getEjc().destroy(employee.getId());
-                updateTable(employee, UpdateType.DESTROY);
-            } catch (IllegalOrphanException ex) {
-                UiManager.showErrorMessage(this, "Dependent record(s) found. Delete those first.");
-                Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (NonexistentEntityException ex) {
-                UiManager.showErrorMessage(this, ex.getMessage());
-                Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+        List<Object> selectedItems = getSelectedItems();
+        if (UiManager.showDeleteConfirmationMessage(this, selectedItems.size())) {
+            for (Object item : selectedItems) {
+                Employee employee = (Employee) item;
+                try {
+                    JpaManager.getEjc().destroy(employee.getId());
+                    updateTable(employee, UpdateType.DESTROY);
+                } catch (IllegalOrphanException ex) {
+                     UiManager.showConstraintViolationMessage(this, employee.toString());
+                    Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (NonexistentEntityException ex) {
+                    UiManager.showErrorMessage(this, ex.getMessage());
+                    Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
@@ -283,7 +300,7 @@ public class EmployeeFrame extends LeaveManagerFrame {
         codeTextField.setText("");
         lastNameTextField.setText("");
         otherNamesTextField.setText("");
-        activeCheckBox.setSelected(false);
+        activeCheckBox.setSelected(true);
     }
 
     @Override

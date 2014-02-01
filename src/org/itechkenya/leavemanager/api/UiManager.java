@@ -41,7 +41,7 @@ public class UiManager {
     }
 
     public static void showConstraintViolationMessage(Component source, String record) {
-        showErrorMessage(source, "Some other records depend on the record: " + record + ". Please delete those first.");
+        showErrorMessage(source, "Some records depend on the record: '" + record + "'. Please delete those first.");
     }
 
     public static String formatDate(Date date) {
