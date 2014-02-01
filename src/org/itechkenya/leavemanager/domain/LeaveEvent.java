@@ -21,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,6 +41,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LeaveEvent.findByEndDate", query = "SELECT l FROM LeaveEvent l WHERE l.endDate = :endDate"),
     @NamedQuery(name = "LeaveEvent.findByComment", query = "SELECT l FROM LeaveEvent l WHERE l.comment = :comment"),
     @NamedQuery(name = "LeaveEvent.findByMonth", query = "SELECT l FROM LeaveEvent l WHERE l.month = :month"),
+    @NamedQuery(name = "LeaveEvent.findByContract", query = "SELECT l FROM LeaveEvent l WHERE l.contract = :contract"),
     @NamedQuery(name = "LeaveEvent.findByContractLeaveTypeAndMonth", query = "SELECT l FROM LeaveEvent l WHERE l.contract = :contract AND l.leaveType = :leaveType AND l.month = :month")})
 public class LeaveEvent implements Serializable {
 
@@ -191,6 +193,17 @@ public class LeaveEvent implements Serializable {
     @Override
     public String toString() {
         return "org.itechkenya.leavemanager.domain.LeaveEvent[ id=" + id + " ]";
+    }
+
+    @Transient
+    private BigDecimal balance = BigDecimal.ZERO;
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
 }

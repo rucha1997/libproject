@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.itechkenya.leavemanager.gui;
 
 import java.math.BigDecimal;
@@ -377,6 +372,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 JpaManager.getLejc().edit(leaveEvent);
                 updateTable(leaveEvent, UpdateType.EDIT);
             }
+            updateLeaveEvents(null);
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -394,6 +390,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             try {
                 JpaManager.getLejc().destroy(leaveEvent.getId());
                 updateTable(leaveEvent, UpdateType.DESTROY);
+                updateLeaveEvents(null);
             } catch (NonexistentEntityException ex) {
                 UiManager.showErrorMessage(this, ex.getMessage());
                 Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -404,16 +401,14 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     private void employeeComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_employeeComboBoxItemStateChanged
         Employee employee = (Employee) employeeComboBox.getSelectedItem();
         if (employee != null) {
-            List<Contract> contractList = JpaManager.getCjc().findContractEntities();
+            List<Contract> contractList = JpaManager.getCjc().findContracts(employee);
             contractComboBox.removeAllItems();
             for (Contract contract : contractList) {
-                if (employee.equals(contract.getEmployee())) {
-                    contractComboBox.addItem(contract);
-                    if (contract.getActive()) {
-                        contractComboBox.setSelectedItem(contract);
-                    } else {
-                        contractComboBox.setSelectedItem(null);
-                    }
+                contractComboBox.addItem(contract);
+                if (contract.getActive()) {
+                    contractComboBox.setSelectedItem(contract);
+                } else {
+                    contractComboBox.setSelectedItem(null);
                 }
             }
         }
@@ -423,17 +418,11 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         Contract contract = (Contract) contractComboBox.getSelectedItem();
         LeaveEventTableModel model = new LeaveEventTableModel();
         if (contract != null) {
-            List<LeaveEvent> leaveEventList = JpaManager.getLejc().findLeaveEventEntities();
-            List<LeaveEvent> contractLeaveEventList = new ArrayList<>();
-            BigDecimal daysEarned = BigDecimal.ZERO;
-            BigDecimal daysSpent = BigDecimal.ZERO;
+            List<LeaveEvent> leaveEventList = JpaManager.getLejc().findLeaveEvents(contract);
             for (LeaveEvent leaveEvent : leaveEventList) {
-                if (contract.equals(leaveEvent.getContract())) {
-                    model.createRow(leaveEvent);
-                    contractLeaveEventList.add(leaveEvent);
-                }
+                model.createRow(leaveEvent);
             }
-            updateSummary(contractLeaveEventList, contract);
+            updateLeaveEvents(leaveEventList);
         }
         table.setModel(model);
     }//GEN-LAST:event_contractComboBoxItemStateChanged
@@ -476,27 +465,6 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     private javax.swing.JTable table;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-
-    private void updateSummary(List<LeaveEvent> leaveEventList, Contract contract) {
-
-        int contractYear = LeaveManager.getContractYear(contract);
-
-        BigDecimal daysEarned = BigDecimal.ZERO;
-        BigDecimal daysSpent = BigDecimal.ZERO;
-        for (LeaveEvent leaveEvent : leaveEventList) {
-            if (leaveEvent.getDaysEarned() != null) {
-                daysEarned = daysEarned.add(leaveEvent.getDaysEarned());
-            }
-            if (leaveEvent.getDaysSpent() != null) {
-                daysSpent = daysSpent.add(leaveEvent.getDaysSpent());
-            }
-        }
-        BigDecimal balance = daysEarned.add(daysSpent.negate());
-        contractYearTextField.setText(String.valueOf(contractYear));
-        daysEarnedTextField.setText(daysEarned.toString());
-        daysSpentTextField.setText(daysSpent.toString());
-        balanceTextField.setText(balance.toString());
-    }
 
     @Override
     public final void loadData() {
@@ -596,7 +564,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 case 4:
                     return leaveEvent.getDaysSpent();
                 case 5:
-                    return leaveEvent.getDaysSpent();
+                    return leaveEvent.getBalance();
                 case 6:
                     return leaveEvent.getEndDate();
                 case 7:
@@ -610,6 +578,57 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         public String[] getColumns() {
             String[] columns = {"Contract Year", "Leave Type", "Start Date", "Days Earned", "Days Spent", "Balance", "End Date", "Comment"};
             return columns;
+        }
+    }
+
+    private void updateLeaveEvents(List<LeaveEvent> leaveEvents) {
+        if (leaveEvents != null) {
+            updateSummaryAndBalances(leaveEvents);
+            setLeaveEventBalances(leaveEvents);
+        } else {
+            if (table.getModel() != null && table.getModel() instanceof LeaveEventTableModel) {
+                LeaveEventTableModel model = (LeaveEventTableModel) table.getModel();
+                leaveEvents = new ArrayList<>();
+                for (Object item : model.getRows()) {
+                    leaveEvents.add((LeaveEvent) item);
+                }
+                updateSummaryAndBalances(leaveEvents);
+            }
+        }
+    }
+
+    private void updateSummaryAndBalances(List<LeaveEvent> leaveEventList) {
+        int contractYear = -1;
+        BigDecimal daysEarned = BigDecimal.ZERO;
+        BigDecimal daysSpent = BigDecimal.ZERO;
+        if (leaveEventList != null && !leaveEventList.isEmpty()) {
+            contractYear = LeaveManager.getContractYear(leaveEventList.get(0).getContract());
+            for (LeaveEvent leaveEvent : leaveEventList) {
+                if (leaveEvent.getDaysEarned() != null) {
+                    daysEarned = daysEarned.add(leaveEvent.getDaysEarned());
+                }
+                if (leaveEvent.getDaysSpent() != null) {
+                    daysSpent = daysSpent.add(leaveEvent.getDaysSpent());
+                }
+            }
+        }
+        BigDecimal balance = daysEarned.add(daysSpent.negate());
+        contractYearTextField.setText(String.valueOf(contractYear));
+        daysEarnedTextField.setText(daysEarned.toString());
+        daysSpentTextField.setText(daysSpent.toString());
+        balanceTextField.setText(balance.toString());
+    }
+
+    private void setLeaveEventBalances(List<LeaveEvent> leaveEvents) {
+        BigDecimal balance = BigDecimal.ZERO;
+        for (LeaveEvent leaveEvent : leaveEvents) {
+            if (leaveEvent.getDaysEarned() != null) {
+                balance = balance.add(leaveEvent.getDaysEarned());
+            }
+            if (leaveEvent.getDaysSpent() != null) {
+                balance = balance.add(leaveEvent.getDaysSpent().negate());
+            }
+            leaveEvent.setBalance(balance);
         }
     }
 }

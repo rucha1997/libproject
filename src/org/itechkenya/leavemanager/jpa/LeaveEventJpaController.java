@@ -211,4 +211,12 @@ public class LeaveEventJpaController implements Serializable {
 
         return leaveEvent;
     }
+
+    public List<LeaveEvent> findLeaveEvents(Contract contract) {
+        EntityManager em = getEntityManager();
+        TypedQuery<LeaveEvent> query
+                = em.createNamedQuery("LeaveEvent.findByContract", LeaveEvent.class);
+        query.setParameter("contract", contract);
+        return query.getResultList();
+    }
 }

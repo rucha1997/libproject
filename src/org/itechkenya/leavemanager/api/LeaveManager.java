@@ -1,5 +1,6 @@
 package org.itechkenya.leavemanager.api;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
