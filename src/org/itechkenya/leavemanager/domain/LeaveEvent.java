@@ -206,6 +206,17 @@ public class LeaveEvent implements Serializable, Comparable<LeaveEvent> {
         this.balance = balance;
     }
 
+    @Transient
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public int compareTo(LeaveEvent leaveEvent) {
         return this.getStartDate().compareTo(leaveEvent.getStartDate());

@@ -3,6 +3,7 @@ package org.itechkenya.leavemanager.gui;
 import java.awt.Color;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -551,7 +552,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             leaveEvent.setContract((Contract) contractComboBox.getSelectedItem());
             leaveEvent.setLeaveType((LeaveType) leaveTypeComboBox.getSelectedItem());
             leaveEvent.setStartDate(startDateChooser.getDate());
-            leaveEvent.setContractYear(LeaveManager.getContractYear(leaveEvent.getContract(), 
+            leaveEvent.setContractYear(LeaveManager.getContractYear(leaveEvent.getContract(),
                     leaveEvent.getStartDate()));
             if (earnRadioButton.isSelected()) {
                 leaveEvent.setDaysEarned(new BigDecimal(daysTextField.getText()));
@@ -641,6 +642,8 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     return leaveEvent.getEndDate();
                 case 7:
                     return leaveEvent.getComment();
+                case 8:
+                    return leaveEvent.getStatus();
                 default:
                     return null;
             }
@@ -679,7 +682,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
         @Override
         public String[] getColumns() {
-            String[] columns = {"Contract Year", "Leave Type", "Start Date", "Days Earned", "Days Spent", "Balance", "End Date", "Comment"};
+            String[] columns = {"Contract Year", "Leave Type", "Start Date", "Days Earned", "Days Spent", "Balance", "End Date", "Comment", "Status"};
             return columns;
         }
     }
@@ -687,7 +690,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     private void updateLeaveEvents(List<LeaveEvent> leaveEvents, Contract contract) {
         if (leaveEvents != null) {
             updateSummary(leaveEvents, contract);
-            setLeaveEventBalances(leaveEvents);
+            updateCalculatedValues(leaveEvents);
         } else {
             if (table.getModel() != null && table.getModel() instanceof LeaveEventTableModel) {
                 LeaveEventTableModel model = (LeaveEventTableModel) table.getModel();
@@ -696,7 +699,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     leaveEvents.add((LeaveEvent) item);
                 }
                 updateSummary(leaveEvents, contract);
-                setLeaveEventBalances(leaveEvents);
+                updateCalculatedValues(leaveEvents);
             }
         }
     }
@@ -728,16 +731,29 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         }
     }
 
-    private void setLeaveEventBalances(List<LeaveEvent> leaveEvents) {
+    private void updateCalculatedValues(List<LeaveEvent> leaveEvents) {
         BigDecimal balance = BigDecimal.ZERO;
+        String status = "NA";
         for (LeaveEvent leaveEvent : leaveEvents) {
             if (leaveEvent.getDaysEarned() != null) {
                 balance = balance.add(leaveEvent.getDaysEarned());
+                 status = "NA";
             }
             if (leaveEvent.getDaysSpent() != null) {
                 balance = balance.add(leaveEvent.getDaysSpent().negate());
+                Date today = new Date();
+                if (leaveEvent.getStartDate().compareTo(today) == 1) {
+                    status = "Not started";
+                }
+                if (leaveEvent.getEndDate().compareTo(today) == -1) {
+                    status = "Completed";
+                }
+                if (leaveEvent.getStartDate().compareTo(today) != 1 && leaveEvent.getEndDate().compareTo(today) != -1) {
+                    status = "In progress";
+                }
             }
             leaveEvent.setBalance(balance);
+            leaveEvent.setStatus(status);
         }
     }
 }

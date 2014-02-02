@@ -30,12 +30,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "employee")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e"),
-    @NamedQuery(name = "Employee.findById", query = "SELECT e FROM Employee e WHERE e.id = :id"),
-    @NamedQuery(name = "Employee.findByCode", query = "SELECT e FROM Employee e WHERE e.code = :code"),
-    @NamedQuery(name = "Employee.findByLastName", query = "SELECT e FROM Employee e WHERE e.lastName = :lastName"),
-    @NamedQuery(name = "Employee.findByOtherNames", query = "SELECT e FROM Employee e WHERE e.otherNames = :otherNames"),
-    @NamedQuery(name = "Employee.findByActive", query = "SELECT e FROM Employee e WHERE e.active = :active")})
+    @NamedQuery(name = "Employee.findAll", query = "SELECT e FROM Employee e ORDER BY e.lastName, e.otherNames ASC"),
+    @NamedQuery(name = "Employee.findById", query = "SELECT e FROM Employee e WHERE e.id = :id ORDER BY e.lastName, e.otherNames ASC"),
+    @NamedQuery(name = "Employee.findByCode", query = "SELECT e FROM Employee e WHERE e.code = :code ORDER BY e.lastName, e.otherNames ASC"),
+    @NamedQuery(name = "Employee.findByLastName", query = "SELECT e FROM Employee e WHERE e.lastName = :lastName ORDER BY e.lastName, e.otherNames ASC"),
+    @NamedQuery(name = "Employee.findByOtherNames", query = "SELECT e FROM Employee e WHERE e.otherNames = :otherNames ORDER BY e.lastName, e.otherNames ASC"),
+    @NamedQuery(name = "Employee.findByActive", query = "SELECT e FROM Employee e WHERE e.active = :active ORDER BY e.lastName, e.otherNames ASC")})
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
