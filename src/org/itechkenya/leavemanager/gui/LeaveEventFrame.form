@@ -375,6 +375,10 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="leaveTypeComboBoxItemStateChanged"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="leaveTypeComboBoxFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="startDateLabel">
           <Properties>
@@ -382,6 +386,10 @@
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="startDateChooser">
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="startDateChooserFocusLost"/>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="startDateChooserPropertyChange"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="daysLabel">
           <Properties>
@@ -389,6 +397,10 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="daysTextField">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="daysTextFieldActionPerformed"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="daysTextFieldFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="endDateLabel">
           <Properties>

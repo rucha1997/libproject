@@ -28,7 +28,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
     /**
      * Creates new form EarnLeaveFrame
-     * 
+     *
      * @param mainForm
      */
     public LeaveEventFrame(MainForm mainForm) {
@@ -200,9 +200,42 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
         leaveTypeLabel.setText("Leave Type");
 
+        leaveTypeComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                leaveTypeComboBoxItemStateChanged(evt);
+            }
+        });
+        leaveTypeComboBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                leaveTypeComboBoxFocusLost(evt);
+            }
+        });
+
         startDateLabel.setText("Start Date");
 
+        startDateChooser.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                startDateChooserFocusLost(evt);
+            }
+        });
+        startDateChooser.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                startDateChooserPropertyChange(evt);
+            }
+        });
+
         daysLabel.setText("Days");
+
+        daysTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                daysTextFieldActionPerformed(evt);
+            }
+        });
+        daysTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                daysTextFieldFocusLost(evt);
+            }
+        });
 
         endDateLabel.setText("End Date");
 
@@ -385,7 +418,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if (!validateFields(false)) {
+        if (!validateFields(false, true)) {
             return;
         }
         save((LeaveEvent) getSelectedItem(), false);
@@ -454,6 +487,43 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         }
     }//GEN-LAST:event_calculateButtonActionPerformed
 
+    private void leaveTypeComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_leaveTypeComboBoxItemStateChanged
+        if (spendRadioButton.isSelected()) {
+            showEndDate(calculateEndDate(null, false));
+        }
+    }//GEN-LAST:event_leaveTypeComboBoxItemStateChanged
+
+    private void leaveTypeComboBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_leaveTypeComboBoxFocusLost
+        if (spendRadioButton.isSelected()) {
+            showEndDate(calculateEndDate(null, false));
+        }
+    }//GEN-LAST:event_leaveTypeComboBoxFocusLost
+
+    private void startDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_startDateChooserPropertyChange
+        if ("date".equals(evt.getPropertyName())) {
+            if (spendRadioButton.isSelected()) {
+                showEndDate(calculateEndDate(null, false));
+            }
+        }
+    }//GEN-LAST:event_startDateChooserPropertyChange
+
+    private void startDateChooserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_startDateChooserFocusLost
+        if (spendRadioButton.isSelected()) {
+            showEndDate(calculateEndDate(null, false));
+        }
+    }//GEN-LAST:event_startDateChooserFocusLost
+
+    private void daysTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daysTextFieldActionPerformed
+        if (spendRadioButton.isSelected()) {
+            showEndDate(calculateEndDate(null, false));
+        }
+    }//GEN-LAST:event_daysTextFieldActionPerformed
+
+    private void daysTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_daysTextFieldFocusLost
+        if (spendRadioButton.isSelected()) {
+            showEndDate(calculateEndDate(null, false));
+        }
+    }//GEN-LAST:event_daysTextFieldFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel balanceLabel;
@@ -505,7 +575,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 updateTable(leaveEvent, UpdateType.CREATE);
             } else {
                 if (leaveEvent.getMonth() != null) {
-                    UiManager.showWarningMessage(this, "This leave event was automatically created. You cannot edit it.", saveButton);
+                    UiManager.showWarningMessage(this, "This leave event was automatically created. You cannot update it.", saveButton);
                     return;
                 }
                 flesh(leaveEvent);
@@ -550,8 +620,8 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
     @Override
     public void dataChanged(LeaveManagerFrame source) {
-        if (source instanceof EmployeeFrame 
-                || source instanceof ContractFrame 
+        if (source instanceof EmployeeFrame
+                || source instanceof ContractFrame
                 || source instanceof LeaveTypeFrame) {
             loadData();
         }
@@ -744,7 +814,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     }
 
     public Date calculateEndDate(LeaveEvent leaveEvent, boolean message) {
-        if (!validateFields(true)) {
+        if (!validateFields(true, message)) {
             return null;
         }
         if (leaveEvent == null) {
@@ -776,58 +846,80 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         return nextLeaveDayDateTime.toDate();
     }
 
-    private boolean validateFields(boolean excludeEndDate) {
+    private boolean validateFields(boolean excludeEndDate, boolean message) {
         if (employeeComboBox.getSelectedItem() == null) {
-            UiManager.showWarningMessage(this, "Select employee.", employeeComboBox);
+            if (message) {
+                UiManager.showWarningMessage(this, "Select employee.", employeeComboBox);
+            }
             return false;
         }
         if (contractComboBox.getSelectedItem() == null) {
-            UiManager.showWarningMessage(this, "Select contract.", contractComboBox);
+            if (message) {
+                UiManager.showWarningMessage(this, "Select contract.", contractComboBox);
+            }
             return false;
         }
         if (leaveTypeComboBox.getSelectedItem() == null) {
-            UiManager.showWarningMessage(this, "Select leave type.", leaveTypeComboBox);
+            if (message) {
+                UiManager.showWarningMessage(this, "Select leave type.", leaveTypeComboBox);
+            }
             return false;
         }
         if (startDateChooser.getDate() == null) {
-            UiManager.showWarningMessage(this, "Enter leave event start date.", startDateChooser);
+            if (message) {
+                UiManager.showWarningMessage(this, "Enter leave event start date.", startDateChooser);
+            }
             return false;
         }
         if (daysTextField.getText().equals("")) {
-            UiManager.showWarningMessage(this, "Enter days to be " + (spendRadioButton.isSelected() ? "spent" : "earned") + ".", daysTextField);
+            if (message) {
+                UiManager.showWarningMessage(this, "Enter days to be " + (spendRadioButton.isSelected() ? "spent" : "earned") + ".", daysTextField);
+            }
             return false;
         }
         try {
             BigDecimal test = new BigDecimal(daysTextField.getText());
             if (test.compareTo(new BigDecimal("999.99")) == 1) {
-                UiManager.showWarningMessage(this, "Days to be earned or spent cannot exceed 999.99.", daysTextField);
+                if (message) {
+                    UiManager.showWarningMessage(this, "Days to be earned or spent cannot exceed 999.99.", daysTextField);
+                }
                 return false;
             }
         } catch (NumberFormatException ex) {
-            UiManager.showWarningMessage(this, "Days to be earned per month must be a decimal number with the format ###.##.", daysTextField);
+            if (message) {
+                UiManager.showWarningMessage(this, "Days to be earned per month must be a decimal number with the format ###.##.", daysTextField);
+            }
             Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
         if (startDateChooser.getDate().compareTo(((Contract) contractComboBox.getSelectedItem()).getStartDate()) == -1) {
-            UiManager.showWarningMessage(this, "Leave event start date must be within contract period.", startDateChooser);
+            if (message) {
+                UiManager.showWarningMessage(this, "Leave event start date must be within contract period.", startDateChooser);
+            }
             return false;
         }
         if (!excludeEndDate) {
             if (spendRadioButton.isSelected()) {
                 if (endDateChooser.getDate() != null) {
                     if (startDateChooser.getDate().compareTo(endDateChooser.getDate()) == 1) {
-                        UiManager.showWarningMessage(this, "Leave event end date must be greated than start date.", endDateChooser);
+                        if (message) {
+                            UiManager.showWarningMessage(this, "Leave event end date must be greated than start date.", endDateChooser);
+                        }
                         return false;
                     }
                     Contract contract = (Contract) contractComboBox.getSelectedItem();
                     if (contract.getEndDate() != null) {
                         if (endDateChooser.getDate().compareTo(contract.getEndDate()) == 1) {
-                            UiManager.showWarningMessage(this, "Leave event end date must be within contract period.", endDateChooser);
+                            if (message) {
+                                UiManager.showWarningMessage(this, "Leave event end date must be within contract period.", endDateChooser);
+                            }
                             return false;
                         }
                     }
                 } else {
-                    UiManager.showWarningMessage(this, "End date must be specified for 'spend' leave events.", endDateChooser);
+                    if (message) {
+                        UiManager.showWarningMessage(this, "End date must be specified for 'spend' leave events.", endDateChooser);
+                    }
                     return false;
                 }
             }
