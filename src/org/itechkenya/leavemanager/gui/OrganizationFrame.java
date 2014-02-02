@@ -24,16 +24,14 @@ public class OrganizationFrame extends LeaveManagerFrame {
 
     /**
      * Creates new form OrganizationInternalFrame
+     *
+     * @param mainForm
      */
-    public OrganizationFrame() {
-        try {
-            initComponents();
-            configureComponents();
-            loadData();
-        } catch (Exception ex) {
-            UiManager.showErrorMessage(this.getContentPane(), ex.getMessage());
-            Logger.getLogger(OrganizationFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public OrganizationFrame(MainForm mainForm) {
+        super(mainForm);
+        initComponents();
+        configureComponents();
+        loadData();
     }
 
     /**
@@ -153,6 +151,7 @@ public class OrganizationFrame extends LeaveManagerFrame {
                 flesh(organization);
                 JpaManager.getOjc().edit(organization);
             }
+            mainForm.dataChanged(this);
             this.dispose();
         } catch (Exception ex) {
             Logger.getLogger(OrganizationFrame.class.getName()).log(Level.SEVERE, null, ex);

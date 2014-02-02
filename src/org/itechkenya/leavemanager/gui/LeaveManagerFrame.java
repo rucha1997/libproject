@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.itechkenya.leavemanager.gui;
 
 import java.awt.event.ActionEvent;
@@ -33,7 +28,13 @@ public abstract class LeaveManagerFrame extends JInternalFrame {
         DESTROY
     }
 
+    final MainForm mainForm;
+
     private boolean hasSelectedItem = false;
+
+    public LeaveManagerFrame(MainForm mainForm) {
+        this.mainForm = mainForm;
+    }
 
     public void configureComponents() {
         if (getOkButton() != null) {
@@ -60,6 +61,9 @@ public abstract class LeaveManagerFrame extends JInternalFrame {
         jif.getRootPane().registerKeyboardAction(escListener,
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_IN_FOCUSED_WINDOW);
+    }
+
+    public void dataChanged(LeaveManagerFrame source) {
     }
 
     private class TableListSelectionListener implements ListSelectionListener {

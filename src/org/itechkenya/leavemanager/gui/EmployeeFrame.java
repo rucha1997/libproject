@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.itechkenya.leavemanager.gui;
 
 import java.util.List;
@@ -24,16 +19,14 @@ public class EmployeeFrame extends LeaveManagerFrame {
 
     /**
      * Creates new form EmployeeFrame
+     *
+     * @param mainForm
      */
-    public EmployeeFrame() {
-        try {
-            initComponents();
-            configureComponents();
-            loadData();
-        } catch (Exception ex) {
-            UiManager.showErrorMessage(this.getContentPane(), ex.getMessage());
-            Logger.getLogger(OrganizationFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public EmployeeFrame(MainForm mainForm) {
+        super(mainForm);
+        initComponents();
+        configureComponents();
+        loadData();
     }
 
     /**
@@ -220,6 +213,8 @@ public class EmployeeFrame extends LeaveManagerFrame {
                 JpaManager.getEjc().edit(employee);
                 updateTable(employee, UpdateType.EDIT);
             }
+            clear();
+            mainForm.dataChanged(this);
         } catch (NonexistentEntityException ex) {
             UiManager.showErrorMessage(this, ex.getMessage());
             Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -238,13 +233,14 @@ public class EmployeeFrame extends LeaveManagerFrame {
                     JpaManager.getEjc().destroy(employee.getId());
                     updateTable(employee, UpdateType.DESTROY);
                 } catch (IllegalOrphanException ex) {
-                     UiManager.showConstraintViolationMessage(this, employee.toString());
+                    UiManager.showConstraintViolationMessage(this, employee.toString());
                     Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (NonexistentEntityException ex) {
                     UiManager.showErrorMessage(this, ex.getMessage());
                     Logger.getLogger(EmployeeFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            mainForm.dataChanged(this);
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 

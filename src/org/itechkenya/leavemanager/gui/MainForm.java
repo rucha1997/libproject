@@ -2,6 +2,8 @@ package org.itechkenya.leavemanager.gui;
 
 import java.awt.Dimension;
 import java.beans.PropertyVetoException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
@@ -12,11 +14,11 @@ import javax.swing.JInternalFrame;
  */
 public class MainForm extends javax.swing.JFrame {
 
-    private final LeaveManagerFrame leaveEventFrame = new LeaveEventFrame();
-    private final LeaveManagerFrame employeeFrame = new EmployeeFrame();
-    private final LeaveManagerFrame contractFrame = new ContractFrame();
-    private final LeaveManagerFrame leaveTypeFrame = new LeaveTypeFrame();
-    private final LeaveManagerFrame organizationFrame = new OrganizationFrame();
+    private final LeaveManagerFrame leaveEventFrame = new LeaveEventFrame(this);
+    private final LeaveManagerFrame employeeFrame = new EmployeeFrame(this);
+    private final LeaveManagerFrame contractFrame = new ContractFrame(this);
+    private final LeaveManagerFrame leaveTypeFrame = new LeaveTypeFrame(this);
+    private final LeaveManagerFrame organizationFrame = new OrganizationFrame(this);
 
     /**
      * Creates new form MainForm
@@ -330,8 +332,26 @@ public class MainForm extends javax.swing.JFrame {
         return organizationFrame;
     }
 
+    public void dataChanged(LeaveManagerFrame source) {
+        for (LeaveManagerFrame frame : getLeaveManagaerFrames()) {
+            if (!frame.equals(source)) {
+                frame.dataChanged(source);
+            }
+        }
+    }
+
     public void showAutoCreatedLeaveEventMessage(String message) {
         statusLabel.setText(message);
+    }
+
+    private List<LeaveManagerFrame> getLeaveManagaerFrames() {
+        List<LeaveManagerFrame> leaveManagerFrames = new ArrayList<>();
+        leaveManagerFrames.add(contractFrame);
+        leaveManagerFrames.add(employeeFrame);
+        leaveManagerFrames.add(leaveEventFrame);
+        leaveManagerFrames.add(leaveTypeFrame);
+        leaveManagerFrames.add(organizationFrame);
+        return leaveManagerFrames;
     }
 
     private void showLeaveManagerFrame(LeaveManagerFrame frame, boolean maximize) {

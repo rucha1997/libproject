@@ -25,8 +25,11 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
 
     /**
      * Creates new form LeaveTypeFrame
+     * 
+     * @param mainForm
      */
-    public LeaveTypeFrame() {
+    public LeaveTypeFrame(MainForm mainForm) {
+        super(mainForm);
         initComponents();
         configureComponents();
         loadData();
@@ -230,6 +233,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                 JpaManager.getLtjc().edit(leaveType);
                 updateTable(leaveType, UpdateType.EDIT);
             }
+            mainForm.dataChanged(this);
             clear();
         } catch (NonexistentEntityException ex) {
             UiManager.showErrorMessage(this, ex.getMessage());
@@ -256,6 +260,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
                     Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            mainForm.dataChanged(this);
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 

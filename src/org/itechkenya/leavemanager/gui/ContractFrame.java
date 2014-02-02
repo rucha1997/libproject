@@ -25,8 +25,11 @@ public class ContractFrame extends LeaveManagerFrame {
 
     /**
      * Creates new form ContractFrame
+     *
+     * @param mainForm
      */
-    public ContractFrame() {
+    public ContractFrame(MainForm mainForm) {
+        super(mainForm);
         initComponents();
         configureComponents();
         loadData();
@@ -225,6 +228,8 @@ public class ContractFrame extends LeaveManagerFrame {
                 JpaManager.getCjc().edit(contract);
                 updateTable(contract, UpdateType.EDIT);
             }
+            clear();
+            mainForm.dataChanged(this);
         } catch (NonexistentEntityException ex) {
             UiManager.showErrorMessage(this, ex.getMessage());
             Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -251,6 +256,7 @@ public class ContractFrame extends LeaveManagerFrame {
                     Logger.getLogger(ContractFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            mainForm.dataChanged(this);
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
 
@@ -297,6 +303,7 @@ public class ContractFrame extends LeaveManagerFrame {
     @Override
     public final void loadData() {
         List<Employee> employeeList = JpaManager.getEjc().findEmployeeEntities();
+        employeeComboBox.removeAllItems();
         for (Employee employee : employeeList) {
             employeeComboBox.addItem(employee);
         }
@@ -304,6 +311,13 @@ public class ContractFrame extends LeaveManagerFrame {
 
         ContractTableModel model = new ContractTableModel();
         table.setModel(model);
+    }
+
+    @Override
+    public void dataChanged(LeaveManagerFrame source) {
+        if (source instanceof EmployeeFrame) {
+            loadData();
+        }
     }
 
     @Override

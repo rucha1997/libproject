@@ -28,8 +28,11 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
     /**
      * Creates new form EarnLeaveFrame
+     * 
+     * @param mainForm
      */
-    public LeaveEventFrame() {
+    public LeaveEventFrame(MainForm mainForm) {
+        super(mainForm);
         initComponents();
         configureComponents();
         loadData();
@@ -404,6 +407,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     }
                     JpaManager.getLejc().destroy(leaveEvent.getId());
                     updateTable(leaveEvent, UpdateType.DESTROY);
+                    mainForm.dataChanged(this);
                     updateLeaveEvents(null, leaveEvent.getContract());
                 } catch (NonexistentEntityException ex) {
                     UiManager.showErrorMessage(this, ex.getMessage());
@@ -508,6 +512,8 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 JpaManager.getLejc().edit(leaveEvent);
                 updateTable(leaveEvent, UpdateType.EDIT);
             }
+            clear();
+            mainForm.dataChanged(this);
             updateLeaveEvents(null, leaveEvent.getContract());
         } catch (NonexistentEntityException ex) {
             if (!auto) {
@@ -525,12 +531,14 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     @Override
     public final void loadData() {
         List<Employee> employeeList = JpaManager.getEjc().findEmployeeEntities();
+        employeeComboBox.removeAllItems();
         for (Employee employee : employeeList) {
             employeeComboBox.addItem(employee);
         }
         employeeComboBox.setSelectedItem(null);
 
         List<LeaveType> leaveTypeList = JpaManager.getLtjc().findLeaveTypeEntities();
+        leaveTypeComboBox.removeAllItems();
         for (LeaveType leaveType : leaveTypeList) {
             leaveTypeComboBox.addItem(leaveType);
         }
@@ -538,6 +546,15 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
         LeaveEventTableModel model = new LeaveEventTableModel();
         table.setModel(model);
+    }
+
+    @Override
+    public void dataChanged(LeaveManagerFrame source) {
+        if (source instanceof EmployeeFrame 
+                || source instanceof ContractFrame 
+                || source instanceof LeaveTypeFrame) {
+            loadData();
+        }
     }
 
     @Override
