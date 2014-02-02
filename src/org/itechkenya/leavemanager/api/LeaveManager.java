@@ -68,8 +68,8 @@ public class LeaveManager implements Runnable {
                                 leaveEvent.setMonth(previousCompletedPeriod.getName());
                                 if (create) {
                                     autoCreateLeaveEvent(leaveEvent);
+                                    counter++;
                                 }
-                                counter++;
                             }
                         }
                     }
