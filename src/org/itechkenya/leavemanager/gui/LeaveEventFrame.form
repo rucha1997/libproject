@@ -62,7 +62,7 @@
                   <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="scrollPane" pref="202" max="32767" attributes="0"/>
+              <Component id="scrollPane" pref="203" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -111,11 +111,7 @@
                               <Component id="leaveTypeComboBox" max="32767" attributes="0"/>
                               <Component id="commentsTextField" max="32767" attributes="0"/>
                               <Component id="daysTextField" max="32767" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="calculateButton" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="endDateChooser" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="endDateChooser" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -155,13 +151,10 @@
                       <Component id="daysLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="daysTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="endDateChooser" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="endDateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="calculateButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="endDateLabel" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -409,17 +402,6 @@
           <BindingProperties>
             <BindingProperty name="enabled" source="spendRadioButton" sourcePath="${selected}" target="endDateLabel" targetPath="enabled" updateStrategy="0" immediately="false"/>
           </BindingProperties>
-        </Component>
-        <Component class="javax.swing.JButton" name="calculateButton">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Calculate"/>
-          </Properties>
-          <BindingProperties>
-            <BindingProperty name="enabled" source="endDateChooser" sourcePath="${enabled}" target="calculateButton" targetPath="enabled" updateStrategy="0" immediately="false"/>
-          </BindingProperties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="calculateButtonActionPerformed"/>
-          </Events>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="endDateChooser">
           <BindingProperties>

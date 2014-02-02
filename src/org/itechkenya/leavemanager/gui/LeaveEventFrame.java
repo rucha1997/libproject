@@ -73,7 +73,6 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         daysLabel = new javax.swing.JLabel();
         daysTextField = new javax.swing.JTextField();
         endDateLabel = new javax.swing.JLabel();
-        calculateButton = new javax.swing.JButton();
         endDateChooser = new com.toedter.calendar.JDateChooser();
         commentsLabel = new javax.swing.JLabel();
         commentsTextField = new javax.swing.JTextField();
@@ -242,17 +241,6 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, spendRadioButton, org.jdesktop.beansbinding.ELProperty.create("${selected}"), endDateLabel, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
-        calculateButton.setText("Calculate");
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, endDateChooser, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), calculateButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        calculateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                calculateButtonActionPerformed(evt);
-            }
-        });
-
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, spendRadioButton, org.jdesktop.beansbinding.ELProperty.create("${selected}"), endDateChooser, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
@@ -288,10 +276,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                             .addComponent(leaveTypeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(commentsTextField)
                             .addComponent(daysTextField)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, outerPanelLayout.createSequentialGroup()
-                                .addComponent(calculateButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(endDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                            .addComponent(endDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         outerPanelLayout.setVerticalGroup(
@@ -321,12 +306,10 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(daysLabel)
                     .addComponent(daysTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(11, 11, 11)
                 .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(endDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(endDateLabel)
-                        .addComponent(calculateButton)))
+                    .addComponent(endDateLabel))
                 .addGap(7, 7, 7)
                 .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(commentsLabel)
@@ -404,7 +387,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     .addComponent(closeButton)
                     .addComponent(deleteButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -481,12 +464,6 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         table.setModel(model);
     }//GEN-LAST:event_contractComboBoxItemStateChanged
 
-    private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
-        if (spendRadioButton.isSelected()) {
-            showEndDate(calculateEndDate(null, true));
-        }
-    }//GEN-LAST:event_calculateButtonActionPerformed
-
     private void leaveTypeComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_leaveTypeComboBoxItemStateChanged
         if (spendRadioButton.isSelected()) {
             showEndDate(calculateEndDate(null, false));
@@ -528,7 +505,6 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel balanceLabel;
     private javax.swing.JTextField balanceTextField;
-    private javax.swing.JButton calculateButton;
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel commentsLabel;
     private javax.swing.JTextField commentsTextField;
