@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import org.itechkenya.leavemanager.api.DateTimeUtil;
 import org.itechkenya.leavemanager.api.JpaManager;
 import org.itechkenya.leavemanager.api.LeaveManager;
 import org.itechkenya.leavemanager.api.UiManager;
@@ -18,7 +19,6 @@ import org.itechkenya.leavemanager.domain.LeaveEvent;
 import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
 
 /**
  *
@@ -398,6 +398,10 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             for (Object item : selectedItems) {
                 LeaveEvent leaveEvent = (LeaveEvent) item;
                 try {
+                    if (leaveEvent.getMonth() != null) {
+                        UiManager.showWarningMessage(this, "This leave event was automatically created. You cannot delete it.", saveButton);
+                        continue;
+                    }
                     JpaManager.getLejc().destroy(leaveEvent.getId());
                     updateTable(leaveEvent, UpdateType.DESTROY);
                     updateLeaveEvents(null, leaveEvent.getContract());
@@ -441,7 +445,9 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     }//GEN-LAST:event_contractComboBoxItemStateChanged
 
     private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
-        calculateEndDate(null, true);
+        if (spendRadioButton.isSelected()) {
+            showEndDate(calculateEndDate(null, true));
+        }
     }//GEN-LAST:event_calculateButtonActionPerformed
 
 
@@ -494,6 +500,10 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 JpaManager.getLejc().create(leaveEvent);
                 updateTable(leaveEvent, UpdateType.CREATE);
             } else {
+                if (leaveEvent.getMonth() != null) {
+                    UiManager.showWarningMessage(this, "This leave event was automatically created. You cannot edit it.", saveButton);
+                    return;
+                }
                 flesh(leaveEvent);
                 JpaManager.getLejc().edit(leaveEvent);
                 updateTable(leaveEvent, UpdateType.EDIT);
@@ -675,7 +685,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     private void updateLeaveEvents(List<LeaveEvent> leaveEvents, Contract contract) {
         if (leaveEvents != null) {
             updateSummary(leaveEvents, contract);
-            updateCalculatedValues(leaveEvents);
+            LeaveManager.updateCalculatedValues(leaveEvents);
         } else {
             if (table.getModel() != null && table.getModel() instanceof LeaveEventTableModel) {
                 LeaveEventTableModel model = (LeaveEventTableModel) table.getModel();
@@ -684,7 +694,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     leaveEvents.add((LeaveEvent) item);
                 }
                 updateSummary(leaveEvents, contract);
-                updateCalculatedValues(leaveEvents);
+                LeaveManager.updateCalculatedValues(leaveEvents);
             }
         }
     }
@@ -716,106 +726,37 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         }
     }
 
-    private void updateCalculatedValues(List<LeaveEvent> leaveEvents) {
-        BigDecimal balance = BigDecimal.ZERO;
-        String status = "NA";
-        for (LeaveEvent leaveEvent : leaveEvents) {
-            if (leaveEvent.getDaysEarned() != null) {
-                balance = balance.add(leaveEvent.getDaysEarned());
-                status = "NA";
-            }
-            if (leaveEvent.getDaysSpent() != null) {
-                balance = balance.add(leaveEvent.getDaysSpent().negate());
-                Date today = new Date();
-                if (leaveEvent.getStartDate().compareTo(today) == 1) {
-                    status = "Not started";
-                }
-                if (leaveEvent.getEndDate().compareTo(today) == -1) {
-                    status = "Completed";
-                }
-                if (leaveEvent.getStartDate().compareTo(today) != 1 && leaveEvent.getEndDate().compareTo(today) != -1) {
-                    status = "In progress";
-                }
-            }
-            leaveEvent.setBalance(balance);
-            leaveEvent.setStatus(status);
+    public Date calculateEndDate(LeaveEvent leaveEvent, boolean message) {
+        if (!validateFields(true)) {
+            return null;
         }
+        if (leaveEvent == null) {
+            leaveEvent = new LeaveEvent();
+            flesh(leaveEvent);
+        }
+        Integer fullDays = (leaveEvent.getDaysSpent().stripTrailingZeros().scale() <= 0)
+                ? leaveEvent.getDaysSpent().intValue() : leaveEvent.getDaysSpent().intValue() + 1;
+        Date endDate = leaveEvent.getStartDate();
+        for (int day = 1; day < fullDays; day++) {
+            endDate = getNextLeaveDayDate(leaveEvent, endDate);
+        }
+        return endDate;
     }
 
-    private void calculateEndDate(LeaveEvent leaveEvent, boolean message) {
-        if (spendRadioButton.isSelected()) {
-            if (!validateFields(true)) {
-                return;
-            }
-            if (leaveEvent == null) {
-                leaveEvent = new LeaveEvent();
-                flesh(leaveEvent);
-            }
-            Integer fullDays = (leaveEvent.getDaysSpent().stripTrailingZeros().scale() <= 0)
-                    ? leaveEvent.getDaysSpent().intValue() : leaveEvent.getDaysSpent().intValue() + 1;
-            Date endDate = leaveEvent.getStartDate();
-            for (int day = 1; day < fullDays; day++) {
-                endDate = getNextLeaveDayDate(leaveEvent, endDate);
-            }
-            endDateChooser.setDate(endDate);
-        }
+    private void showEndDate(Date endDate) {
+        endDateChooser.setDate(endDate);
     }
 
     private Date getNextLeaveDayDate(LeaveEvent leaveEvent, Date currentLeaveDayDate) {
         DateTime nextLeaveDayDateTime = new DateTime(currentLeaveDayDate).plusDays(1);
         if (!leaveEvent.getLeaveType().getAbsolute()) {
-            if (isSunday(nextLeaveDayDateTime) && isPublicHoliday(nextLeaveDayDateTime)) {
+            if (DateTimeUtil.isSunday(nextLeaveDayDateTime) && DateTimeUtil.isPublicHoliday(nextLeaveDayDateTime)) {
                 return getNextLeaveDayDate(leaveEvent, nextLeaveDayDateTime.plusDays(1).toDate());
-            } else if (isWeekend(nextLeaveDayDateTime) || isPublicHoliday(nextLeaveDayDateTime)) {
+            } else if (DateTimeUtil.isWeekend(nextLeaveDayDateTime) || DateTimeUtil.isPublicHoliday(nextLeaveDayDateTime)) {
                 return getNextLeaveDayDate(leaveEvent, nextLeaveDayDateTime.toDate());
             }
         }
         return nextLeaveDayDateTime.toDate();
-    }
-
-    private boolean isWeekend(DateTime datetime) {
-        return datetime.getDayOfWeek() == DateTimeConstants.SATURDAY
-                || datetime.getDayOfWeek() == DateTimeConstants.SUNDAY;
-    }
-
-    private boolean isSunday(DateTime datetime) {
-        return datetime.getDayOfWeek() == DateTimeConstants.SUNDAY;
-    }
-
-    private boolean isPublicHoliday(DateTime datetime) {
-        //New Year
-        if (datetime.getDayOfMonth() == 1 && datetime.getMonthOfYear()
-                == DateTimeConstants.JANUARY) {
-            return true;
-        }
-        //Labor Day
-        if (datetime.getDayOfMonth() == 1 && datetime.getMonthOfYear()
-                == DateTimeConstants.MAY) {
-            return true;
-        }
-        //Madaraka Day
-        if (datetime.getDayOfMonth() == 1 && datetime.getMonthOfYear()
-                == DateTimeConstants.JUNE) {
-            return true;
-        }
-        //Mashujaa Day
-        if (datetime.getDayOfMonth() == 20 && datetime.getMonthOfYear()
-                == DateTimeConstants.OCTOBER) {
-            return true;
-        }
-        //Jamhuri Day
-        if (datetime.getDayOfMonth() == 12 && datetime.getMonthOfYear()
-                == DateTimeConstants.DECEMBER) {
-            return true;
-        }
-        //Christmas
-        if (datetime.getDayOfMonth() == 25 && datetime.getMonthOfYear()
-                == DateTimeConstants.DECEMBER) {
-            return true;
-        }
-        //Boxing Day
-        return datetime.getDayOfMonth() == 26 && datetime.getMonthOfYear()
-                == DateTimeConstants.DECEMBER;
     }
 
     private boolean validateFields(boolean excludeEndDate) {

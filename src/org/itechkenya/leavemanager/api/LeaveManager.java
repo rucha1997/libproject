@@ -1,6 +1,9 @@
 package org.itechkenya.leavemanager.api;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.itechkenya.leavemanager.domain.Contract;
@@ -17,7 +20,9 @@ import org.joda.time.Years;
  */
 public class LeaveManager implements Runnable {
 
-    private MainForm mainForm;
+    private final MainForm mainForm;
+
+    public static final BigDecimal MINIMUM_CARRY_OVER = BigDecimal.TEN;
 
     public LeaveManager(MainForm mainForm) {
         this.mainForm = mainForm;
@@ -32,21 +37,40 @@ public class LeaveManager implements Runnable {
                 int counter = 0;
                 for (LeaveType leaveType : autoIncrementableLeaveTypes) {
                     for (Contract contract : activeContracts) {
-                        String previousCompletedMonth = getPreviousCompletedMonth(contract);
-                        LeaveEvent leaveEvent = JpaManager.getLejc()
-                                .findLeaveEvent(contract, leaveType, previousCompletedMonth);
-                        if (leaveEvent == null) {
-                            leaveEvent = new LeaveEvent();
-                            leaveEvent.setContract(contract);
-                            leaveEvent.setContractYear(getContractYear(contract));
-                            leaveEvent.setLeaveType(leaveType);
-                            leaveEvent.setStartDate(new Date());
-                            leaveEvent.setDaysEarned(leaveType.getDaysPerMonth());
-                            leaveEvent.setComment("Auto-created for: " + previousCompletedMonth);
-                            leaveEvent.setMonth(previousCompletedMonth);
-                            ((LeaveEventFrame) mainForm.getLeaveEventFrame()).save(leaveEvent, true);
-                            counter++;
-                            mainForm.showAutoCreatedLeaveEventMessage("Auto-created new leave event for: " + leaveEvent.getContract().getEmployee().toString());
+                        List<PreviousCompletedPeriod> previousCompletedPeriods = getPreviousCompletedPeriods(contract);
+                        for (PreviousCompletedPeriod previousCompletedPeriod : previousCompletedPeriods) {
+                            LeaveEvent leaveEvent = JpaManager.getLejc()
+                                    .findLeaveEvent(contract, leaveType, previousCompletedPeriod.getName());
+                            boolean create = true;
+                            if (leaveEvent == null) {
+                                leaveEvent = new LeaveEvent();
+                                leaveEvent.setContract(contract);
+                                leaveEvent.setContractYear(getContractYear(contract));
+                                leaveEvent.setLeaveType(leaveType);
+                                leaveEvent.setStartDate(new Date());
+                                if (previousCompletedPeriod.getPeriodType() == PeriodType.MONTH) {
+                                    leaveEvent.setDaysEarned(leaveType.getDaysPerMonth());
+                                    leaveEvent.setComment("Monthly: " + previousCompletedPeriod.getName());
+                                } else if (previousCompletedPeriod.getPeriodType() == PeriodType.YEAR) {
+                                    BigDecimal balance = getLeaveBalanceAtYearEnd(contract, Integer.parseInt(previousCompletedPeriod.getName()));
+                                    if (balance.compareTo(BigDecimal.ZERO) == 1) {
+                                        if (balance.compareTo(MINIMUM_CARRY_OVER) == 1) {
+                                            leaveEvent.setDaysSpent(balance.add(MINIMUM_CARRY_OVER.negate()));
+                                            leaveEvent.setEndDate(leaveEvent.getStartDate());
+                                            leaveEvent.setComment("Forfeiture: " + previousCompletedPeriod.getName());
+                                        } else {
+                                            create = false;
+                                        }
+                                    } else {
+                                        create = false;
+                                    }
+                                }
+                                leaveEvent.setMonth(previousCompletedPeriod.getName());
+                                if (create) {
+                                    autoCreateLeaveEvent(leaveEvent);
+                                }
+                                counter++;
+                            }
                         }
                     }
                 }
@@ -66,16 +90,101 @@ public class LeaveManager implements Runnable {
         return getContractYear(contract, new Date());
     }
 
-    private String getPreviousCompletedMonth(Contract contract) {
+    public static void updateCalculatedValues(List<LeaveEvent> leaveEvents) {
+        BigDecimal balance = BigDecimal.ZERO;
+        String status = "NA";
+        for (LeaveEvent leaveEvent : leaveEvents) {
+            if (leaveEvent.getDaysEarned() != null) {
+                balance = balance.add(leaveEvent.getDaysEarned());
+                status = "NA";
+            }
+            if (leaveEvent.getDaysSpent() != null) {
+                balance = balance.add(leaveEvent.getDaysSpent().negate());
+                Date today = new Date();
+                if (leaveEvent.getStartDate().compareTo(today) == 1) {
+                    status = "Not started";
+                }
+                if (leaveEvent.getEndDate().compareTo(today) == -1) {
+                    status = "Completed";
+                }
+                if (leaveEvent.getStartDate().compareTo(today) != 1 && leaveEvent.getEndDate().compareTo(today) != -1) {
+                    status = "In progress";
+                }
+            }
+            leaveEvent.setBalance(balance);
+            leaveEvent.setStatus(status);
+        }
+    }
+
+    private void autoCreateLeaveEvent(LeaveEvent leaveEvent) {
+        ((LeaveEventFrame) mainForm.getLeaveEventFrame()).save(leaveEvent, true);
+        mainForm.showAutoCreatedLeaveEventMessage("Auto-created leave event for: " + leaveEvent.getContract().getEmployee().toString());
+    }
+
+    private List<PreviousCompletedPeriod> getPreviousCompletedPeriods(Contract contract) {
+
+        List<PreviousCompletedPeriod> previousCompletedPeriods = new ArrayList<>();
+
         DateTime today = new DateTime(new Date());
         DateTime contractStartDate = new DateTime(contract.getStartDate());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-
+        SimpleDateFormat monthSdf = new SimpleDateFormat("yyyyMM");
         if (today.getDayOfMonth() >= contractStartDate.getDayOfMonth()) {
-            return sdf.format(today.minusMonths(1).toDate());
+            previousCompletedPeriods.add(
+                    new PreviousCompletedPeriod(monthSdf.format(today.minusMonths(1).toDate()), PeriodType.MONTH));
         } else {
-            return sdf.format(today.minusMonths(2).toDate());
+            previousCompletedPeriods.add(
+                    new PreviousCompletedPeriod(monthSdf.format(today.minusMonths(2).toDate()), PeriodType.MONTH));
+        }
+
+        int contractYear = getContractYear(contract);
+        if (contractYear > 1) {
+            int contractStartYear = new DateTime(contract.getStartDate()).getYear();
+            int contractPreviousYear = contractStartYear + (contractYear - 1);
+            previousCompletedPeriods.add(
+                    new PreviousCompletedPeriod(String.valueOf(contractPreviousYear), PeriodType.YEAR));
+        }
+        return previousCompletedPeriods;
+    }
+
+    private BigDecimal getLeaveBalanceAtYearEnd(Contract contract, int year) {
+        BigDecimal balance = BigDecimal.ZERO;
+        if (getContractYear(contract) > 1) {
+            List<LeaveEvent> contractLeaveEvents = contract.getLeaveEventList();
+            Collections.sort(contractLeaveEvents);
+            updateCalculatedValues(contractLeaveEvents);
+            for (LeaveEvent leaveEvent : contractLeaveEvents) {
+                if (new DateTime(leaveEvent.getStartDate()).getYear() == year) {
+                    balance = leaveEvent.getBalance();
+                }
+            }
+        }
+        return balance;
+    }
+
+    private class PreviousCompletedPeriod {
+
+        private final String name;
+        private final PeriodType periodType;
+
+        public PreviousCompletedPeriod(String name, PeriodType periodType) {
+            this.name = name;
+            this.periodType = periodType;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public PeriodType getPeriodType() {
+            return periodType;
         }
     }
+
+    private enum PeriodType {
+
+        MONTH,
+        YEAR
+    }
+
 }
