@@ -385,24 +385,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         if (!validateFields(false)) {
             return;
         }
-        LeaveEvent leaveEvent = (LeaveEvent) getSelectedItem();
-        try {
-            if (leaveEvent == null) {
-                leaveEvent = new LeaveEvent();
-                flesh(leaveEvent);
-                JpaManager.getLejc().create(leaveEvent);
-                updateTable(leaveEvent, UpdateType.CREATE);
-            } else {
-                flesh(leaveEvent);
-                JpaManager.getLejc().edit(leaveEvent);
-                updateTable(leaveEvent, UpdateType.EDIT);
-            }
-            updateLeaveEvents(null, leaveEvent.getContract());
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        save((LeaveEvent) getSelectedItem(), false);
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
@@ -500,6 +483,34 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     private javax.swing.JTable table;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
+
+    public void save(LeaveEvent leaveEvent, boolean auto) {
+        try {
+            if (leaveEvent == null || auto) {
+                if (!auto) {
+                    leaveEvent = new LeaveEvent();
+                    flesh(leaveEvent);
+                }
+                JpaManager.getLejc().create(leaveEvent);
+                updateTable(leaveEvent, UpdateType.CREATE);
+            } else {
+                flesh(leaveEvent);
+                JpaManager.getLejc().edit(leaveEvent);
+                updateTable(leaveEvent, UpdateType.EDIT);
+            }
+            updateLeaveEvents(null, leaveEvent.getContract());
+        } catch (NonexistentEntityException ex) {
+            if (!auto) {
+                UiManager.showErrorMessage(this, ex.getMessage());
+            }
+            Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            if (!auto) {
+                UiManager.showErrorMessage(this, ex.getMessage());
+            }
+            Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     @Override
     public final void loadData() {

@@ -1,12 +1,12 @@
 package org.itechkenya.leavemanager.api;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
 import org.itechkenya.leavemanager.domain.LeaveType;
+import org.itechkenya.leavemanager.gui.LeaveEventFrame;
 import org.itechkenya.leavemanager.gui.MainForm;
 import org.joda.time.DateTime;
 import org.joda.time.Years;
@@ -44,6 +44,7 @@ public class LeaveManager implements Runnable {
                             leaveEvent.setDaysEarned(leaveType.getDaysPerMonth());
                             leaveEvent.setComment("Auto-created for: " + previousCompletedMonth);
                             leaveEvent.setMonth(previousCompletedMonth);
+                            ((LeaveEventFrame) mainForm.getLeaveEventFrame()).save(leaveEvent, true);
                             counter++;
                             mainForm.showAutoCreatedLeaveEventMessage("Auto-created new leave event for: " + leaveEvent.getContract().getEmployee().toString());
                         }

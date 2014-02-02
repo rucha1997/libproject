@@ -12,11 +12,11 @@ import javax.swing.JInternalFrame;
  */
 public class MainForm extends javax.swing.JFrame {
 
-    LeaveManagerFrame leaveEventFrame = new LeaveEventFrame();
-    LeaveManagerFrame employeeFrame = new EmployeeFrame();
-    LeaveManagerFrame contractFrame = new ContractFrame();
-    LeaveManagerFrame leaveTypeFrame = new LeaveTypeFrame();
-    LeaveManagerFrame organizationFrame = new OrganizationFrame();
+    private final LeaveManagerFrame leaveEventFrame = new LeaveEventFrame();
+    private final LeaveManagerFrame employeeFrame = new EmployeeFrame();
+    private final LeaveManagerFrame contractFrame = new ContractFrame();
+    private final LeaveManagerFrame leaveTypeFrame = new LeaveTypeFrame();
+    private final LeaveManagerFrame organizationFrame = new OrganizationFrame();
 
     /**
      * Creates new form MainForm
@@ -309,6 +309,26 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel statusLabel;
     private javax.swing.JPanel statusPanel;
     // End of variables declaration//GEN-END:variables
+
+    public LeaveManagerFrame getContractFrame() {
+        return contractFrame;
+    }
+
+    public LeaveManagerFrame getEmployeeFrame() {
+        return employeeFrame;
+    }
+
+    public LeaveManagerFrame getLeaveEventFrame() {
+        return leaveEventFrame;
+    }
+
+    public LeaveManagerFrame getLeaveTypeFrame() {
+        return leaveTypeFrame;
+    }
+
+    public LeaveManagerFrame getOrganizationFrame() {
+        return organizationFrame;
+    }
 
     public void showAutoCreatedLeaveEventMessage(String message) {
         statusLabel.setText(message);
