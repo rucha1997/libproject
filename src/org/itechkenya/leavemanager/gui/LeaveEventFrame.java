@@ -17,6 +17,8 @@ import org.itechkenya.leavemanager.domain.Employee;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
 import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 
 /**
  *
@@ -68,6 +70,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         daysLabel = new javax.swing.JLabel();
         daysTextField = new javax.swing.JTextField();
         endDateLabel = new javax.swing.JLabel();
+        calculateButton = new javax.swing.JButton();
         endDateChooser = new com.toedter.calendar.JDateChooser();
         commentsLabel = new javax.swing.JLabel();
         commentsTextField = new javax.swing.JTextField();
@@ -203,6 +206,17 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, spendRadioButton, org.jdesktop.beansbinding.ELProperty.create("${selected}"), endDateLabel, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
+        calculateButton.setText("Calculate");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, endDateChooser, org.jdesktop.beansbinding.ELProperty.create("${enabled}"), calculateButton, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        calculateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                calculateButtonActionPerformed(evt);
+            }
+        });
+
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, spendRadioButton, org.jdesktop.beansbinding.ELProperty.create("${selected}"), endDateChooser, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
         bindingGroup.addBinding(binding);
 
@@ -234,11 +248,14 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                             .addComponent(endDateLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(endDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(startDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(startDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
                             .addComponent(leaveTypeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(commentsTextField)
-                            .addComponent(daysTextField))))
+                            .addComponent(daysTextField)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, outerPanelLayout.createSequentialGroup()
+                                .addComponent(calculateButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(endDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         outerPanelLayout.setVerticalGroup(
@@ -271,8 +288,10 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(endDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(endDateLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(endDateLabel)
+                        .addComponent(calculateButton)))
+                .addGap(7, 7, 7)
                 .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(commentsLabel)
                     .addComponent(commentsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -349,7 +368,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     .addComponent(closeButton)
                     .addComponent(deleteButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -363,58 +382,8 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     }//GEN-LAST:event_newButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if (employeeComboBox.getSelectedItem() == null) {
-            UiManager.showWarningMessage(this, "Select employee.", employeeComboBox);
+        if (!validateFields(false)) {
             return;
-        }
-        if (contractComboBox.getSelectedItem() == null) {
-            UiManager.showWarningMessage(this, "Select contract.", contractComboBox);
-            return;
-        }
-        if (leaveTypeComboBox.getSelectedItem() == null) {
-            UiManager.showWarningMessage(this, "Select leave type.", leaveTypeComboBox);
-            return;
-        }
-        if (startDateChooser.getDate() == null) {
-            UiManager.showWarningMessage(this, "Enter leave event start date.", startDateChooser);
-            return;
-        }
-        if (daysTextField.getText().equals("")) {
-            UiManager.showWarningMessage(this, "Enter days to be earned or spent.", daysTextField);
-            return;
-        }
-        try {
-            BigDecimal test = new BigDecimal(daysTextField.getText());
-            if (test.compareTo(new BigDecimal("999.99")) == 1) {
-                UiManager.showWarningMessage(this, "Days to be earned or spent cannot exceed 999.99.", daysTextField);
-                return;
-            }
-        } catch (NumberFormatException ex) {
-            UiManager.showWarningMessage(this, "Days to be earned per month must be a decimal number with the format ###.##.", daysTextField);
-            Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
-            return;
-        }
-        if (startDateChooser.getDate().compareTo(((Contract) contractComboBox.getSelectedItem()).getStartDate()) == -1) {
-            UiManager.showWarningMessage(this, "Leave event start date must be within contract period.", startDateChooser);
-            return;
-        }
-        if (spendRadioButton.isSelected()) {
-            if (endDateChooser.getDate() != null) {
-                if (startDateChooser.getDate().compareTo(endDateChooser.getDate()) == 1) {
-                    UiManager.showWarningMessage(this, "Leave event end date must be greated than start date.", endDateChooser);
-                    return;
-                }
-                Contract contract = (Contract) contractComboBox.getSelectedItem();
-                if (contract.getEndDate() != null) {
-                    if (endDateChooser.getDate().compareTo(contract.getEndDate()) == 1) {
-                        UiManager.showWarningMessage(this, "Leave event end date must be within contract period.", endDateChooser);
-                        return;
-                    }
-                }
-            } else {
-                UiManager.showWarningMessage(this, "End date must be specified for 'spend' leave events.", endDateChooser);
-                return;
-            }
         }
         LeaveEvent leaveEvent = (LeaveEvent) getSelectedItem();
         try {
@@ -488,10 +457,15 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         table.setModel(model);
     }//GEN-LAST:event_contractComboBoxItemStateChanged
 
+    private void calculateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_calculateButtonActionPerformed
+        calculateEndDate(null, true);
+    }//GEN-LAST:event_calculateButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel balanceLabel;
     private javax.swing.JTextField balanceTextField;
+    private javax.swing.JButton calculateButton;
     private javax.swing.JButton closeButton;
     private javax.swing.JLabel commentsLabel;
     private javax.swing.JTextField commentsTextField;
@@ -737,7 +711,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         for (LeaveEvent leaveEvent : leaveEvents) {
             if (leaveEvent.getDaysEarned() != null) {
                 balance = balance.add(leaveEvent.getDaysEarned());
-                 status = "NA";
+                status = "NA";
             }
             if (leaveEvent.getDaysSpent() != null) {
                 balance = balance.add(leaveEvent.getDaysSpent().negate());
@@ -755,5 +729,140 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             leaveEvent.setBalance(balance);
             leaveEvent.setStatus(status);
         }
+    }
+
+    private void calculateEndDate(LeaveEvent leaveEvent, boolean message) {
+        if (spendRadioButton.isSelected()) {
+            if (!validateFields(true)) {
+                return;
+            }
+            if (leaveEvent == null) {
+                leaveEvent = new LeaveEvent();
+                flesh(leaveEvent);
+            }
+            Integer fullDays = (leaveEvent.getDaysSpent().stripTrailingZeros().scale() <= 0)
+                    ? leaveEvent.getDaysSpent().intValue() : leaveEvent.getDaysSpent().intValue() + 1;
+            Date endDate = leaveEvent.getStartDate();
+            for (int day = 1; day < fullDays; day++) {
+                endDate = getNextLeaveDayDate(leaveEvent, endDate);
+            }
+            endDateChooser.setDate(endDate);
+        }
+    }
+
+    private Date getNextLeaveDayDate(LeaveEvent leaveEvent, Date currentLeaveDayDate) {
+        DateTime nextLeaveDayDateTime = new DateTime(currentLeaveDayDate).plusDays(1);
+        if (!leaveEvent.getLeaveType().getAbsolute()) {
+            if (isSunday(nextLeaveDayDateTime) && isPublicHoliday(nextLeaveDayDateTime)) {
+                return getNextLeaveDayDate(leaveEvent, nextLeaveDayDateTime.plusDays(1).toDate());
+            } else if (isWeekend(nextLeaveDayDateTime) || isPublicHoliday(nextLeaveDayDateTime)) {
+                return getNextLeaveDayDate(leaveEvent, nextLeaveDayDateTime.toDate());
+            }
+        }
+        return nextLeaveDayDateTime.toDate();
+    }
+
+    private boolean isWeekend(DateTime datetime) {
+        return datetime.getDayOfWeek() == DateTimeConstants.SATURDAY
+                || datetime.getDayOfWeek() == DateTimeConstants.SUNDAY;
+    }
+
+    private boolean isSunday(DateTime datetime) {
+        return datetime.getDayOfWeek() == DateTimeConstants.SUNDAY;
+    }
+
+    private boolean isPublicHoliday(DateTime datetime) {
+        //New Year
+        if (datetime.getDayOfMonth() == 1 && datetime.getMonthOfYear()
+                == DateTimeConstants.JANUARY) {
+            return true;
+        }
+        //Labor Day
+        if (datetime.getDayOfMonth() == 1 && datetime.getMonthOfYear()
+                == DateTimeConstants.MAY) {
+            return true;
+        }
+        //Madaraka Day
+        if (datetime.getDayOfMonth() == 1 && datetime.getMonthOfYear()
+                == DateTimeConstants.JUNE) {
+            return true;
+        }
+        //Mashujaa Day
+        if (datetime.getDayOfMonth() == 20 && datetime.getMonthOfYear()
+                == DateTimeConstants.OCTOBER) {
+            return true;
+        }
+        //Jamhuri Day
+        if (datetime.getDayOfMonth() == 12 && datetime.getMonthOfYear()
+                == DateTimeConstants.DECEMBER) {
+            return true;
+        }
+        //Christmas
+        if (datetime.getDayOfMonth() == 25 && datetime.getMonthOfYear()
+                == DateTimeConstants.DECEMBER) {
+            return true;
+        }
+        //Boxing Day
+        return datetime.getDayOfMonth() == 26 && datetime.getMonthOfYear()
+                == DateTimeConstants.DECEMBER;
+    }
+
+    private boolean validateFields(boolean excludeEndDate) {
+        if (employeeComboBox.getSelectedItem() == null) {
+            UiManager.showWarningMessage(this, "Select employee.", employeeComboBox);
+            return false;
+        }
+        if (contractComboBox.getSelectedItem() == null) {
+            UiManager.showWarningMessage(this, "Select contract.", contractComboBox);
+            return false;
+        }
+        if (leaveTypeComboBox.getSelectedItem() == null) {
+            UiManager.showWarningMessage(this, "Select leave type.", leaveTypeComboBox);
+            return false;
+        }
+        if (startDateChooser.getDate() == null) {
+            UiManager.showWarningMessage(this, "Enter leave event start date.", startDateChooser);
+            return false;
+        }
+        if (daysTextField.getText().equals("")) {
+            UiManager.showWarningMessage(this, "Enter days to be " + (spendRadioButton.isSelected() ? "spent" : "earned") + ".", daysTextField);
+            return false;
+        }
+        try {
+            BigDecimal test = new BigDecimal(daysTextField.getText());
+            if (test.compareTo(new BigDecimal("999.99")) == 1) {
+                UiManager.showWarningMessage(this, "Days to be earned or spent cannot exceed 999.99.", daysTextField);
+                return false;
+            }
+        } catch (NumberFormatException ex) {
+            UiManager.showWarningMessage(this, "Days to be earned per month must be a decimal number with the format ###.##.", daysTextField);
+            Logger.getLogger(LeaveTypeFrame.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        if (startDateChooser.getDate().compareTo(((Contract) contractComboBox.getSelectedItem()).getStartDate()) == -1) {
+            UiManager.showWarningMessage(this, "Leave event start date must be within contract period.", startDateChooser);
+            return false;
+        }
+        if (!excludeEndDate) {
+            if (spendRadioButton.isSelected()) {
+                if (endDateChooser.getDate() != null) {
+                    if (startDateChooser.getDate().compareTo(endDateChooser.getDate()) == 1) {
+                        UiManager.showWarningMessage(this, "Leave event end date must be greated than start date.", endDateChooser);
+                        return false;
+                    }
+                    Contract contract = (Contract) contractComboBox.getSelectedItem();
+                    if (contract.getEndDate() != null) {
+                        if (endDateChooser.getDate().compareTo(contract.getEndDate()) == 1) {
+                            UiManager.showWarningMessage(this, "Leave event end date must be within contract period.", endDateChooser);
+                            return false;
+                        }
+                    }
+                } else {
+                    UiManager.showWarningMessage(this, "End date must be specified for 'spend' leave events.", endDateChooser);
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

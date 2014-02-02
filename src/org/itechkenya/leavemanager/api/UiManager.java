@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 public class UiManager {
 
     public static void showWarningMessage(Component source, String message, Component toFocus) {
-        JOptionPane.showMessageDialog(source, message, "Warning!", JOptionPane.WARNING_MESSAGE, null);
+        JOptionPane.showMessageDialog(source, message, "Stop!", JOptionPane.WARNING_MESSAGE, null);
         if (toFocus != null) {
             toFocus.requestFocus();
         }
