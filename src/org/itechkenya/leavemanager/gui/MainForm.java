@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
+import org.itechkenya.leavemanager.domain.Organization;
 
 /**
  *
  * @author gitahi
  */
 public class MainForm extends javax.swing.JFrame {
-
+    
     private final LeaveManagerFrame leaveEventFrame = new LeaveEventFrame(this);
     private final LeaveManagerFrame employeeFrame = new EmployeeFrame(this);
     private final LeaveManagerFrame contractFrame = new ContractFrame(this);
@@ -25,6 +26,7 @@ public class MainForm extends javax.swing.JFrame {
      */
     public MainForm() {
         initComponents();
+        showTitle(((OrganizationFrame) organizationFrame).getOrganization());
     }
 
     /**
@@ -315,35 +317,47 @@ public class MainForm extends javax.swing.JFrame {
     public LeaveManagerFrame getContractFrame() {
         return contractFrame;
     }
-
+    
     public LeaveManagerFrame getEmployeeFrame() {
         return employeeFrame;
     }
-
+    
     public LeaveManagerFrame getLeaveEventFrame() {
         return leaveEventFrame;
     }
-
+    
     public LeaveManagerFrame getLeaveTypeFrame() {
         return leaveTypeFrame;
     }
-
+    
     public LeaveManagerFrame getOrganizationFrame() {
         return organizationFrame;
     }
-
+    
     public void dataChanged(LeaveManagerFrame source) {
         for (LeaveManagerFrame frame : getLeaveManagaerFrames()) {
             if (!frame.equals(source)) {
                 frame.dataChanged(source);
             }
         }
+        if (source instanceof OrganizationFrame) {
+            OrganizationFrame orgFrame = (OrganizationFrame) source;
+            showTitle(orgFrame.getOrganization());
+        }
     }
-
+    
     public void showAutoCreatedLeaveEventMessage(String message) {
         statusLabel.setText(message);
     }
 
+    public final void showTitle(Organization organization) {
+        String title = "Leave Manager";
+        if (organization != null) {
+            title = title + " - " + organization.getName();
+        }
+        this.setTitle(title);
+    }
+    
     private List<LeaveManagerFrame> getLeaveManagaerFrames() {
         List<LeaveManagerFrame> leaveManagerFrames = new ArrayList<>();
         leaveManagerFrames.add(contractFrame);
@@ -353,7 +367,7 @@ public class MainForm extends javax.swing.JFrame {
         leaveManagerFrames.add(organizationFrame);
         return leaveManagerFrames;
     }
-
+    
     private void showLeaveManagerFrame(LeaveManagerFrame frame, boolean maximize) {
         try {
             if (!frameAlreadyLoaded(desktopPane.getAllFrames(), frame)) {
@@ -367,11 +381,11 @@ public class MainForm extends javax.swing.JFrame {
             Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     private void showLeaveManagerFrame(LeaveManagerFrame frame) {
         showLeaveManagerFrame(frame, true);
     }
-
+    
     private boolean frameAlreadyLoaded(JInternalFrame[] frames, JInternalFrame frame) {
         for (JInternalFrame jInternalFrame : frames) {
             if (jInternalFrame.equals(frame)) {
@@ -380,7 +394,7 @@ public class MainForm extends javax.swing.JFrame {
         }
         return false;
     }
-
+    
     public void centerFrame(JInternalFrame jif) {
         Dimension desktopSize = desktopPane.getSize();
         Dimension jInternalFrameSize = jif.getSize();

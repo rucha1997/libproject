@@ -173,6 +173,10 @@ public class OrganizationFrame extends LeaveManagerFrame {
     private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 
+    public Organization getOrganization() {
+        return organization;
+    }
+
     @Override
     public final void loadData() {
         List<Organization> organizationsList = JpaManager.getOjc().findOrganizationEntities();
