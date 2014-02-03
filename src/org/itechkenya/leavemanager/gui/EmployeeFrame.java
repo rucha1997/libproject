@@ -54,6 +54,7 @@ public class EmployeeFrame extends LeaveManagerFrame {
         table = new javax.swing.JTable();
 
         setClosable(true);
+        setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setTitle("Employees");

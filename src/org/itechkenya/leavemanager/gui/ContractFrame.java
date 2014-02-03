@@ -60,6 +60,7 @@ public class ContractFrame extends LeaveManagerFrame {
         table = new javax.swing.JTable();
 
         setClosable(true);
+        setIconifiable(true);
         setMaximizable(true);
         setTitle("Contracts");
 
