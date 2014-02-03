@@ -236,6 +236,11 @@ public class MainForm extends javax.swing.JFrame {
 
         aboutMenuItem.setMnemonic('a');
         aboutMenuItem.setText("About");
+        aboutMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutMenuItemActionPerformed(evt);
+            }
+        });
         helpMenu.add(aboutMenuItem);
 
         menuBar.add(helpMenu);
@@ -283,6 +288,12 @@ public class MainForm extends javax.swing.JFrame {
     private void leaveTypesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveTypesButtonActionPerformed
         showLeaveManagerFrame(leaveTypeFrame);
     }//GEN-LAST:event_leaveTypesButtonActionPerformed
+
+    private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
+        AboutDialog ad = new AboutDialog(this, true);
+        ad.setLocationRelativeTo(this);
+        ad.setVisible(true);
+    }//GEN-LAST:event_aboutMenuItemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
