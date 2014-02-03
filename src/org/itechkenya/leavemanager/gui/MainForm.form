@@ -67,11 +67,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="splitPane" alignment="0" max="32767" attributes="0"/>
           <Component id="statusPanel" alignment="0" max="32767" attributes="0"/>
+          <Component id="toolBar" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <Component id="toolBar" min="-2" pref="25" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="splitPane" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="statusPanel" min="-2" max="-2" attributes="0"/>
@@ -102,7 +105,7 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="486" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="455" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -152,7 +155,7 @@
                       <Component id="organizationButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="separator3" min="-2" pref="10" max="-2" attributes="0"/>
-                      <EmptySpace pref="277" max="32767" attributes="0"/>
+                      <EmptySpace pref="241" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -160,6 +163,9 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="leaveEventsButton">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/leave-event.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Leave Events"/>
               </Properties>
               <Events>
@@ -170,6 +176,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="employeesButton">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/employee.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Employees"/>
               </Properties>
               <Events>
@@ -178,6 +187,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="contractsButton">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/contract.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Contracts"/>
               </Properties>
               <Events>
@@ -188,6 +200,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="leaveTypesButton">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/leave-type.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Leave Types"/>
               </Properties>
               <Events>
@@ -196,6 +211,9 @@
             </Component>
             <Component class="javax.swing.JButton" name="organizationButton">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/organization.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Organization"/>
               </Properties>
               <Events>
@@ -239,6 +257,89 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JLabel" name="statusLabel">
+        </Component>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JToolBar" name="toolBar">
+      <Properties>
+        <Property name="rollover" type="boolean" value="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JButton" name="leaveEventToolButton">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/leave-event.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Leave events"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="leaveEventToolButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToolBar$Separator" name="jSeparator1">
+        </Component>
+        <Component class="javax.swing.JButton" name="employeeToolButton">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/employee.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Employees"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="employeeToolButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="contractToolButton">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/contract.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Contracts"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="contractToolButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToolBar$Separator" name="jSeparator2">
+        </Component>
+        <Component class="javax.swing.JButton" name="leaveTypeToolButton">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/leave-type.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Leave type"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="leaveTypeToolButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="organizationToolButton">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/organization.png"/>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Organization"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="organizationToolButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

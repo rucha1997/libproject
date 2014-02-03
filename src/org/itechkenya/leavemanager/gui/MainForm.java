@@ -51,6 +51,14 @@ public class MainForm extends javax.swing.JFrame {
         separator3 = new javax.swing.JSeparator();
         statusPanel = new javax.swing.JPanel();
         statusLabel = new javax.swing.JLabel();
+        toolBar = new javax.swing.JToolBar();
+        leaveEventToolButton = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        employeeToolButton = new javax.swing.JButton();
+        contractToolButton = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        leaveTypeToolButton = new javax.swing.JButton();
+        organizationToolButton = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -70,11 +78,12 @@ public class MainForm extends javax.swing.JFrame {
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGap(0, 455, Short.MAX_VALUE)
         );
 
         splitPane.setRightComponent(desktopPane);
 
+        leaveEventsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/leave-event.png"))); // NOI18N
         leaveEventsButton.setText("Leave Events");
         leaveEventsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -82,6 +91,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        employeesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/employee.png"))); // NOI18N
         employeesButton.setText("Employees");
         employeesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,6 +99,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        contractsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/contract.png"))); // NOI18N
         contractsButton.setText("Contracts");
         contractsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,6 +107,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        leaveTypesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/leave-type.png"))); // NOI18N
         leaveTypesButton.setText("Leave Types");
         leaveTypesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,6 +115,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
+        organizationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/organization.png"))); // NOI18N
         organizationButton.setText("Organization");
         organizationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,7 +159,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(organizationButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(separator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(277, Short.MAX_VALUE))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
 
         splitPane.setLeftComponent(navigationPanel);
@@ -169,6 +182,70 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(statusLabel)
                 .addContainerGap())
         );
+
+        toolBar.setRollover(true);
+
+        leaveEventToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/leave-event.png"))); // NOI18N
+        leaveEventToolButton.setToolTipText("Leave events");
+        leaveEventToolButton.setFocusable(false);
+        leaveEventToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        leaveEventToolButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        leaveEventToolButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaveEventToolButtonActionPerformed(evt);
+            }
+        });
+        toolBar.add(leaveEventToolButton);
+        toolBar.add(jSeparator1);
+
+        employeeToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/employee.png"))); // NOI18N
+        employeeToolButton.setToolTipText("Employees");
+        employeeToolButton.setFocusable(false);
+        employeeToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        employeeToolButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        employeeToolButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeeToolButtonActionPerformed(evt);
+            }
+        });
+        toolBar.add(employeeToolButton);
+
+        contractToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/contract.png"))); // NOI18N
+        contractToolButton.setToolTipText("Contracts");
+        contractToolButton.setFocusable(false);
+        contractToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        contractToolButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        contractToolButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contractToolButtonActionPerformed(evt);
+            }
+        });
+        toolBar.add(contractToolButton);
+        toolBar.add(jSeparator2);
+
+        leaveTypeToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/leave-type.png"))); // NOI18N
+        leaveTypeToolButton.setToolTipText("Leave type");
+        leaveTypeToolButton.setFocusable(false);
+        leaveTypeToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        leaveTypeToolButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        leaveTypeToolButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaveTypeToolButtonActionPerformed(evt);
+            }
+        });
+        toolBar.add(leaveTypeToolButton);
+
+        organizationToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/organization.png"))); // NOI18N
+        organizationToolButton.setToolTipText("Organization");
+        organizationToolButton.setFocusable(false);
+        organizationToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        organizationToolButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        organizationToolButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                organizationToolButtonActionPerformed(evt);
+            }
+        });
+        toolBar.add(organizationToolButton);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -206,10 +283,13 @@ public class MainForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(splitPane)
             .addComponent(statusPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(toolBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(toolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(splitPane)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(statusPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -248,25 +328,53 @@ public class MainForm extends javax.swing.JFrame {
         ad.setVisible(true);
     }//GEN-LAST:event_aboutMenuItemActionPerformed
 
+    private void leaveEventToolButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveEventToolButtonActionPerformed
+         showLeaveManagerFrame(leaveEventFrame);
+    }//GEN-LAST:event_leaveEventToolButtonActionPerformed
+
+    private void employeeToolButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeToolButtonActionPerformed
+         showLeaveManagerFrame(employeeFrame);
+    }//GEN-LAST:event_employeeToolButtonActionPerformed
+
+    private void contractToolButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contractToolButtonActionPerformed
+        showLeaveManagerFrame(contractFrame);
+    }//GEN-LAST:event_contractToolButtonActionPerformed
+
+    private void leaveTypeToolButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveTypeToolButtonActionPerformed
+         showLeaveManagerFrame(leaveTypeFrame);
+    }//GEN-LAST:event_leaveTypeToolButtonActionPerformed
+
+    private void organizationToolButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_organizationToolButtonActionPerformed
+         showLeaveManagerFrame(organizationFrame, false);
+    }//GEN-LAST:event_organizationToolButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton contractToolButton;
     private javax.swing.JButton contractsButton;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JButton employeeToolButton;
     private javax.swing.JButton employeesButton;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JButton leaveEventToolButton;
     private javax.swing.JButton leaveEventsButton;
+    private javax.swing.JButton leaveTypeToolButton;
     private javax.swing.JButton leaveTypesButton;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JPanel navigationPanel;
     private javax.swing.JButton organizationButton;
+    private javax.swing.JButton organizationToolButton;
     private javax.swing.JSeparator separator1;
     private javax.swing.JSeparator separator2;
     private javax.swing.JSeparator separator3;
     private javax.swing.JSplitPane splitPane;
     private javax.swing.JLabel statusLabel;
     private javax.swing.JPanel statusPanel;
+    private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables
 
     public LeaveManagerFrame getContractFrame() {
