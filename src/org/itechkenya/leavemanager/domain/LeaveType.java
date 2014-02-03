@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "LeaveType.findByRegular", query = "SELECT l FROM LeaveType l WHERE l.regular = :regular ORDER BY l.name ASC"),
     @NamedQuery(name = "LeaveType.findByAbsolute", query = "SELECT l FROM LeaveType l WHERE l.absolute = :absolute ORDER BY l.name ASC"),
     @NamedQuery(name = "LeaveType.findByActive", query = "SELECT l FROM LeaveType l WHERE l.active = :active ORDER BY l.name ASC")})
-public class LeaveType implements Serializable {
+public class LeaveType implements Serializable, Comparable<LeaveType> {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -160,6 +160,11 @@ public class LeaveType implements Serializable {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public int compareTo(LeaveType that) {
+        return this.name.compareTo(that.name);
     }
     
 }

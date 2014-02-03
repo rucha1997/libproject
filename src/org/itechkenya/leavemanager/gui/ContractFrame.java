@@ -5,6 +5,7 @@
  */
 package org.itechkenya.leavemanager.gui;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -304,6 +305,7 @@ public class ContractFrame extends LeaveManagerFrame {
     @Override
     public final void loadData() {
         List<Employee> employeeList = JpaManager.getEjc().findEmployeeEntities();
+        Collections.sort(employeeList);
         employeeComboBox.removeAllItems();
         for (Employee employee : employeeList) {
             employeeComboBox.addItem(employee);

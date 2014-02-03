@@ -3,6 +3,7 @@ package org.itechkenya.leavemanager.gui;
 import java.awt.Color;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -438,6 +439,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         Employee employee = (Employee) employeeComboBox.getSelectedItem();
         if (employee != null) {
             List<Contract> contractList = JpaManager.getCjc().findContracts(employee);
+            Collections.sort(contractList);
             contractComboBox.removeAllItems();
             for (Contract contract : contractList) {
                 contractComboBox.addItem(contract);
@@ -578,6 +580,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     @Override
     public final void loadData() {
         List<Employee> employeeList = JpaManager.getEjc().findEmployeeEntities();
+        Collections.sort(employeeList);
         employeeComboBox.removeAllItems();
         for (Employee employee : employeeList) {
             employeeComboBox.addItem(employee);
@@ -585,6 +588,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         employeeComboBox.setSelectedItem(null);
 
         List<LeaveType> leaveTypeList = JpaManager.getLtjc().findLeaveTypeEntities();
+        Collections.sort(leaveTypeList);
         leaveTypeComboBox.removeAllItems();
         for (LeaveType leaveType : leaveTypeList) {
             leaveTypeComboBox.addItem(leaveType);

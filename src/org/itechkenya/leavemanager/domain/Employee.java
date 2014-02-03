@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Employee.findByLastName", query = "SELECT e FROM Employee e WHERE e.lastName = :lastName ORDER BY e.lastName, e.otherNames ASC"),
     @NamedQuery(name = "Employee.findByOtherNames", query = "SELECT e FROM Employee e WHERE e.otherNames = :otherNames ORDER BY e.lastName, e.otherNames ASC"),
     @NamedQuery(name = "Employee.findByActive", query = "SELECT e FROM Employee e WHERE e.active = :active ORDER BY e.lastName, e.otherNames ASC")})
-public class Employee implements Serializable {
+public class Employee implements Serializable, Comparable<Employee> {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -145,6 +145,15 @@ public class Employee implements Serializable {
     @Override
     public String toString() {
         return lastName + " " + otherNames + " (" + code + ")";
+    }
+
+    @Override
+    public int compareTo(Employee that) {
+        int result = this.lastName.compareTo(that.lastName);
+        if (result == 0) {
+            result = this.otherNames.compareTo(that.otherNames);
+        }
+        return result;
     }
     
 }
