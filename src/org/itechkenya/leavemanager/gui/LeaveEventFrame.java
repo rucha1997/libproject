@@ -26,6 +26,8 @@ import org.joda.time.DateTime;
  * @author gitahi
  */
 public class LeaveEventFrame extends LeaveManagerFrame {
+    
+    private LeaveType defaultLeaveType;
 
     /**
      * Creates new form EarnLeaveFrame
@@ -51,13 +53,6 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
         eventButtonGroup = new javax.swing.ButtonGroup();
         outerPanel = new javax.swing.JPanel();
-        eventTypePanel = new javax.swing.JPanel();
-        spendRadioButton = new javax.swing.JRadioButton();
-        earnRadioButton = new javax.swing.JRadioButton();
-        employeeLabel = new javax.swing.JLabel();
-        employeeComboBox = new javax.swing.JComboBox();
-        contractLabel = new javax.swing.JLabel();
-        contractComboBox = new javax.swing.JComboBox();
         innerPanel = new javax.swing.JPanel();
         contractYearLabel = new javax.swing.JLabel();
         contractYearTextField = new javax.swing.JTextField();
@@ -67,12 +62,21 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         daysSpentTextField = new javax.swing.JTextField();
         balanceLabel = new javax.swing.JLabel();
         balanceTextField = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        employeeLabel = new javax.swing.JLabel();
+        employeeComboBox = new javax.swing.JComboBox();
+        contractLabel = new javax.swing.JLabel();
+        contractComboBox = new javax.swing.JComboBox();
+        eventTypePanel = new javax.swing.JPanel();
+        spendRadioButton = new javax.swing.JRadioButton();
+        earnRadioButton = new javax.swing.JRadioButton();
         leaveTypeLabel = new javax.swing.JLabel();
         leaveTypeComboBox = new javax.swing.JComboBox();
+        jPanel2 = new javax.swing.JPanel();
         startDateLabel = new javax.swing.JLabel();
         startDateChooser = new com.toedter.calendar.JDateChooser();
-        daysLabel = new javax.swing.JLabel();
         daysTextField = new javax.swing.JTextField();
+        daysLabel = new javax.swing.JLabel();
         endDateLabel = new javax.swing.JLabel();
         endDateChooser = new com.toedter.calendar.JDateChooser();
         commentsLabel = new javax.swing.JLabel();
@@ -91,54 +95,6 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         setTitle("Leave Events");
 
         outerPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        eventTypePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Event Type"));
-
-        eventButtonGroup.add(spendRadioButton);
-        spendRadioButton.setSelected(true);
-        spendRadioButton.setText("Spend");
-
-        eventButtonGroup.add(earnRadioButton);
-        earnRadioButton.setText("Earn");
-
-        javax.swing.GroupLayout eventTypePanelLayout = new javax.swing.GroupLayout(eventTypePanel);
-        eventTypePanel.setLayout(eventTypePanelLayout);
-        eventTypePanelLayout.setHorizontalGroup(
-            eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(eventTypePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(spendRadioButton)
-                .addGap(18, 18, 18)
-                .addComponent(earnRadioButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        eventTypePanelLayout.setVerticalGroup(
-            eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(eventTypePanelLayout.createSequentialGroup()
-                .addGroup(eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(earnRadioButton)
-                    .addComponent(spendRadioButton))
-                .addGap(0, 6, Short.MAX_VALUE))
-        );
-
-        employeeLabel.setText("Employee");
-
-        employeeComboBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                employeeComboBoxItemStateChanged(evt);
-            }
-        });
-
-        contractLabel.setText("Contract");
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, employeeComboBox, org.jdesktop.beansbinding.ELProperty.create("${selectedItem != null}"), contractComboBox, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
-        bindingGroup.addBinding(binding);
-
-        contractComboBox.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                contractComboBoxItemStateChanged(evt);
-            }
-        });
 
         innerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Summary"));
 
@@ -172,7 +128,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     .addComponent(balanceLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(balanceTextField)
+                    .addComponent(balanceTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                     .addComponent(daysSpentTextField)
                     .addComponent(daysEarnedTextField)
                     .addComponent(contractYearTextField))
@@ -196,7 +152,56 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 .addGroup(innerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(balanceLabel)
                     .addComponent(balanceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Event"));
+
+        employeeLabel.setText("Employee");
+
+        employeeComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                employeeComboBoxItemStateChanged(evt);
+            }
+        });
+
+        contractLabel.setText("Contract");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, employeeComboBox, org.jdesktop.beansbinding.ELProperty.create("${selectedItem != null}"), contractComboBox, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
+        bindingGroup.addBinding(binding);
+
+        contractComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                contractComboBoxItemStateChanged(evt);
+            }
+        });
+
+        eventTypePanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Event Type"));
+
+        eventButtonGroup.add(spendRadioButton);
+        spendRadioButton.setText("Spend");
+
+        eventButtonGroup.add(earnRadioButton);
+        earnRadioButton.setText("Earn");
+
+        javax.swing.GroupLayout eventTypePanelLayout = new javax.swing.GroupLayout(eventTypePanel);
+        eventTypePanel.setLayout(eventTypePanelLayout);
+        eventTypePanelLayout.setHorizontalGroup(
+            eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(eventTypePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(spendRadioButton)
+                .addGap(18, 18, 18)
+                .addComponent(earnRadioButton)
+                .addContainerGap(403, Short.MAX_VALUE))
+        );
+        eventTypePanelLayout.setVerticalGroup(
+            eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(eventTypePanelLayout.createSequentialGroup()
+                .addGroup(eventTypePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(earnRadioButton)
+                    .addComponent(spendRadioButton))
+                .addGap(0, 7, Short.MAX_VALUE))
         );
 
         leaveTypeLabel.setText("Leave Type");
@@ -212,6 +217,50 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(employeeLabel)
+                            .addComponent(contractLabel))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(contractComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(employeeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(eventTypePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(leaveTypeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(leaveTypeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(employeeLabel)
+                    .addComponent(employeeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(contractLabel)
+                    .addComponent(contractComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(eventTypePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(leaveTypeLabel)
+                    .addComponent(leaveTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Dates"));
+
         startDateLabel.setText("Start Date");
 
         startDateChooser.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -225,8 +274,6 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             }
         });
 
-        daysLabel.setText("Days");
-
         daysTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 daysTextFieldActionPerformed(evt);
@@ -238,6 +285,8 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             }
         });
 
+        daysLabel.setText("Days");
+
         endDateLabel.setText("End Date");
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, spendRadioButton, org.jdesktop.beansbinding.ELProperty.create("${selected}"), endDateLabel, org.jdesktop.beansbinding.BeanProperty.create("enabled"));
@@ -248,6 +297,47 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
         commentsLabel.setText("Comments");
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(daysLabel)
+                    .addComponent(commentsLabel)
+                    .addComponent(startDateLabel)
+                    .addComponent(endDateLabel))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(startDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(commentsTextField)
+                    .addComponent(daysTextField)
+                    .addComponent(endDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(startDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startDateLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(daysLabel)
+                    .addComponent(daysTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(endDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(endDateLabel))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(commentsLabel)
+                    .addComponent(commentsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout outerPanelLayout = new javax.swing.GroupLayout(outerPanel);
         outerPanel.setLayout(outerPanelLayout);
         outerPanelLayout.setHorizontalGroup(
@@ -255,67 +345,22 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             .addGroup(outerPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(eventTypePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(innerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(outerPanelLayout.createSequentialGroup()
-                        .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(employeeLabel)
-                            .addComponent(contractLabel))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(contractComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(employeeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(outerPanelLayout.createSequentialGroup()
-                        .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(daysLabel)
-                            .addComponent(commentsLabel)
-                            .addComponent(leaveTypeLabel)
-                            .addComponent(startDateLabel)
-                            .addComponent(endDateLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(startDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
-                            .addComponent(leaveTypeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(commentsTextField)
-                            .addComponent(daysTextField)
-                            .addComponent(endDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(innerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         outerPanelLayout.setVerticalGroup(
             outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(outerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(employeeLabel)
-                    .addComponent(employeeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(innerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(contractLabel)
-                    .addComponent(contractComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(innerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(eventTypePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(leaveTypeLabel)
-                    .addComponent(leaveTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(startDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(startDateLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(daysLabel)
-                    .addComponent(daysTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(endDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(endDateLabel))
-                .addGap(7, 7, 7)
-                .addGroup(outerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(commentsLabel)
-                    .addComponent(commentsTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -374,7 +419,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(closeButton)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 923, Short.MAX_VALUE))
+                    .addComponent(scrollPane))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -389,7 +434,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     .addComponent(closeButton)
                     .addComponent(deleteButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -463,6 +508,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 model.createRow(leaveEvent);
             }
             updateLeaveEvents(leaveEventList, contract);
+            clear();
         }
         table.setModel(model);
     }//GEN-LAST:event_contractComboBoxItemStateChanged
@@ -530,6 +576,8 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     private javax.swing.ButtonGroup eventButtonGroup;
     private javax.swing.JPanel eventTypePanel;
     private javax.swing.JPanel innerPanel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JComboBox leaveTypeComboBox;
     private javax.swing.JLabel leaveTypeLabel;
     private javax.swing.JButton newButton;
@@ -592,11 +640,16 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         leaveTypeComboBox.removeAllItems();
         for (LeaveType leaveType : leaveTypeList) {
             leaveTypeComboBox.addItem(leaveType);
+            if (leaveType.getRegular()) {
+                leaveTypeComboBox.setSelectedItem(leaveType);
+                defaultLeaveType = leaveType;
+            } else {
+                leaveTypeComboBox.setSelectedItem(null);
+            }
         }
-        leaveTypeComboBox.setSelectedItem(null);
-
         LeaveEventTableModel model = new LeaveEventTableModel();
         table.setModel(model);
+        clear();
     }
 
     @Override
@@ -656,7 +709,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             }
         }
         spendRadioButton.setSelected(true);
-        leaveTypeComboBox.setSelectedItem(null);
+        leaveTypeComboBox.setSelectedItem(defaultLeaveType);
         startDateChooser.setDate(null);
         daysTextField.setText("");
         endDateChooser.setDate(null);

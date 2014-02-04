@@ -44,7 +44,7 @@
                       <Component id="closeButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="scrollPane" alignment="0" pref="923" max="32767" attributes="0"/>
+                  <Component id="scrollPane" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -63,7 +63,7 @@
                   <Component id="deleteButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="scrollPane" pref="203" max="32767" attributes="0"/>
+              <Component id="scrollPane" pref="168" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -82,38 +82,14 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="eventTypePanel" max="32767" attributes="0"/>
-                      <Component id="innerPanel" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="employeeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="contractLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Component id="jPanel2" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jPanel1" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="contractComboBox" max="32767" attributes="0"/>
-                              <Component id="employeeComboBox" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="daysLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="commentsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="leaveTypeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="startDateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="endDateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="startDateChooser" pref="803" max="32767" attributes="0"/>
-                              <Component id="leaveTypeComboBox" max="32767" attributes="0"/>
-                              <Component id="commentsTextField" max="32767" attributes="0"/>
-                              <Component id="daysTextField" max="32767" attributes="0"/>
-                              <Component id="endDateChooser" alignment="1" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="innerPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -124,136 +100,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="employeeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="employeeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="jPanel1" max="32767" attributes="0"/>
+                      <Component id="innerPanel" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="contractLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="contractComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="innerPanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="eventTypePanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="leaveTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="leaveTypeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="startDateChooser" min="-2" max="-2" attributes="0"/>
-                      <Component id="startDateLabel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="daysLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="daysTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="endDateChooser" min="-2" max="-2" attributes="0"/>
-                      <Component id="endDateLabel" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="commentsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="commentsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="eventTypePanel">
-          <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="Event Type"/>
-              </Border>
-            </Property>
-          </Properties>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="spendRadioButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="earnRadioButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="earnRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="spendRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JRadioButton" name="spendRadioButton">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="eventButtonGroup"/>
-                </Property>
-                <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Spend"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JRadioButton" name="earnRadioButton">
-              <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="eventButtonGroup"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Earn"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
-        <Component class="javax.swing.JLabel" name="employeeLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Employee"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="employeeComboBox">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="employeeComboBoxItemStateChanged"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="contractLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Contract"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="contractComboBox">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
-          <BindingProperties>
-            <BindingProperty name="enabled" source="employeeComboBox" sourcePath="${selectedItem != null}" target="contractComboBox" targetPath="enabled" updateStrategy="0" immediately="false"/>
-          </BindingProperties>
-          <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="contractComboBoxItemStateChanged"/>
-          </Events>
-        </Component>
         <Container class="javax.swing.JPanel" name="innerPanel">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -276,7 +134,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="balanceTextField" max="32767" attributes="0"/>
+                          <Component id="balanceTextField" pref="180" max="32767" attributes="0"/>
                           <Component id="daysSpentTextField" max="32767" attributes="0"/>
                           <Component id="daysEarnedTextField" max="32767" attributes="0"/>
                           <Component id="contractYearTextField" max="32767" attributes="0"/>
@@ -307,7 +165,7 @@
                           <Component id="balanceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="balanceTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="19" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -358,64 +216,276 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="leaveTypeLabel">
+        <Container class="javax.swing.JPanel" name="jPanel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Leave Type"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="leaveTypeComboBox">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Event"/>
+              </Border>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="leaveTypeComboBoxItemStateChanged"/>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="leaveTypeComboBoxFocusLost"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="startDateLabel">
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="employeeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="contractLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="contractComboBox" max="32767" attributes="0"/>
+                                  <Component id="employeeComboBox" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="eventTypePanel" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="leaveTypeLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="leaveTypeComboBox" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="employeeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="employeeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="contractLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="contractComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="eventTypePanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="leaveTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="leaveTypeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="employeeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Employee"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="employeeComboBox">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="employeeComboBoxItemStateChanged"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="contractLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Contract"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="contractComboBox">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="enabled" source="employeeComboBox" sourcePath="${selectedItem != null}" target="contractComboBox" targetPath="enabled" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="contractComboBoxItemStateChanged"/>
+              </Events>
+            </Component>
+            <Container class="javax.swing.JPanel" name="eventTypePanel">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Event Type"/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="spendRadioButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="earnRadioButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="403" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="earnRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="spendRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="7" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JRadioButton" name="spendRadioButton">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="eventButtonGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Spend"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JRadioButton" name="earnRadioButton">
+                  <Properties>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="eventButtonGroup"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Earn"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="leaveTypeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Leave Type"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="leaveTypeComboBox">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="0"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="leaveTypeComboBoxItemStateChanged"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="leaveTypeComboBoxFocusLost"/>
+              </Events>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Start Date"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="Dates"/>
+              </Border>
+            </Property>
           </Properties>
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="startDateChooser">
-          <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="startDateChooserFocusLost"/>
-            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="startDateChooserPropertyChange"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="daysLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Days"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="daysTextField">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="daysTextFieldActionPerformed"/>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="daysTextFieldFocusLost"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="endDateLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="End Date"/>
-          </Properties>
-          <BindingProperties>
-            <BindingProperty name="enabled" source="spendRadioButton" sourcePath="${selected}" target="endDateLabel" targetPath="enabled" updateStrategy="0" immediately="false"/>
-          </BindingProperties>
-        </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="endDateChooser">
-          <BindingProperties>
-            <BindingProperty name="enabled" source="spendRadioButton" sourcePath="${selected}" target="endDateChooser" targetPath="enabled" updateStrategy="0" immediately="false"/>
-          </BindingProperties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="commentsLabel">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Comments"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="commentsTextField">
-        </Component>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="daysLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="commentsLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="startDateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="endDateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="startDateChooser" max="32767" attributes="0"/>
+                          <Component id="commentsTextField" max="32767" attributes="0"/>
+                          <Component id="daysTextField" max="32767" attributes="0"/>
+                          <Component id="endDateChooser" alignment="1" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="startDateChooser" min="-2" max="-2" attributes="0"/>
+                          <Component id="startDateLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="daysLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="daysTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="endDateChooser" min="-2" max="-2" attributes="0"/>
+                          <Component id="endDateLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="commentsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="commentsTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="startDateLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Start Date"/>
+              </Properties>
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="startDateChooser">
+              <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="startDateChooserFocusLost"/>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="startDateChooserPropertyChange"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="daysTextField">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="daysTextFieldActionPerformed"/>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="daysTextFieldFocusLost"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="daysLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Days"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="endDateLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="End Date"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="enabled" source="spendRadioButton" sourcePath="${selected}" target="endDateLabel" targetPath="enabled" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+            </Component>
+            <Component class="com.toedter.calendar.JDateChooser" name="endDateChooser">
+              <BindingProperties>
+                <BindingProperty name="enabled" source="spendRadioButton" sourcePath="${selected}" target="endDateChooser" targetPath="enabled" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="commentsLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Comments"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="commentsTextField">
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="newButton">

@@ -154,7 +154,10 @@ public class LeaveManager implements Runnable {
             Collections.sort(contractLeaveEvents);
             updateCalculatedValues(contractLeaveEvents);
             for (LeaveEvent leaveEvent : contractLeaveEvents) {
-                if (new DateTime(leaveEvent.getStartDate()).getYear() == year) {
+                DateTime leaveEventStartDateTime = new DateTime(leaveEvent.getStartDate());
+                DateTime contractStartDateTime = new DateTime(contract.getStartDate());
+                if (leaveEventStartDateTime.getYear() == year
+                        && leaveEventStartDateTime.getMonthOfYear() < contractStartDateTime.getMonthOfYear()) {
                     balance = leaveEvent.getBalance();
                 }
             }
