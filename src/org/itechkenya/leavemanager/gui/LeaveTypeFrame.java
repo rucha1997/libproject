@@ -371,7 +371,7 @@ public class LeaveTypeFrame extends LeaveManagerFrame {
 
         @Override
         public String[] getColumns() {
-            String[] columns = {"Name", "Days per Month", "Regular", "Absolute", "Active"};
+            String[] columns = {"Name", "Days per Month", "Default", "Absolute", "Active"};
             return columns;
         }
     }
