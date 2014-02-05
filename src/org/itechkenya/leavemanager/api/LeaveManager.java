@@ -47,7 +47,7 @@ public class LeaveManager implements Runnable {
                                 leaveEvent.setContract(contract);
                                 leaveEvent.setContractYear(getContractYear(contract));
                                 leaveEvent.setLeaveType(leaveType);
-                                leaveEvent.setStartDate(new Date());
+                                leaveEvent.setStartDate(previousCompletedPeriod.getDate());
                                 if (previousCompletedPeriod.getPeriodType() == PeriodType.MONTH) {
                                     leaveEvent.setDaysEarned(leaveType.getDaysPerMonth());
                                     leaveEvent.setComment("Monthly: " + previousCompletedPeriod.getName());
@@ -129,20 +129,31 @@ public class LeaveManager implements Runnable {
         DateTime contractStartDate = new DateTime(contract.getStartDate());
 
         SimpleDateFormat monthSdf = new SimpleDateFormat("yyyyMM");
+        SimpleDateFormat yearSdf = new SimpleDateFormat("yyyy");
+
+        DateTime earnDateTime;
+        DateTime recordDateTime;
+        Date date;
+
         if (today.getDayOfMonth() >= contractStartDate.getDayOfMonth()) {
-            previousCompletedPeriods.add(
-                    new PreviousCompletedPeriod(monthSdf.format(today.minusMonths(1).toDate()), PeriodType.MONTH));
+            earnDateTime = today.minusMonths(1);
         } else {
-            previousCompletedPeriods.add(
-                    new PreviousCompletedPeriod(monthSdf.format(today.minusMonths(2).toDate()), PeriodType.MONTH));
+            earnDateTime = today.minusMonths(2);
         }
+        recordDateTime = earnDateTime.plusMonths(1);
+        date = DateTimeUtil.createDate(recordDateTime.getYear(), recordDateTime.getMonthOfYear(), contractStartDate.getDayOfMonth());
+        previousCompletedPeriods.add(
+                new PreviousCompletedPeriod(monthSdf.format(earnDateTime.toDate()), date, PeriodType.MONTH));
 
         int contractYear = getContractYear(contract);
         if (contractYear > 1) {
             int contractStartYear = new DateTime(contract.getStartDate()).getYear();
             int contractPreviousYear = contractStartYear + (contractYear - 1);
+            
+            Date recordDate = DateTimeUtil.createDate(contractPreviousYear, contractStartDate.getMonthOfYear(), contractStartDate.getDayOfMonth());
+
             previousCompletedPeriods.add(
-                    new PreviousCompletedPeriod(String.valueOf(contractPreviousYear), PeriodType.YEAR));
+                    new PreviousCompletedPeriod(yearSdf.format(recordDate), recordDate, PeriodType.YEAR));
         }
         return previousCompletedPeriods;
     }
@@ -168,15 +179,21 @@ public class LeaveManager implements Runnable {
     private class PreviousCompletedPeriod {
 
         private final String name;
+        private final Date date;
         private final PeriodType periodType;
 
-        public PreviousCompletedPeriod(String name, PeriodType periodType) {
+        public PreviousCompletedPeriod(String name, Date date, PeriodType periodType) {
             this.name = name;
+            this.date = date;
             this.periodType = periodType;
         }
 
         public String getName() {
             return name;
+        }
+
+        public Date getDate() {
+            return date;
         }
 
         public PeriodType getPeriodType() {

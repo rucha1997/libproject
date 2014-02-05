@@ -1,6 +1,7 @@
 package org.itechkenya.leavemanager.api;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
@@ -10,6 +11,10 @@ import org.joda.time.DateTimeConstants;
  * @author gitahi
  */
 public class DateTimeUtil {
+
+    private final static int DEFAULT_YEAR = 2000;
+    private final static int DEFAULT_HOUR = 0;
+    private final static int DEFAULT_MINUTE = 0;
 
     public static boolean isPublicHoliday(DateTime datetime) {
         List<DateTime> publicHolidays = getPublicHolidays();
@@ -30,18 +35,19 @@ public class DateTimeUtil {
                 || datetime.getDayOfWeek() == DateTimeConstants.SUNDAY;
     }
 
+    public static Date createDate(int year, int month, int day) {
+        return new DateTime(year, month, day, DEFAULT_HOUR, DEFAULT_MINUTE).toDate();
+    }
+
     private static List<DateTime> getPublicHolidays() {
         List<DateTime> publicHolidays = new ArrayList<>();
-        int defaultYear = 2000;
-        int defaultHour = 0;
-        int defaultMinute = 0;
-        publicHolidays.add(new DateTime(defaultYear, 1, 1, defaultHour, defaultMinute)); //New Year Day
-        publicHolidays.add(new DateTime(defaultYear, 5, 1, defaultHour, defaultMinute)); //Labor Day
-        publicHolidays.add(new DateTime(defaultYear, 6, 1, defaultHour, defaultMinute)); //Madaraka Day
-        publicHolidays.add(new DateTime(defaultYear, 10, 20, defaultHour, defaultMinute)); //Mashujaa Day
-        publicHolidays.add(new DateTime(defaultYear, 12, 12, defaultHour, defaultMinute)); //Jamhuri Day
-        publicHolidays.add(new DateTime(defaultYear, 12, 25, defaultHour, defaultMinute)); //Christmas Day
-        publicHolidays.add(new DateTime(defaultYear, 12, 26, defaultHour, defaultMinute)); //Boxing Day
+        publicHolidays.add(new DateTime(DEFAULT_YEAR, 1, 1, DEFAULT_HOUR, DEFAULT_MINUTE)); //New Year Day
+        publicHolidays.add(new DateTime(DEFAULT_YEAR, 5, 1, DEFAULT_HOUR, DEFAULT_MINUTE)); //Labor Day
+        publicHolidays.add(new DateTime(DEFAULT_YEAR, 6, 1, DEFAULT_HOUR, DEFAULT_MINUTE)); //Madaraka Day
+        publicHolidays.add(new DateTime(DEFAULT_YEAR, 10, 20, DEFAULT_HOUR, DEFAULT_MINUTE)); //Mashujaa Day
+        publicHolidays.add(new DateTime(DEFAULT_YEAR, 12, 12, DEFAULT_HOUR, DEFAULT_MINUTE)); //Jamhuri Day
+        publicHolidays.add(new DateTime(DEFAULT_YEAR, 12, 25, DEFAULT_HOUR, DEFAULT_MINUTE)); //Christmas Day
+        publicHolidays.add(new DateTime(DEFAULT_YEAR, 12, 26, DEFAULT_HOUR, DEFAULT_MINUTE)); //Boxing Day
         return publicHolidays;
     }
 
