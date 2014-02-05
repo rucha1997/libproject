@@ -282,6 +282,7 @@ public class ContractFrame extends LeaveManagerFrame {
             }
             table.setModel(model);
         }
+        clear();
     }//GEN-LAST:event_employeeComboBoxItemStateChanged
 
 

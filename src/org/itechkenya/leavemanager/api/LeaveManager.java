@@ -145,17 +145,22 @@ public class LeaveManager implements Runnable {
         previousCompletedPeriods.add(
                 new PreviousCompletedPeriod(monthSdf.format(earnDateTime.toDate()), date, PeriodType.MONTH));
 
-        int contractYear = getContractYear(contract);
-        if (contractYear > 1) {
-            int contractStartYear = new DateTime(contract.getStartDate()).getYear();
-            int contractPreviousYear = contractStartYear + (contractYear - 1);
-            
-            Date recordDate = DateTimeUtil.createDate(contractPreviousYear, contractStartDate.getMonthOfYear(), contractStartDate.getDayOfMonth());
+        int contractYearCount = getContractYear(contract);
+        if (contractYearCount > 1) {
+            int previousContractYear = getPreviousContractYear(contract, contractYearCount);
+
+            Date recordDate = DateTimeUtil.createDate(previousContractYear + 1, contractStartDate.getMonthOfYear(), contractStartDate.getDayOfMonth());
 
             previousCompletedPeriods.add(
-                    new PreviousCompletedPeriod(yearSdf.format(recordDate), recordDate, PeriodType.YEAR));
+                    new PreviousCompletedPeriod(String.valueOf(previousContractYear), recordDate, PeriodType.YEAR));
         }
         return previousCompletedPeriods;
+    }
+
+    private int getPreviousContractYear(Contract contract, int contractYearCount) {
+        DateTime contractStartDateTime = new DateTime(contract.getStartDate());
+        int contractStartYear = contractStartDateTime.getYear();
+        return contractStartYear + (contractYearCount - 2);
     }
 
     private BigDecimal getLeaveBalanceAtYearEnd(Contract contract, int year) {
@@ -164,11 +169,12 @@ public class LeaveManager implements Runnable {
             List<LeaveEvent> contractLeaveEvents = contract.getLeaveEventList();
             Collections.sort(contractLeaveEvents);
             updateCalculatedValues(contractLeaveEvents);
+            DateTime contractStartDateTime;
             for (LeaveEvent leaveEvent : contractLeaveEvents) {
-                DateTime leaveEventStartDateTime = new DateTime(leaveEvent.getStartDate());
-                DateTime contractStartDateTime = new DateTime(contract.getStartDate());
-                if (leaveEventStartDateTime.getYear() == year
-                        && leaveEventStartDateTime.getMonthOfYear() < contractStartDateTime.getMonthOfYear()) {
+                contractStartDateTime = new DateTime(contract.getStartDate());
+                Date contractDateThisYear = DateTimeUtil.createDate(year + 1,
+                        contractStartDateTime.getMonthOfYear(), contractStartDateTime.getDayOfMonth());
+                if (leaveEvent.getStartDate().compareTo(contractDateThisYear) != 1) {
                     balance = leaveEvent.getBalance();
                 }
             }
