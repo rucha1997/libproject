@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeConstants;
+import org.joda.time.LocalDate;
 
 /**
  *
@@ -36,7 +37,9 @@ public class DateTimeUtil {
     }
 
     public static Date createDate(int year, int month, int day) {
-        return new DateTime(year, month, day, DEFAULT_HOUR, DEFAULT_MINUTE).toDate();
+        DateTime firstDateTime = new DateTime(year, month, 1, DEFAULT_HOUR, DEFAULT_MINUTE);
+        int maxDay = firstDateTime.dayOfMonth().withMaximumValue().getDayOfMonth();
+        return new DateTime(year, month, maxDay <= day ? maxDay : day, DEFAULT_HOUR, DEFAULT_MINUTE).toDate();
     }
 
     private static List<DateTime> getPublicHolidays() {

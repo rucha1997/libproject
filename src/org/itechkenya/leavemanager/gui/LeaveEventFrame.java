@@ -26,7 +26,7 @@ import org.joda.time.DateTime;
  * @author gitahi
  */
 public class LeaveEventFrame extends LeaveManagerFrame {
-    
+
     private LeaveType defaultLeaveType;
 
     /**
@@ -593,13 +593,16 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
     public void save(LeaveEvent leaveEvent, boolean auto) {
         try {
+            Contract contract = (Contract) contractComboBox.getSelectedItem();
             if (leaveEvent == null || auto) {
                 if (!auto) {
                     leaveEvent = new LeaveEvent();
                     flesh(leaveEvent);
                 }
                 JpaManager.getLejc().create(leaveEvent);
-                updateTable(leaveEvent, UpdateType.CREATE);
+                if (leaveEvent.getContract().equals(contract)) {
+                    updateTable(leaveEvent, UpdateType.CREATE);
+                }
             } else {
                 if (leaveEvent.getMonth() != null) {
                     UiManager.showWarningMessage(this, "This leave event was automatically created. You cannot update it.", saveButton);

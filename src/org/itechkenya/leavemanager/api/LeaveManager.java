@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
 import org.itechkenya.leavemanager.domain.LeaveType;
@@ -21,6 +23,7 @@ import org.joda.time.Years;
 public class LeaveManager implements Runnable {
 
     private final MainForm mainForm;
+    private final long refreshRate = 10000L;
 
     public static final BigDecimal MINIMUM_CARRY_OVER = BigDecimal.TEN;
 
@@ -30,53 +33,60 @@ public class LeaveManager implements Runnable {
 
     @Override
     public void run() {
-        List<LeaveType> autoIncrementableLeaveTypes = JpaManager.getLtjc().findAutoIncrementableLeaveTypes();
-        if (autoIncrementableLeaveTypes != null && !autoIncrementableLeaveTypes.isEmpty()) {
-            List<Contract> activeContracts = JpaManager.getCjc().findActiveContracts();
-            if (activeContracts != null && !activeContracts.isEmpty()) {
-                int counter = 0;
-                for (LeaveType leaveType : autoIncrementableLeaveTypes) {
-                    for (Contract contract : activeContracts) {
-                        List<PreviousCompletedPeriod> previousCompletedPeriods = getPreviousCompletedPeriods(contract);
-                        for (PreviousCompletedPeriod previousCompletedPeriod : previousCompletedPeriods) {
-                            LeaveEvent leaveEvent = JpaManager.getLejc()
-                                    .findLeaveEvent(contract, leaveType, previousCompletedPeriod.getName());
-                            boolean create = true;
-                            if (leaveEvent == null) {
-                                leaveEvent = new LeaveEvent();
-                                leaveEvent.setContract(contract);
-                                leaveEvent.setContractYear(getContractYear(contract));
-                                leaveEvent.setLeaveType(leaveType);
-                                leaveEvent.setStartDate(previousCompletedPeriod.getDate());
-                                if (previousCompletedPeriod.getPeriodType() == PeriodType.MONTH) {
-                                    leaveEvent.setDaysEarned(leaveType.getDaysPerMonth());
-                                    leaveEvent.setComment("Monthly: " + previousCompletedPeriod.getName());
-                                } else if (previousCompletedPeriod.getPeriodType() == PeriodType.YEAR) {
-                                    BigDecimal balance = getLeaveBalanceAtYearEnd(contract, Integer.parseInt(previousCompletedPeriod.getName()));
-                                    if (balance.compareTo(BigDecimal.ZERO) == 1) {
-                                        if (balance.compareTo(MINIMUM_CARRY_OVER) == 1) {
-                                            leaveEvent.setDaysSpent(balance.add(MINIMUM_CARRY_OVER.negate()));
-                                            leaveEvent.setEndDate(leaveEvent.getStartDate());
-                                            leaveEvent.setComment("Forfeiture: " + previousCompletedPeriod.getName());
-                                        } else {
-                                            create = false;
+        while (true) {
+            try {
+                List<LeaveType> autoIncrementableLeaveTypes = JpaManager.getLtjc().findAutoIncrementableLeaveTypes();
+                if (autoIncrementableLeaveTypes != null && !autoIncrementableLeaveTypes.isEmpty()) {
+                    List<Contract> activeContracts = JpaManager.getCjc().findActiveContracts();
+                    if (activeContracts != null && !activeContracts.isEmpty()) {
+                        int counter = 0;
+                        for (LeaveType leaveType : autoIncrementableLeaveTypes) {
+                            for (Contract contract : activeContracts) {
+                                List<PreviousCompletedPeriod> previousCompletedPeriods = getPreviousCompletedPeriods(contract);
+                                for (PreviousCompletedPeriod previousCompletedPeriod : previousCompletedPeriods) {
+                                    LeaveEvent leaveEvent = JpaManager.getLejc()
+                                            .findLeaveEvent(contract, leaveType, previousCompletedPeriod.getName());
+                                    boolean create = true;
+                                    if (leaveEvent == null) {
+                                        leaveEvent = new LeaveEvent();
+                                        leaveEvent.setContract(contract);
+                                        leaveEvent.setContractYear(getContractYear(contract));
+                                        leaveEvent.setLeaveType(leaveType);
+                                        leaveEvent.setStartDate(previousCompletedPeriod.getDate());
+                                        if (previousCompletedPeriod.getPeriodType() == PeriodType.MONTH) {
+                                            leaveEvent.setDaysEarned(leaveType.getDaysPerMonth());
+                                            leaveEvent.setComment("Monthly: " + previousCompletedPeriod.getName());
+                                        } else if (previousCompletedPeriod.getPeriodType() == PeriodType.YEAR) {
+                                            BigDecimal balance = getLeaveBalanceAtYearEnd(contract, Integer.parseInt(previousCompletedPeriod.getName()));
+                                            if (balance.compareTo(BigDecimal.ZERO) == 1) {
+                                                if (balance.compareTo(MINIMUM_CARRY_OVER) == 1) {
+                                                    leaveEvent.setDaysSpent(balance.add(MINIMUM_CARRY_OVER.negate()));
+                                                    leaveEvent.setEndDate(leaveEvent.getStartDate());
+                                                    leaveEvent.setComment("Forfeiture: " + previousCompletedPeriod.getName());
+                                                } else {
+                                                    create = false;
+                                                }
+                                            } else {
+                                                create = false;
+                                            }
                                         }
-                                    } else {
-                                        create = false;
+                                        leaveEvent.setMonth(previousCompletedPeriod.getName());
+                                        if (create) {
+                                            autoCreateLeaveEvent(leaveEvent);
+                                            counter++;
+                                        }
                                     }
-                                }
-                                leaveEvent.setMonth(previousCompletedPeriod.getName());
-                                if (create) {
-                                    autoCreateLeaveEvent(leaveEvent);
-                                    counter++;
                                 }
                             }
                         }
+                        if (counter > 1) {
+                            mainForm.showAutoCreatedLeaveEventMessage("Auto-created " + counter + " new leave event(s).");
+                        }
                     }
                 }
-                if (counter > 1) {
-                    mainForm.showAutoCreatedLeaveEventMessage("Auto-created " + counter + " new leave event(s).");
-                }
+                Thread.sleep(refreshRate);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(LeaveManager.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
