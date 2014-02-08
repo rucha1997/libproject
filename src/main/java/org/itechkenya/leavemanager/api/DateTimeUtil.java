@@ -1,5 +1,6 @@
 package org.itechkenya.leavemanager.api;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +40,13 @@ public class DateTimeUtil {
         DateTime firstDateTime = new DateTime(year, month, 1, DEFAULT_HOUR, DEFAULT_MINUTE);
         int maxDay = firstDateTime.dayOfMonth().withMaximumValue().getDayOfMonth();
         return new DateTime(year, month, maxDay <= day ? maxDay : day, DEFAULT_HOUR, DEFAULT_MINUTE).toDate();
+    }
+
+    public static String formatDate(Date date) {
+        if (date != null) {
+            return new SimpleDateFormat("MMM dd, yyyy").format(date);
+        }
+        return "None";
     }
 
     private static List<DateTime> getPublicHolidays() {

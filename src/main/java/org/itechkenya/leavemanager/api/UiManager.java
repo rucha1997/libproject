@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.itechkenya.leavemanager.api;
 
 import java.awt.Component;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -42,12 +35,5 @@ public class UiManager {
 
     public static void showConstraintViolationMessage(Component source, String record) {
         showErrorMessage(source, "Some records depend on the record: '" + record + "'. Please delete those first.");
-    }
-
-    public static String formatDate(Date date) {
-        if (date != null) {
-            return new SimpleDateFormat("MMM dd, yyyy").format(date);
-        }
-        return "None";
     }
 }
