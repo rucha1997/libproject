@@ -164,7 +164,7 @@
             <Component class="javax.swing.JButton" name="leaveEventsButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/leave-event.png"/>
+                  <Image iconType="3" name="/icons/leave-event.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Leave Events"/>
               </Properties>
@@ -177,7 +177,7 @@
             <Component class="javax.swing.JButton" name="employeesButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/employee.png"/>
+                  <Image iconType="3" name="/icons/employee.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Employees"/>
               </Properties>
@@ -188,7 +188,7 @@
             <Component class="javax.swing.JButton" name="contractsButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/contract.png"/>
+                  <Image iconType="3" name="/icons/contract.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Contracts"/>
               </Properties>
@@ -201,7 +201,7 @@
             <Component class="javax.swing.JButton" name="leaveTypesButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/leave-type.png"/>
+                  <Image iconType="3" name="/icons/leave-type.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Leave Types"/>
               </Properties>
@@ -212,7 +212,7 @@
             <Component class="javax.swing.JButton" name="organizationButton">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/organization.png"/>
+                  <Image iconType="3" name="/icons/organization.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Organization"/>
               </Properties>
@@ -270,7 +270,7 @@
         <Component class="javax.swing.JButton" name="leaveEventToolButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/leave-event.png"/>
+              <Image iconType="3" name="/icons/leave-event.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Leave events"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -286,7 +286,7 @@
         <Component class="javax.swing.JButton" name="employeeToolButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/employee.png"/>
+              <Image iconType="3" name="/icons/employee.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Employees"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -300,7 +300,7 @@
         <Component class="javax.swing.JButton" name="contractToolButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/contract.png"/>
+              <Image iconType="3" name="/icons/contract.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Contracts"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -316,7 +316,7 @@
         <Component class="javax.swing.JButton" name="leaveTypeToolButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/leave-type.png"/>
+              <Image iconType="3" name="/icons/leave-type.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Leave type"/>
             <Property name="focusable" type="boolean" value="false"/>
@@ -330,7 +330,7 @@
         <Component class="javax.swing.JButton" name="organizationToolButton">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/org/itechkenya/leavemanager/gui/icons/organization.png"/>
+              <Image iconType="3" name="/icons/organization.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Organization"/>
             <Property name="focusable" type="boolean" value="false"/>

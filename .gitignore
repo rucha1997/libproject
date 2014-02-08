@@ -6,6 +6,7 @@
 *.exe
 *.o
 *.so
+/target
 
 # bin directory #
 #################
@@ -43,6 +44,7 @@ build.xml
 build/
 dist/
 nbproject/
+nbactions.xml
 
 # Eclipse #
 ###########

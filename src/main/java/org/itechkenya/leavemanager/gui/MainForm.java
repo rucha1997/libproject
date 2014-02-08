@@ -28,7 +28,7 @@ public class MainForm extends javax.swing.JFrame {
     public MainForm() {
         initComponents();
         showTitle(((OrganizationFrame) organizationFrame).getOrganization());
-        setIconImage(new ImageIcon(getClass().getResource("icons/leave-manager.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/icons/leave-manager.png")).getImage());
     }
 
     /**
@@ -85,7 +85,7 @@ public class MainForm extends javax.swing.JFrame {
 
         splitPane.setRightComponent(desktopPane);
 
-        leaveEventsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/leave-event.png"))); // NOI18N
+        leaveEventsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/leave-event.png"))); // NOI18N
         leaveEventsButton.setText("Leave Events");
         leaveEventsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,7 +93,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        employeesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/employee.png"))); // NOI18N
+        employeesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/employee.png"))); // NOI18N
         employeesButton.setText("Employees");
         employeesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,7 +101,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        contractsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/contract.png"))); // NOI18N
+        contractsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/contract.png"))); // NOI18N
         contractsButton.setText("Contracts");
         contractsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,7 +109,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        leaveTypesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/leave-type.png"))); // NOI18N
+        leaveTypesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/leave-type.png"))); // NOI18N
         leaveTypesButton.setText("Leave Types");
         leaveTypesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,7 +117,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        organizationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/organization.png"))); // NOI18N
+        organizationButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/organization.png"))); // NOI18N
         organizationButton.setText("Organization");
         organizationButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -187,7 +187,7 @@ public class MainForm extends javax.swing.JFrame {
 
         toolBar.setRollover(true);
 
-        leaveEventToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/leave-event.png"))); // NOI18N
+        leaveEventToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/leave-event.png"))); // NOI18N
         leaveEventToolButton.setToolTipText("Leave events");
         leaveEventToolButton.setFocusable(false);
         leaveEventToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -200,7 +200,7 @@ public class MainForm extends javax.swing.JFrame {
         toolBar.add(leaveEventToolButton);
         toolBar.add(jSeparator1);
 
-        employeeToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/employee.png"))); // NOI18N
+        employeeToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/employee.png"))); // NOI18N
         employeeToolButton.setToolTipText("Employees");
         employeeToolButton.setFocusable(false);
         employeeToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -212,7 +212,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         toolBar.add(employeeToolButton);
 
-        contractToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/contract.png"))); // NOI18N
+        contractToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/contract.png"))); // NOI18N
         contractToolButton.setToolTipText("Contracts");
         contractToolButton.setFocusable(false);
         contractToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -225,7 +225,7 @@ public class MainForm extends javax.swing.JFrame {
         toolBar.add(contractToolButton);
         toolBar.add(jSeparator2);
 
-        leaveTypeToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/leave-type.png"))); // NOI18N
+        leaveTypeToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/leave-type.png"))); // NOI18N
         leaveTypeToolButton.setToolTipText("Leave type");
         leaveTypeToolButton.setFocusable(false);
         leaveTypeToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -237,7 +237,7 @@ public class MainForm extends javax.swing.JFrame {
         });
         toolBar.add(leaveTypeToolButton);
 
-        organizationToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/itechkenya/leavemanager/gui/icons/organization.png"))); // NOI18N
+        organizationToolButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/organization.png"))); // NOI18N
         organizationToolButton.setToolTipText("Organization");
         organizationToolButton.setFocusable(false);
         organizationToolButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -360,7 +360,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JButton leaveEventToolButton;
     private javax.swing.JButton leaveEventsButton;
