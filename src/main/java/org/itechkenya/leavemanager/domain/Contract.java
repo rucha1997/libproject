@@ -218,7 +218,13 @@ public class Contract implements Serializable, Comparable<Contract> {
         BigDecimal balance = BigDecimal.ZERO;
         for (LeaveEvent leaveEvent : this.getLeaveEventList()) {
             assignStatus(leaveEvent);
-            balance = balance.add(assignBalance(leaveEvent, balance));
+            if (leaveEvent.getDaysEarned() != null) {
+                balance = balance.add(leaveEvent.getDaysEarned());
+            }
+            if (leaveEvent.getDaysSpent() != null) {
+                balance = balance.add(leaveEvent.getDaysSpent().negate());
+            }
+            leaveEvent.setBalance(balance);
         }
     }
 
@@ -295,17 +301,6 @@ public class Contract implements Serializable, Comparable<Contract> {
             }
         }
         leaveEvent.setStatus(status);
-    }
-
-    private BigDecimal assignBalance(LeaveEvent leaveEvent, BigDecimal balance) {
-        if (leaveEvent.getDaysEarned() != null) {
-            balance = balance.add(leaveEvent.getDaysEarned());
-        }
-        if (leaveEvent.getDaysSpent() != null) {
-            balance = balance.add(leaveEvent.getDaysSpent().negate());
-        }
-        leaveEvent.setBalance(balance);
-        return balance;
     }
 
     public class PreviouslyCompletedPeriod {

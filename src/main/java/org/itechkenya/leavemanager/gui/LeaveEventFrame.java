@@ -20,15 +20,12 @@ package org.itechkenya.leavemanager.gui;
 
 import java.awt.Color;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JTable;
-import org.itechkenya.leavemanager.api.DateTimeUtil;
 import org.itechkenya.leavemanager.api.JpaManager;
 import org.itechkenya.leavemanager.api.UiManager;
 import org.itechkenya.leavemanager.domain.Contract;
@@ -36,7 +33,6 @@ import org.itechkenya.leavemanager.domain.Employee;
 import org.itechkenya.leavemanager.domain.LeaveEvent;
 import org.itechkenya.leavemanager.domain.LeaveType;
 import org.itechkenya.leavemanager.jpa.exceptions.NonexistentEntityException;
-import org.joda.time.DateTime;
 
 /**
  *
@@ -488,7 +484,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     JpaManager.getLejc().destroy(leaveEvent.getId());
                     updateTable(leaveEvent, UpdateType.DESTROY);
                     mainForm.dataChanged(this);
-                    updateLeaveEvents(leaveEvent.getContract());
+                    updateLeaveEvents(leaveEvent.getContract(), true);
                 } catch (NonexistentEntityException ex) {
                     UiManager.showErrorMessage(this, ex.getMessage());
                     Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -520,11 +516,11 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         Contract contract = (Contract) contractComboBox.getSelectedItem();
         LeaveEventTableModel model = new LeaveEventTableModel();
         if (contract != null) {
-            List<LeaveEvent> leaveEventList = JpaManager.getLejc().findLeaveEvents(contract);
+            List<LeaveEvent> leaveEventList = contract.getLeaveEventList();
+            updateLeaveEvents(contract, false);
             for (LeaveEvent leaveEvent : leaveEventList) {
                 model.createRow(leaveEvent);
             }
-            updateLeaveEvents(contract);
             clear();
         }
         table.setModel(model);
@@ -631,7 +627,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             }
             clear();
             mainForm.dataChanged(this);
-            updateLeaveEvents(leaveEvent.getContract());
+            updateLeaveEvents(leaveEvent.getContract(), true);
         } catch (NonexistentEntityException ex) {
             if (!auto) {
                 UiManager.showErrorMessage(this, ex.getMessage());
@@ -822,8 +818,20 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         }
     }
 
-    private void updateLeaveEvents(Contract contract) {
+    private void updateLeaveEvents(Contract contract, boolean updateTable) {
         contract.calculateLeaveEventValues();
+        if (updateTable) {
+            if (table.getModel() != null && table.getModel() instanceof LeaveEventTableModel) {
+                LeaveEventTableModel model = (LeaveEventTableModel) table.getModel();
+                for (Object item : model.getRows()) {
+                    LeaveEvent le = (LeaveEvent) item;
+                    int l = contract.getLeaveEventList().indexOf(le);
+                    if (contract.getLeaveEventList().contains(le)) {
+                        le.setBalance(contract.getLeaveEventList().get(l).getBalance());
+                    }
+                }
+            }
+        }
 
         BigDecimal daysEarned = contract.calculateDaysEarned();
         BigDecimal daysSpent = contract.calculateDaysSpent();
