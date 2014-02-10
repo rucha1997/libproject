@@ -687,8 +687,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             leaveEvent.setContract((Contract) contractComboBox.getSelectedItem());
             leaveEvent.setLeaveType((LeaveType) leaveTypeComboBox.getSelectedItem());
             leaveEvent.setStartDate(startDateChooser.getDate());
-            leaveEvent.setContractYear(LeaveManager.getContractYear(leaveEvent.getContract(),
-                    leaveEvent.getStartDate()));
+            leaveEvent.setContractYear(leaveEvent.getContract().calculateContractYear(leaveEvent.getStartDate()));
             if (earnRadioButton.isSelected()) {
                 leaveEvent.setDaysEarned(new BigDecimal(daysTextField.getText()));
                 leaveEvent.setDaysSpent(null);
@@ -852,7 +851,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                 }
             }
         }
-        int contractYear = LeaveManager.getContractYear(contract);
+        int contractYear = contract.calculateContractYear();
         BigDecimal balance = daysEarned.add(daysSpent.negate());
         contractYearTextField.setText(String.valueOf(contractYear));
         daysEarnedTextField.setText(daysEarned.toString());

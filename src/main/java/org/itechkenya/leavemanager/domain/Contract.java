@@ -1,19 +1,21 @@
 /**
  * LeaveManager, a basic leave management program for small organizations
- * 
+ *
  * This file is part of LeaveManager.
- * 
- * LeaveManager is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * LeaveManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * 
- * See the GNU General Public License for more details. You should have received a copy of the GNU
- * General Public License along with LeaveManager. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * LeaveManager is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * LeaveManager is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU General Public License for more details. You should have received
+ * a copy of the GNU General Public License along with LeaveManager. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
-
 package org.itechkenya.leavemanager.domain;
 
 import java.io.Serializable;
@@ -37,6 +39,8 @@ import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.itechkenya.leavemanager.api.DateTimeUtil;
+import org.joda.time.DateTime;
+import org.joda.time.Years;
 
 /**
  *
@@ -148,21 +152,18 @@ public class Contract implements Serializable, Comparable<Contract> {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Contract)) {
             return false;
         }
         Contract other = (Contract) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
     public String toString() {
-        String active = this.getActive() ? "Active" : "Inactive";
-        return DateTimeUtil.formatDate(startDate) + " - " + DateTimeUtil.formatDate(endDate) + " (" + active + ")";
+        return DateTimeUtil.formatDate(startDate) 
+                + " - " + DateTimeUtil.formatDate(endDate) 
+                + " (" + (this.getActive() ? "Active" : "Inactive") + ")";
     }
 
     @Override
@@ -170,4 +171,12 @@ public class Contract implements Serializable, Comparable<Contract> {
         return this.getStartDate().compareTo(contract.getStartDate());
     }
 
+    public int calculateContractYear(Date asOf) {
+        return Years.yearsBetween(new DateTime(this.getStartDate()),
+                new DateTime(asOf)).getYears() + 1;
+    }
+
+    public int calculateContractYear() {
+        return calculateContractYear(new Date());
+    }
 }

@@ -74,7 +74,7 @@ public class LeaveManager implements Runnable {
                                     if (leaveEvent == null) {
                                         leaveEvent = new LeaveEvent();
                                         leaveEvent.setContract(contract);
-                                        leaveEvent.setContractYear(getContractYear(contract));
+                                        leaveEvent.setContractYear(contract.calculateContractYear());
                                         leaveEvent.setLeaveType(leaveType);
                                         leaveEvent.setStartDate(previousCompletedPeriod.getDate());
                                         if (previousCompletedPeriod.getPeriodType() == PeriodType.MONTH) {
@@ -113,15 +113,6 @@ public class LeaveManager implements Runnable {
                 Logger.getLogger(LeaveManager.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
-
-    public static int getContractYear(Contract contract, Date asOf) {
-        return Years.yearsBetween(new DateTime(contract.getStartDate()),
-                new DateTime(asOf)).getYears() + 1;
-    }
-
-    public static int getContractYear(Contract contract) {
-        return getContractYear(contract, new Date());
     }
 
     public static void updateCalculatedValues(List<LeaveEvent> leaveEvents) {
@@ -179,7 +170,7 @@ public class LeaveManager implements Runnable {
         previousCompletedPeriods.add(
                 new PreviousCompletedPeriod(monthSdf.format(earnDateTime.toDate()), date, PeriodType.MONTH));
 
-        int contractYearCount = getContractYear(contract);
+        int contractYearCount = contract.calculateContractYear();
         if (contractYearCount > 1) {
             int previousContractYear = getPreviousContractYear(contract, contractYearCount);
 
@@ -199,7 +190,7 @@ public class LeaveManager implements Runnable {
 
     private BigDecimal getLeaveBalanceAtYearEnd(Contract contract, int year) {
         BigDecimal balance = BigDecimal.ZERO;
-        if (getContractYear(contract) > 1) {
+        if (contract.calculateContractYear() > 1) {
             List<LeaveEvent> contractLeaveEvents = contract.getLeaveEventList();
             Collections.sort(contractLeaveEvents);
             updateCalculatedValues(contractLeaveEvents);
