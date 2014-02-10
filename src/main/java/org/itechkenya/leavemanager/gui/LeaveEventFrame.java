@@ -28,7 +28,6 @@ import javax.swing.JButton;
 import javax.swing.JTable;
 import org.itechkenya.leavemanager.api.DateTimeUtil;
 import org.itechkenya.leavemanager.api.JpaManager;
-import org.itechkenya.leavemanager.api.LeaveManager;
 import org.itechkenya.leavemanager.api.UiManager;
 import org.itechkenya.leavemanager.domain.Contract;
 import org.itechkenya.leavemanager.domain.Employee;
@@ -824,7 +823,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
     private void updateLeaveEvents(List<LeaveEvent> leaveEvents, Contract contract) {
         if (leaveEvents != null) {
             updateSummary(leaveEvents, contract);
-            LeaveManager.updateCalculatedValues(leaveEvents);
+            contract.calculateLeaveEventValues();
         } else {
             if (table.getModel() != null && table.getModel() instanceof LeaveEventTableModel) {
                 LeaveEventTableModel model = (LeaveEventTableModel) table.getModel();
@@ -833,7 +832,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     leaveEvents.add((LeaveEvent) item);
                 }
                 updateSummary(leaveEvents, contract);
-                LeaveManager.updateCalculatedValues(leaveEvents);
+                contract.calculateLeaveEventValues();
             }
         }
     }

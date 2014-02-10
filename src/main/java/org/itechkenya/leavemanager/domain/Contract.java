@@ -19,6 +19,10 @@
 package org.itechkenya.leavemanager.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -136,6 +140,10 @@ public class Contract implements Serializable, Comparable<Contract> {
 
     @XmlTransient
     public List<LeaveEvent> getLeaveEventList() {
+        if (leaveEventList == null) {
+            leaveEventList = new ArrayList<>();
+        }
+        Collections.sort(leaveEventList);
         return leaveEventList;
     }
 
@@ -161,8 +169,8 @@ public class Contract implements Serializable, Comparable<Contract> {
 
     @Override
     public String toString() {
-        return DateTimeUtil.formatDate(startDate) 
-                + " - " + DateTimeUtil.formatDate(endDate) 
+        return DateTimeUtil.formatDate(startDate)
+                + " - " + DateTimeUtil.formatDate(endDate)
                 + " (" + (this.getActive() ? "Active" : "Inactive") + ")";
     }
 
@@ -176,7 +184,137 @@ public class Contract implements Serializable, Comparable<Contract> {
                 new DateTime(asOf)).getYears() + 1;
     }
 
+    public int calculatePreviousContractYear(int contractYearCount) {
+        DateTime contractStartDateTime = new DateTime(this.getStartDate());
+        int contractStartYear = contractStartDateTime.getYear();
+        return contractStartYear + (contractYearCount - 2);
+    }
+
     public int calculateContractYear() {
         return calculateContractYear(new Date());
+    }
+
+    public void calculateLeaveEventValues() {
+        BigDecimal balance = BigDecimal.ZERO;
+        for (LeaveEvent leaveEvent : this.getLeaveEventList()) {
+            assignStatus(leaveEvent);
+            assignBalance(leaveEvent, balance);
+        }
+    }
+
+    public BigDecimal calculateLeaveBalanceAtYearEnd(int year) {
+        BigDecimal balance = BigDecimal.ZERO;
+        if (this.calculateContractYear() > 1) {
+            this.calculateLeaveEventValues();
+            DateTime contractStartDateTime;
+            for (LeaveEvent leaveEvent : this.getLeaveEventList()) {
+                contractStartDateTime = new DateTime(this.getStartDate());
+                Date contractDateThisYear = DateTimeUtil.createDate(year + 1,
+                        contractStartDateTime.getMonthOfYear(), contractStartDateTime.getDayOfMonth());
+                if (leaveEvent.getStartDate().compareTo(contractDateThisYear) != 1) {
+                    balance = leaveEvent.getBalance();
+                }
+            }
+        }
+        return balance;
+    }
+
+    public List<PreviousCompletedPeriod> calculatePreviousCompletedPeriods() {
+
+        List<PreviousCompletedPeriod> previousCompletedPeriods = new ArrayList<>();
+
+        DateTime today = new DateTime(new Date());
+        DateTime contractStartDate = new DateTime(this.getStartDate());
+
+        SimpleDateFormat monthSdf = new SimpleDateFormat("yyyyMM");
+        SimpleDateFormat yearSdf = new SimpleDateFormat("yyyy");
+
+        DateTime earnDateTime;
+        DateTime recordDateTime;
+        Date date;
+
+        if (today.getDayOfMonth() >= contractStartDate.getDayOfMonth()) {
+            earnDateTime = today.minusMonths(1);
+        } else {
+            earnDateTime = today.minusMonths(2);
+        }
+        recordDateTime = earnDateTime.plusMonths(1);
+        date = DateTimeUtil.createDate(recordDateTime.getYear(), recordDateTime.getMonthOfYear(), contractStartDate.getDayOfMonth());
+        previousCompletedPeriods.add(
+                new PreviousCompletedPeriod(monthSdf.format(earnDateTime.toDate()), date, PeriodType.MONTH));
+
+        int contractYearCount = this.calculateContractYear();
+        if (contractYearCount > 1) {
+            int previousContractYear = this.calculatePreviousContractYear(contractYearCount);
+
+            Date recordDate = DateTimeUtil.createDate(previousContractYear + 1, contractStartDate.getMonthOfYear(), contractStartDate.getDayOfMonth());
+
+            previousCompletedPeriods.add(
+                    new PreviousCompletedPeriod(String.valueOf(previousContractYear), recordDate, PeriodType.YEAR));
+        }
+        return previousCompletedPeriods;
+    }
+
+    private void assignStatus(LeaveEvent leaveEvent) {
+        String status = "NA";
+        if (leaveEvent.getDaysEarned() != null) {
+            status = "NA";
+        } else {
+            if (leaveEvent.getDaysSpent() != null) {
+                Date today = new Date();
+                if (leaveEvent.getStartDate().compareTo(today) == 1) {
+                    status = "Not started";
+                }
+                if (leaveEvent.getEndDate().compareTo(today) == -1) {
+                    status = "Completed";
+                }
+                if (leaveEvent.getStartDate().compareTo(today) != 1
+                        && leaveEvent.getEndDate().compareTo(today) != -1) {
+                    status = "In progress";
+                }
+            }
+        }
+        leaveEvent.setStatus(status);
+    }
+
+    private void assignBalance(LeaveEvent leaveEvent, BigDecimal balance) {
+        if (leaveEvent.getDaysEarned() != null) {
+            balance = balance.add(leaveEvent.getDaysEarned());
+        }
+        if (leaveEvent.getDaysSpent() != null) {
+            balance = balance.add(leaveEvent.getDaysSpent().negate());
+        }
+        leaveEvent.setBalance(balance);
+    }
+
+    public class PreviousCompletedPeriod {
+
+        private final String name;
+        private final Date date;
+        private final PeriodType periodType;
+
+        public PreviousCompletedPeriod(String name, Date date, PeriodType periodType) {
+            this.name = name;
+            this.date = date;
+            this.periodType = periodType;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Date getDate() {
+            return date;
+        }
+
+        public PeriodType getPeriodType() {
+            return periodType;
+        }
+    }
+
+    public enum PeriodType {
+
+        MONTH,
+        YEAR
     }
 }
