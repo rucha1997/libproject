@@ -33,6 +33,14 @@ import org.joda.time.DateTime;
 import org.joda.time.Years;
 
 /**
+ * Manages all automated leave events such as monthly leave increments and end of year
+ * forfeitures. This class spawns a separate thread on application startup. It then runs
+ * periodically after every 10 seconds to check for any new leave events that might need
+ * to be created automatically. In future, the 10 second polling time will be removed from
+ * the source file to a configuration file.
+ * 
+ * This class also provides a few static general purpose methods for leave events useful
+ * to other classes.
  *
  * @author gitahi
  */
