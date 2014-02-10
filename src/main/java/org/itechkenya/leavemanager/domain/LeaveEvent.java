@@ -243,7 +243,7 @@ public class LeaveEvent implements Serializable, Comparable<LeaveEvent> {
         return eDate;
     }
 
-    public Date getNextLeaveDayDate(Date currentLeaveDayDate) {
+    private Date getNextLeaveDayDate(Date currentLeaveDayDate) {
         DateTime nextLeaveDayDateTime = new DateTime(currentLeaveDayDate).plusDays(1);
         if (!this.getLeaveType().getAbsolute()) {
             if (DateTimeUtil.isSunday(nextLeaveDayDateTime) && DateTimeUtil.isPublicHoliday(nextLeaveDayDateTime)) {
