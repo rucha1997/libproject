@@ -1,19 +1,21 @@
 /**
  * LeaveManager, a basic leave management program for small organizations
- * 
+ *
  * This file is part of LeaveManager.
- * 
- * LeaveManager is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * LeaveManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * 
- * See the GNU General Public License for more details. You should have received a copy of the GNU
- * General Public License along with LeaveManager. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * LeaveManager is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * LeaveManager is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU General Public License for more details. You should have received
+ * a copy of the GNU General Public License along with LeaveManager. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
-
 package org.itechkenya.leavemanager.gui;
 
 import java.awt.Color;
@@ -486,7 +488,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
                     JpaManager.getLejc().destroy(leaveEvent.getId());
                     updateTable(leaveEvent, UpdateType.DESTROY);
                     mainForm.dataChanged(this);
-                    updateLeaveEvents(null, leaveEvent.getContract());
+                    updateLeaveEvents(leaveEvent.getContract());
                 } catch (NonexistentEntityException ex) {
                     UiManager.showErrorMessage(this, ex.getMessage());
                     Logger.getLogger(LeaveEventFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -522,7 +524,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             for (LeaveEvent leaveEvent : leaveEventList) {
                 model.createRow(leaveEvent);
             }
-            updateLeaveEvents(leaveEventList, contract);
+            updateLeaveEvents(contract);
             clear();
         }
         table.setModel(model);
@@ -530,39 +532,39 @@ public class LeaveEventFrame extends LeaveManagerFrame {
 
     private void leaveTypeComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_leaveTypeComboBoxItemStateChanged
         if (spendRadioButton.isSelected()) {
-            showEndDate(calculateEndDate(null, false));
+            showEndDate();
         }
     }//GEN-LAST:event_leaveTypeComboBoxItemStateChanged
 
     private void leaveTypeComboBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_leaveTypeComboBoxFocusLost
         if (spendRadioButton.isSelected()) {
-            showEndDate(calculateEndDate(null, false));
+            showEndDate();
         }
     }//GEN-LAST:event_leaveTypeComboBoxFocusLost
 
     private void startDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_startDateChooserPropertyChange
         if ("date".equals(evt.getPropertyName())) {
             if (spendRadioButton.isSelected()) {
-                showEndDate(calculateEndDate(null, false));
+                showEndDate();
             }
         }
     }//GEN-LAST:event_startDateChooserPropertyChange
 
     private void startDateChooserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_startDateChooserFocusLost
         if (spendRadioButton.isSelected()) {
-            showEndDate(calculateEndDate(null, false));
+            showEndDate();
         }
     }//GEN-LAST:event_startDateChooserFocusLost
 
     private void daysTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_daysTextFieldActionPerformed
         if (spendRadioButton.isSelected()) {
-            showEndDate(calculateEndDate(null, false));
+            showEndDate();
         }
     }//GEN-LAST:event_daysTextFieldActionPerformed
 
     private void daysTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_daysTextFieldFocusLost
         if (spendRadioButton.isSelected()) {
-            showEndDate(calculateEndDate(null, false));
+            showEndDate();
         }
     }//GEN-LAST:event_daysTextFieldFocusLost
 
@@ -629,7 +631,7 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             }
             clear();
             mainForm.dataChanged(this);
-            updateLeaveEvents(null, leaveEvent.getContract());
+            updateLeaveEvents(leaveEvent.getContract());
         } catch (NonexistentEntityException ex) {
             if (!auto) {
                 UiManager.showErrorMessage(this, ex.getMessage());
@@ -820,36 +822,11 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         }
     }
 
-    private void updateLeaveEvents(List<LeaveEvent> leaveEvents, Contract contract) {
-        if (leaveEvents != null) {
-            updateSummary(leaveEvents, contract);
-            contract.calculateLeaveEventValues();
-        } else {
-            if (table.getModel() != null && table.getModel() instanceof LeaveEventTableModel) {
-                LeaveEventTableModel model = (LeaveEventTableModel) table.getModel();
-                leaveEvents = new ArrayList<>();
-                for (Object item : model.getRows()) {
-                    leaveEvents.add((LeaveEvent) item);
-                }
-                updateSummary(leaveEvents, contract);
-                contract.calculateLeaveEventValues();
-            }
-        }
-    }
+    private void updateLeaveEvents(Contract contract) {
+        contract.calculateLeaveEventValues();
 
-    private void updateSummary(List<LeaveEvent> leaveEventList, Contract contract) {
-        BigDecimal daysEarned = BigDecimal.ZERO;
-        BigDecimal daysSpent = BigDecimal.ZERO;
-        if (leaveEventList != null && !leaveEventList.isEmpty()) {
-            for (LeaveEvent leaveEvent : leaveEventList) {
-                if (leaveEvent.getDaysEarned() != null) {
-                    daysEarned = daysEarned.add(leaveEvent.getDaysEarned());
-                }
-                if (leaveEvent.getDaysSpent() != null) {
-                    daysSpent = daysSpent.add(leaveEvent.getDaysSpent());
-                }
-            }
-        }
+        BigDecimal daysEarned = contract.calculateDaysEarned();
+        BigDecimal daysSpent = contract.calculateDaysSpent();
         int contractYear = contract.calculateContractYear();
         BigDecimal balance = daysEarned.add(daysSpent.negate());
         contractYearTextField.setText(String.valueOf(contractYear));
@@ -864,37 +841,13 @@ public class LeaveEventFrame extends LeaveManagerFrame {
         }
     }
 
-    public Date calculateEndDate(LeaveEvent leaveEvent, boolean message) {
-        if (!validateFields(true, message)) {
-            return null;
+    private void showEndDate() {
+        if (!validateFields(true, false)) {
+            return;
         }
-        if (leaveEvent == null) {
-            leaveEvent = new LeaveEvent();
-            flesh(leaveEvent);
-        }
-        Integer fullDays = (leaveEvent.getDaysSpent().stripTrailingZeros().scale() <= 0)
-                ? leaveEvent.getDaysSpent().intValue() : leaveEvent.getDaysSpent().intValue() + 1;
-        Date endDate = leaveEvent.getStartDate();
-        for (int day = 1; day < fullDays; day++) {
-            endDate = getNextLeaveDayDate(leaveEvent, endDate);
-        }
-        return endDate;
-    }
-
-    private void showEndDate(Date endDate) {
-        endDateChooser.setDate(endDate);
-    }
-
-    private Date getNextLeaveDayDate(LeaveEvent leaveEvent, Date currentLeaveDayDate) {
-        DateTime nextLeaveDayDateTime = new DateTime(currentLeaveDayDate).plusDays(1);
-        if (!leaveEvent.getLeaveType().getAbsolute()) {
-            if (DateTimeUtil.isSunday(nextLeaveDayDateTime) && DateTimeUtil.isPublicHoliday(nextLeaveDayDateTime)) {
-                return getNextLeaveDayDate(leaveEvent, nextLeaveDayDateTime.plusDays(1).toDate());
-            } else if (DateTimeUtil.isWeekend(nextLeaveDayDateTime) || DateTimeUtil.isPublicHoliday(nextLeaveDayDateTime)) {
-                return getNextLeaveDayDate(leaveEvent, nextLeaveDayDateTime.toDate());
-            }
-        }
-        return nextLeaveDayDateTime.toDate();
+        LeaveEvent leaveEvent = new LeaveEvent();
+        flesh(leaveEvent);
+        endDateChooser.setDate(leaveEvent.calculateEndDate());
     }
 
     private boolean validateFields(boolean excludeEndDate, boolean message) {

@@ -1,19 +1,21 @@
 /**
  * LeaveManager, a basic leave management program for small organizations
- * 
+ *
  * This file is part of LeaveManager.
- * 
- * LeaveManager is free software: you can redistribute it and/or modify it under the terms of the
- * GNU General Public License as published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- * 
- * LeaveManager is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
- * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * 
- * See the GNU General Public License for more details. You should have received a copy of the GNU
- * General Public License along with LeaveManager. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * LeaveManager is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later
+ * version.
+ *
+ * LeaveManager is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU General Public License for more details. You should have received
+ * a copy of the GNU General Public License along with LeaveManager. If not, see
+ * <http://www.gnu.org/licenses/>.
  */
-
 package org.itechkenya.leavemanager.domain;
 
 import java.io.Serializable;
@@ -34,6 +36,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.itechkenya.leavemanager.api.DateTimeUtil;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -190,15 +194,11 @@ public class LeaveEvent implements Serializable, Comparable<LeaveEvent> {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof LeaveEvent)) {
             return false;
         }
         LeaveEvent other = (LeaveEvent) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
@@ -231,5 +231,27 @@ public class LeaveEvent implements Serializable, Comparable<LeaveEvent> {
     @Override
     public int compareTo(LeaveEvent leaveEvent) {
         return this.getStartDate().compareTo(leaveEvent.getStartDate());
+    }
+
+    public Date calculateEndDate() {
+        Integer fullDays = (this.getDaysSpent().stripTrailingZeros().scale() <= 0)
+                ? this.getDaysSpent().intValue() : this.getDaysSpent().intValue() + 1;
+        Date eDate = this.getStartDate();
+        for (int day = 1; day < fullDays; day++) {
+            eDate = this.getNextLeaveDayDate(eDate);
+        }
+        return eDate;
+    }
+
+    public Date getNextLeaveDayDate(Date currentLeaveDayDate) {
+        DateTime nextLeaveDayDateTime = new DateTime(currentLeaveDayDate).plusDays(1);
+        if (!this.getLeaveType().getAbsolute()) {
+            if (DateTimeUtil.isSunday(nextLeaveDayDateTime) && DateTimeUtil.isPublicHoliday(nextLeaveDayDateTime)) {
+                return getNextLeaveDayDate(nextLeaveDayDateTime.plusDays(1).toDate());
+            } else if (DateTimeUtil.isWeekend(nextLeaveDayDateTime) || DateTimeUtil.isPublicHoliday(nextLeaveDayDateTime)) {
+                return getNextLeaveDayDate(nextLeaveDayDateTime.toDate());
+            }
+        }
+        return nextLeaveDayDateTime.toDate();
     }
 }

@@ -63,8 +63,8 @@ public class LeaveManager implements Runnable {
                         int counter = 0;
                         for (LeaveType leaveType : autoIncrementableLeaveTypes) {
                             for (Contract contract : activeContracts) {
-                                List<Contract.PreviousCompletedPeriod> previousCompletedPeriods = contract.calculatePreviousCompletedPeriods();
-                                for (Contract.PreviousCompletedPeriod previousCompletedPeriod : previousCompletedPeriods) {
+                                List<Contract.PreviouslyCompletedPeriod> previousCompletedPeriods = contract.calculatePreviouslyCompletedPeriod();
+                                for (Contract.PreviouslyCompletedPeriod previousCompletedPeriod : previousCompletedPeriods) {
                                     LeaveEvent leaveEvent = JpaManager.getLejc()
                                             .findLeaveEvent(contract, leaveType, previousCompletedPeriod.getName());
                                     boolean create = true;

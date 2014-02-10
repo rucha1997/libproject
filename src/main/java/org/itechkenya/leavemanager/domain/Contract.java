@@ -179,9 +179,33 @@ public class Contract implements Serializable, Comparable<Contract> {
         return this.getStartDate().compareTo(contract.getStartDate());
     }
 
+    public int calculateContractYear() {
+        return calculateContractYear(new Date());
+    }
+
     public int calculateContractYear(Date asOf) {
         return Years.yearsBetween(new DateTime(this.getStartDate()),
                 new DateTime(asOf)).getYears() + 1;
+    }
+
+    public BigDecimal calculateDaysEarned() {
+        BigDecimal daysEarned = BigDecimal.ZERO;
+        for (LeaveEvent leaveEvent : this.getLeaveEventList()) {
+            if (leaveEvent.getDaysEarned() != null) {
+                daysEarned = daysEarned.add(leaveEvent.getDaysEarned());
+            }
+        }
+        return daysEarned;
+    }
+
+    public BigDecimal calculateDaysSpent() {
+        BigDecimal daysSpent = BigDecimal.ZERO;
+        for (LeaveEvent leaveEvent : this.getLeaveEventList()) {
+            if (leaveEvent.getDaysSpent() != null) {
+                daysSpent = daysSpent.add(leaveEvent.getDaysSpent());
+            }
+        }
+        return daysSpent;
     }
 
     public int calculatePreviousContractYear(int contractYearCount) {
@@ -190,15 +214,11 @@ public class Contract implements Serializable, Comparable<Contract> {
         return contractStartYear + (contractYearCount - 2);
     }
 
-    public int calculateContractYear() {
-        return calculateContractYear(new Date());
-    }
-
     public void calculateLeaveEventValues() {
         BigDecimal balance = BigDecimal.ZERO;
         for (LeaveEvent leaveEvent : this.getLeaveEventList()) {
             assignStatus(leaveEvent);
-            assignBalance(leaveEvent, balance);
+            balance = balance.add(assignBalance(leaveEvent, balance));
         }
     }
 
@@ -219,9 +239,9 @@ public class Contract implements Serializable, Comparable<Contract> {
         return balance;
     }
 
-    public List<PreviousCompletedPeriod> calculatePreviousCompletedPeriods() {
+    public List<PreviouslyCompletedPeriod> calculatePreviouslyCompletedPeriod() {
 
-        List<PreviousCompletedPeriod> previousCompletedPeriods = new ArrayList<>();
+        List<PreviouslyCompletedPeriod> previousCompletedPeriods = new ArrayList<>();
 
         DateTime today = new DateTime(new Date());
         DateTime contractStartDate = new DateTime(this.getStartDate());
@@ -241,7 +261,7 @@ public class Contract implements Serializable, Comparable<Contract> {
         recordDateTime = earnDateTime.plusMonths(1);
         date = DateTimeUtil.createDate(recordDateTime.getYear(), recordDateTime.getMonthOfYear(), contractStartDate.getDayOfMonth());
         previousCompletedPeriods.add(
-                new PreviousCompletedPeriod(monthSdf.format(earnDateTime.toDate()), date, PeriodType.MONTH));
+                new PreviouslyCompletedPeriod(monthSdf.format(earnDateTime.toDate()), date, PeriodType.MONTH));
 
         int contractYearCount = this.calculateContractYear();
         if (contractYearCount > 1) {
@@ -250,7 +270,7 @@ public class Contract implements Serializable, Comparable<Contract> {
             Date recordDate = DateTimeUtil.createDate(previousContractYear + 1, contractStartDate.getMonthOfYear(), contractStartDate.getDayOfMonth());
 
             previousCompletedPeriods.add(
-                    new PreviousCompletedPeriod(String.valueOf(previousContractYear), recordDate, PeriodType.YEAR));
+                    new PreviouslyCompletedPeriod(String.valueOf(previousContractYear), recordDate, PeriodType.YEAR));
         }
         return previousCompletedPeriods;
     }
@@ -277,7 +297,7 @@ public class Contract implements Serializable, Comparable<Contract> {
         leaveEvent.setStatus(status);
     }
 
-    private void assignBalance(LeaveEvent leaveEvent, BigDecimal balance) {
+    private BigDecimal assignBalance(LeaveEvent leaveEvent, BigDecimal balance) {
         if (leaveEvent.getDaysEarned() != null) {
             balance = balance.add(leaveEvent.getDaysEarned());
         }
@@ -285,15 +305,16 @@ public class Contract implements Serializable, Comparable<Contract> {
             balance = balance.add(leaveEvent.getDaysSpent().negate());
         }
         leaveEvent.setBalance(balance);
+        return balance;
     }
 
-    public class PreviousCompletedPeriod {
+    public class PreviouslyCompletedPeriod {
 
         private final String name;
         private final Date date;
         private final PeriodType periodType;
 
-        public PreviousCompletedPeriod(String name, Date date, PeriodType periodType) {
+        public PreviouslyCompletedPeriod(String name, Date date, PeriodType periodType) {
             this.name = name;
             this.date = date;
             this.periodType = periodType;
