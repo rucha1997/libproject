@@ -890,10 +890,12 @@ public class LeaveEventFrame extends LeaveManagerFrame {
             return false;
         }
         try {
-            BigDecimal test = new BigDecimal(daysTextField.getText());
-            if (test.compareTo(new BigDecimal("999.99")) == 1) {
+            BigDecimal daysValue = new BigDecimal(daysTextField.getText());
+            if (daysValue.compareTo(new BigDecimal("999.99")) == 1
+                    || daysValue.compareTo(new BigDecimal("0.00")) == -1
+                    || daysValue.compareTo(new BigDecimal("0.00")) == 0) {
                 if (message) {
-                    UiManager.showWarningMessage(this, "Days to be earned or spent cannot exceed 999.99.", daysTextField);
+                    UiManager.showWarningMessage(this, "Days to be earned or spent must be more than 0.00 and at most 999.99.", daysTextField);
                 }
                 return false;
             }
