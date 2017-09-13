@@ -239,6 +239,9 @@
         <Component class="javax.swing.JTextField" name="studentNameField">
         </Component>
         <Component class="javax.swing.JTextField" name="studedntIDField">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="studedntIDFieldActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="studentIdLabel">
           <Properties>
@@ -284,6 +287,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Add"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addNewStudentButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
