@@ -5,11 +5,19 @@
  */
 package liberaryproject;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author amans
  */
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 public class AddNewStudent extends javax.swing.JFrame {
+Connection con=null;
+    ResultSet rs=null;
+    PreparedStatement pst=null;
 
     /**
      * Creates new form AddNewStudent
@@ -108,9 +116,15 @@ public class AddNewStudent extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         passwordField.setText("jPasswordField1");
+
+        emailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailFieldActionPerformed(evt);
+            }
+        });
 
         studentIdLabel.setText("Student ID:");
 
@@ -187,6 +201,11 @@ public class AddNewStudent extends javax.swing.JFrame {
         );
 
         addNewStudentButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Checkmark_25px_1.png"))); // NOI18N
+        addNewStudentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewStudentButtonActionPerformed(evt);
+            }
+        });
 
         titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         titleLabel.setText("Add New Student");
@@ -253,10 +272,38 @@ public class AddNewStudent extends javax.swing.JFrame {
         manageStudents.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void addNewStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewStudentButtonActionPerformed
+        try
+        {
+           Class.forName("com.mysql.jdbc.Driver");  
+        con=DriverManager.getConnection("jdbc:derby://localhost:1527/liberaryproject [roziroti on ROZIROTI]");  
+            String sql="INSERT INTO STUDINF VALUES(?,?,?,?,?,?,?);";
+            pst=con.prepareStatement(sql);
+            pst.setString(1, studedntIDField.getText());
+            pst.setString(2,studentNameField.getText());
+            pst.setString(3, studentBatchField.getText());
+            pst.setString(4, departmentField.getText());
+            pst.setString(5,contactNoField .getText());
+            pst.setString(6, emailField.getText());
+            pst.setString(7, passwordField.getText());
+            rs=pst.executeQuery();
+        }
+        catch(SQLException e)
+                {
+                 JOptionPane.showMessageDialog(null,e);   
+                } catch (ClassNotFoundException ex) { 
+        Logger.getLogger(AddNewStudent.class.getName()).log(Level.SEVERE, null, ex);
+    } 
+    }//GEN-LAST:event_addNewStudentButtonActionPerformed
+
+    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws ClassNotFoundException, SQLException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -281,7 +328,9 @@ public class AddNewStudent extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new AddNewStudent().setVisible(true);
             }

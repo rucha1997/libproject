@@ -248,6 +248,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="emailField">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="emailFieldActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="contactNoField">
         </Component>
@@ -302,6 +305,9 @@
           <Image iconType="3" name="/Images/icons8_Checkmark_25px_1.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addNewStudentButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="titleLabel">
       <Properties>
