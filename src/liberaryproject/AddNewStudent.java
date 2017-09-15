@@ -11,10 +11,37 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+
 
  class EmailValidator {
 
    
+    private Pattern pattern;
+    private Matcher matcher;
+
+    private static final String EMAIL_PATTERN = 
+        "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
+    public EmailValidator() {
+        pattern = Pattern.compile(EMAIL_PATTERN);
+    }
+
+    /**
+     * Validate hex with regular expression
+     * 
+     * @param hex
+     *            hex for validation
+     * @return true valid hex, false invalid hex
+     */
+    public boolean validate(final String hex) {
+
+        matcher = pattern.matcher(hex);
+        return matcher.matches();
+
+    }
 }
 
 /**
@@ -171,7 +198,7 @@ public class AddNewStudent extends javax.swing.JFrame {
                     .addComponent(contactNumberLabel)
                     .addComponent(emailLabel)
                     .addComponent(passwordLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(departmentField, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -218,7 +245,7 @@ public class AddNewStudent extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordLabel))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         addNewStudentButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Checkmark_25px_1.png"))); // NOI18N
@@ -240,7 +267,7 @@ public class AddNewStudent extends javax.swing.JFrame {
                 .addGap(321, 321, 321))
             .addGroup(layout.createSequentialGroup()
                 .addGap(226, 226, 226)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -262,7 +289,8 @@ public class AddNewStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+       // Icon i1 = new ImageIcon("refresh.png");
+        //Button button3 = new JButton(i1);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void studedntIDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studedntIDFieldActionPerformed
@@ -286,13 +314,15 @@ public class AddNewStudent extends javax.swing.JFrame {
             ps.setString(3, studentBatchField.getText());
             ps.setString(4, departmentField.getText());
             ps.setString(5, contactNoField.getText());
-            Emailvalidator emailValidator = new Emailvalidator();
+            EmailValidator emailValidator = new EmailValidator();
    if(!emailValidator.validate(emailField.getText().trim())) {
        jLabel1.setText("invalid E-mailID..");
         /*
            Action that you want to take. For ex. make email id field red
            or give message box saying invalid email id.
         */
+        
+               
    }
    else
    {
