@@ -127,7 +127,6 @@ public class AddNewStudent extends javax.swing.JFrame {
             }
         });
 
-        studedntIDField.setText("eerrt");
         studedntIDField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 studedntIDFieldActionPerformed(evt);
@@ -259,11 +258,12 @@ public class AddNewStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_studedntIDFieldActionPerformed
 
     private void addNewStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewStudentButtonActionPerformed
+        boolean re=false;
         try { 
             Class.forName("com.mysql.jdbc.Driver");
         
         
-        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject\",\"root\",\"rucha");
+        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
 //here sonoo is database name, root is username and password 
            
             PreparedStatement ps = con.prepareStatement("INSERT INTO studinf VALUES(?,?,?,?,?,?,?)");
@@ -274,10 +274,17 @@ public class AddNewStudent extends javax.swing.JFrame {
             ps.setString(5, contactNoField.getText());
              ps.setString(6, emailField.getText());
               ps.setString(7, passwordField.getText());
-        ps.executeUpdate();
+        ps.execute();
+        re=true;
        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddNewStudent.class.getName()).log(Level.SEVERE, null, ex);
+           
         }
+        if(re==true)
+        {
+            System.out.println("Student Added Successfully..");
+        }
+        
     }//GEN-LAST:event_addNewStudentButtonActionPerformed
 
     private void studentNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentNameFieldActionPerformed
