@@ -6,6 +6,8 @@
 package liberaryproject;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -14,14 +16,7 @@ import java.sql.*;
  */
 public class AddNewStudent extends javax.swing.JFrame {
 
-    static String i;
-     static   String str2;
-     static   String str3;
-       
-     static   String str4;
-     static   String str5;
-     static String str6;
-     static String str7;
+    
         
     private Object studentIDField;
     
@@ -30,13 +25,8 @@ public class AddNewStudent extends javax.swing.JFrame {
      */
     public AddNewStudent() {
         initComponents();
-         i = studedntIDField.getText();
-        str2 = studentNameField.getText();
-        str3 = studentBatchField.getText();
-        str4 = departmentField.getText();
-         str5 = contactNoField.getText();
-          str6 = emailField.getText();
-         str7 = passwordField.getText();
+      
+        
     }
     
     /**
@@ -131,6 +121,13 @@ public class AddNewStudent extends javax.swing.JFrame {
 
         passwordField.setText("jPasswordField1");
 
+        studentNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentNameFieldActionPerformed(evt);
+            }
+        });
+
+        studedntIDField.setText("eerrt");
         studedntIDField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 studedntIDFieldActionPerformed(evt);
@@ -262,10 +259,30 @@ public class AddNewStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_studedntIDFieldActionPerformed
 
     private void addNewStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewStudentButtonActionPerformed
-     
+        try { 
+            Class.forName("com.mysql.jdbc.Driver");
         
-       
+        
+        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject\",\"root\",\"rucha");
+//here sonoo is database name, root is username and password 
+           
+            PreparedStatement ps = con.prepareStatement("INSERT INTO studinf VALUES(?,?,?,?,?,?,?)");
+            ps.setString(1,studedntIDField.getText());
+            ps.setString(2, studentNameField.getText());
+            ps.setString(3, studentBatchField.getText());
+            ps.setString(4, departmentField.getText());
+            ps.setString(5, contactNoField.getText());
+             ps.setString(6, emailField.getText());
+              ps.setString(7, passwordField.getText());
+        ps.executeUpdate();
+       } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddNewStudent.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_addNewStudentButtonActionPerformed
+
+    private void studentNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studentNameFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -297,26 +314,11 @@ public class AddNewStudent extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        Class.forName("com.mysql.jdbc.Driver"); 
-        
-        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject\",\"root\",\"rucha");
-//here sonoo is database name, root is username and password 
-           
-            PreparedStatement ps = con.prepareStatement("INSERT INTO studinf VALUES(?,?,?,?,?,?,?)");
-            ps.setString(1,i);
-            ps.setString(2, str2);
-            ps.setString(3, str3);
-            ps.setString(4, str4);
-            ps.setString(5, str5);
-             ps.setString(6, str6);
-              ps.setString(7, str7);
+       
             //Statement stmt=null;  
            // ResultSet rs=stmt.executeQuery("INSERT INTO STUDINF VALUES(?,?,?)"); 
         java.awt.EventQueue.invokeLater(new Runnable() {
-            private Statement stmt;
-            {
-                this.stmt = con.createStatement();
-            }
+           
             @Override
             public void run() {
                 new AddNewStudent().setVisible(true);

@@ -237,8 +237,14 @@
         <Component class="javax.swing.JTextField" name="studentBatchField">
         </Component>
         <Component class="javax.swing.JTextField" name="studentNameField">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="studentNameFieldActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="studedntIDField">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="eerrt"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="studedntIDFieldActionPerformed"/>
           </Events>
