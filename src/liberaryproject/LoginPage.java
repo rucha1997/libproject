@@ -5,7 +5,8 @@
  */
 package liberaryproject;
 
-import com.sun.jndi.ldap.Connection;
+//import com.sun.jndi.ldap.Connection;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Scanner;
 import javax.naming.spi.DirStateFactory.Result;
@@ -27,7 +28,7 @@ public class LoginPage extends javax.swing.JFrame {
     Scanner sc=new Scanner(System.in);
     private String userName;
     private String passWord;
-    Connection conn;
+    Connection conn=null;
     Result RS=null;
     PreparedStatement PSP = null;
     
@@ -223,7 +224,7 @@ public class LoginPage extends javax.swing.JFrame {
        
         try{
             String sql="select * from users where username=? and password=?";
-            PSP=conn.preparestatment(sql);
+            //PSP=con.preparestatment(sql);
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);

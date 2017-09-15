@@ -1,10 +1,12 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * Topackage liberaryproject; change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.sql.*;
 package liberaryproject;
+
+import java.sql.*;
+
 
 /**
  *
@@ -12,13 +14,31 @@ package liberaryproject;
  */
 public class AddNewStudent extends javax.swing.JFrame {
 
+    static String i;
+     static   String str2;
+     static   String str3;
+       
+     static   String str4;
+     static   String str5;
+     static String str6;
+     static String str7;
+        
+    private Object studentIDField;
+    
     /**
      * Creates new form AddNewStudent
      */
     public AddNewStudent() {
         initComponents();
+         i = studedntIDField.getText();
+        str2 = studentNameField.getText();
+        str3 = studentBatchField.getText();
+        str4 = departmentField.getText();
+         str5 = contactNoField.getText();
+          str6 = emailField.getText();
+         str7 = passwordField.getText();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -110,9 +130,10 @@ public class AddNewStudent extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         passwordField.setText("jPasswordField1");
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
+
+        studedntIDField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
+                studedntIDFieldActionPerformed(evt);
             }
         });
 
@@ -192,6 +213,11 @@ public class AddNewStudent extends javax.swing.JFrame {
 
         addNewStudentButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Checkmark_25px_1.png"))); // NOI18N
         addNewStudentButton.setText("Add");
+        addNewStudentButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addNewStudentButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -222,21 +248,31 @@ public class AddNewStudent extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
+    private void studedntIDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studedntIDFieldActionPerformed
+         
+       
+            
+    }//GEN-LAST:event_studedntIDFieldActionPerformed
+
+    private void addNewStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewStudentButtonActionPerformed
+     
+        
+       
+    }//GEN-LAST:event_addNewStudentButtonActionPerformed
 
     /**
      * @param args the command line arguments
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws SQLException, ClassNotFoundException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -261,18 +297,32 @@ public class AddNewStudent extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Class.forName("com.mysql.jdbc.Driver"); 
+        
+        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject\",\"root\",\"rucha");
+//here sonoo is database name, root is username and password 
+           
+            PreparedStatement ps = con.prepareStatement("INSERT INTO studinf VALUES(?,?,?,?,?,?,?)");
+            ps.setString(1,i);
+            ps.setString(2, str2);
+            ps.setString(3, str3);
+            ps.setString(4, str4);
+            ps.setString(5, str5);
+             ps.setString(6, str6);
+              ps.setString(7, str7);
+            //Statement stmt=null;  
+           // ResultSet rs=stmt.executeQuery("INSERT INTO STUDINF VALUES(?,?,?)"); 
         java.awt.EventQueue.invokeLater(new Runnable() {
+            private Statement stmt;
             {
                 this.stmt = con.createStatement();
             }
+            @Override
             public void run() {
                 new AddNewStudent().setVisible(true);
             }
             //  
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/LIBERARYPROJECT","root","roziroti");
-//here sonoo is database name, root is username and password
-            Statement stmt;  
-            ResultSet rs=stmt.executeQuery("select * from emp"); 
+            
         });
     }
 

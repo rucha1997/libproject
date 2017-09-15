@@ -5,17 +5,28 @@
  */
 package liberaryproject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author amans
  */
 public class EditStudent extends javax.swing.JFrame {
-
+static String newpwd;
+static String id;
     /**
      * Creates new form EditStudent
      */
     public EditStudent() {
         initComponents();
+        
+        newpwd=passwordField.getText();
+        id=studedntIDField.getText();
     }
 
     /**
@@ -268,7 +279,8 @@ public class EditStudent extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    
+    public static void main(String args[]) throws SQLException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -293,7 +305,43 @@ public class EditStudent extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/LIBERARYPROJECT","root","roziroti");
+//here sonoo is database name, root is username and password 
+String sql="UPDATE STUDENTINF SET password=? WHERE name=?";
+     PreparedStatement ps = con.prepareStatement(sql);
+     
+     
+String sql1 = "SELECT studid FROM STUDENTINF";
+Statement stmt=null;
+int pwd=0;
+
+      ResultSet rs = stmt.executeQuery(sql1);
+    
+      while(rs.next()){
+          
+         //Retrieve by column name
+         int id1  = rs.getInt("studid");
+         if(id.equals(id1))
+         {
+             pwd=1;
+             ps.executeUpdate(newpwd, 5);
+         }
+         
+    }
+      if(pwd==0)
+      {
+          System.out.println("ID didn't matched");
+      }
+       
+      
+
+     
         java.awt.EventQueue.invokeLater(new Runnable() {
+             private Statement stmt;
+            {
+                this.stmt = con.createStatement();
+            }
+            
             public void run() {
                 new EditStudent().setVisible(true);
             }
