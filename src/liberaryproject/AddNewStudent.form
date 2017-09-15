@@ -165,17 +165,21 @@
                   </Group>
                   <EmptySpace pref="30" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="studedntIDField" max="32767" attributes="0"/>
-                          <Component id="studentNameField" max="32767" attributes="0"/>
-                          <Component id="emailField" alignment="0" max="32767" attributes="0"/>
-                          <Component id="studentBatchField" alignment="0" max="32767" attributes="0"/>
-                          <Component id="contactNoField" alignment="0" max="32767" attributes="0"/>
-                          <Component id="passwordField" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="departmentField" alignment="0" min="-2" pref="111" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="studedntIDField" max="32767" attributes="0"/>
+                              <Component id="studentNameField" max="32767" attributes="0"/>
+                              <Component id="emailField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="studentBatchField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="contactNoField" alignment="0" max="32767" attributes="0"/>
+                              <Component id="passwordField" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="138" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="departmentField" min="-2" pref="111" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -211,6 +215,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="emailField" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="emailLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -279,6 +284,11 @@
         <Component class="javax.swing.JLabel" name="passwordLabel">
           <Properties>
             <Property name="text" type="java.lang.String" value="Password:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="*"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -65,6 +65,7 @@ public class AddNewStudent extends javax.swing.JFrame {
         contactNumberLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
         passwordLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         addNewStudentButton = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(18, 49, 113));
@@ -154,6 +155,8 @@ public class AddNewStudent extends javax.swing.JFrame {
 
         passwordLabel.setText("Password:");
 
+        jLabel1.setText("*");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -170,15 +173,18 @@ public class AddNewStudent extends javax.swing.JFrame {
                     .addComponent(passwordLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(studedntIDField)
-                        .addComponent(studentNameField)
-                        .addComponent(emailField)
-                        .addComponent(studentBatchField)
-                        .addComponent(contactNoField)
-                        .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(departmentField, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                    .addComponent(departmentField, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(studedntIDField)
+                            .addComponent(studentNameField)
+                            .addComponent(emailField)
+                            .addComponent(studentBatchField)
+                            .addComponent(contactNoField)
+                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +212,8 @@ public class AddNewStudent extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(emailLabel))
+                    .addComponent(emailLabel)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -281,13 +288,16 @@ public class AddNewStudent extends javax.swing.JFrame {
             ps.setString(5, contactNoField.getText());
             Emailvalidator emailValidator = new Emailvalidator();
    if(!emailValidator.validate(emailField.getText().trim())) {
-        System.out.print("Invalid Email ID");
+       jLabel1.setText("invalid E-mailID..");
         /*
            Action that you want to take. For ex. make email id field red
            or give message box saying invalid email id.
         */
    }
+   else
+   {
              ps.setString(6, emailField.getText());
+   }
               ps.setString(7, passwordField.getText());
         ps.execute();
         re=true;
@@ -361,6 +371,7 @@ public class AddNewStudent extends javax.swing.JFrame {
     private javax.swing.JLabel emailLabel;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
