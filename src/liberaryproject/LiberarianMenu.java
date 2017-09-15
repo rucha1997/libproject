@@ -180,12 +180,24 @@ public class LiberarianMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         GenerateReport generateReport=new  GenerateReport();
         generateReport.setVisible(true);
+        
+        //To close thew current window 
+        LiberarianMenu liberarianMenu= new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
+                
+            
     }//GEN-LAST:event_generatereportButtonActionPerformed
 
     private void generateBackupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBackupButtonActionPerformed
         // TODO add your handling code here:
         GenerateBackup generateBackup=new GenerateBackup();
         generateBackup.setVisible(true);
+        
+        //To close thew current window 
+        LiberarianMenu liberarianMenu= new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_generateBackupButtonActionPerformed
 
     private void manageBorrowerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBorrowerButtonActionPerformed
@@ -193,24 +205,44 @@ public class LiberarianMenu extends javax.swing.JFrame {
         ManageBorrower manageBorrower=new ManageBorrower();
         manageBorrower.setVisible(true);
         
+        //To close thew current window 
+        LiberarianMenu liberarianMenu= new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
+        
     }//GEN-LAST:event_manageBorrowerButtonActionPerformed
 
     private void searchBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBooksButtonActionPerformed
         // TODO add your handling code here:
         SearchBooks searchBooks=new SearchBooks();
         searchBooks.setVisible(true);
+        
+        //To close thew current window 
+        LiberarianMenu liberarianMenu= new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_searchBooksButtonActionPerformed
 
     private void manageBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBooksButtonActionPerformed
         // TODO add your handling code here:
         ManageBooks manageBooks=new ManageBooks();
         manageBooks.setVisible(true);
+        
+        //To close thew current window 
+        LiberarianMenu liberarianMenu= new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_manageBooksButtonActionPerformed
 
     private void manageStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageStudentButtonActionPerformed
         // TODO add your handling code here:
         ManageStudents manageStudents=new ManageStudents();
         manageStudents.setVisible(true);
+        
+        //To close thew current window 
+        LiberarianMenu liberarianMenu= new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_manageStudentButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -221,6 +253,11 @@ public class LiberarianMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         AdminSettings adminSettings=new AdminSettings();
         adminSettings.setVisible(true);
+        
+        //To close thew current window 
+        LiberarianMenu liberarianMenu= new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_adminSettingButtonActionPerformed
 
     /**
@@ -250,12 +287,15 @@ public class LiberarianMenu extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+         /*Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
+@Override
             public void run() {
                 new LiberarianMenu().setVisible(true);
             }
         });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

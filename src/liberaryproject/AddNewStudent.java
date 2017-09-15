@@ -8,7 +8,14 @@ package liberaryproject;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+ class EmailValidator {
+
+   
+}
 
 /**
  *
@@ -161,7 +168,7 @@ public class AddNewStudent extends javax.swing.JFrame {
                     .addComponent(contactNumberLabel)
                     .addComponent(emailLabel)
                     .addComponent(passwordLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(studedntIDField)
@@ -220,14 +227,14 @@ public class AddNewStudent extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(226, 226, 226)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addNewStudentButton)
                 .addGap(321, 321, 321))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(226, 226, 226)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,6 +279,14 @@ public class AddNewStudent extends javax.swing.JFrame {
             ps.setString(3, studentBatchField.getText());
             ps.setString(4, departmentField.getText());
             ps.setString(5, contactNoField.getText());
+            Emailvalidator emailValidator = new Emailvalidator();
+   if(!emailValidator.validate(emailField.getText().trim())) {
+        System.out.print("Invalid Email ID");
+        /*
+           Action that you want to take. For ex. make email id field red
+           or give message box saying invalid email id.
+        */
+   }
              ps.setString(6, emailField.getText());
               ps.setString(7, passwordField.getText());
         ps.execute();
@@ -282,8 +297,9 @@ public class AddNewStudent extends javax.swing.JFrame {
         }
         if(re==true)
         {
-            System.out.println("Student Added Successfully..");
+            JOptionPane.showMessageDialog(null, "Student Added Successfully..");
         }
+       
         
     }//GEN-LAST:event_addNewStudentButtonActionPerformed
 
@@ -358,4 +374,5 @@ public class AddNewStudent extends javax.swing.JFrame {
     private javax.swing.JTextField studentNameField;
     private javax.swing.JLabel studentNameLabel;
     // End of variables declaration//GEN-END:variables
+
 }

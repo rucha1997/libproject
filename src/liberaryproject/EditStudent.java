@@ -305,17 +305,18 @@ static String id;
         //</editor-fold>
 
         /* Create and display the form */
-        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/LIBERARYPROJECT","root","roziroti");
+        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproj","root","rucha");
 //here sonoo is database name, root is username and password 
-String sql="UPDATE STUDENTINF SET password=? WHERE name=?";
+String sql="UPDATE studinf SET password=? WHERE stud_name=?";
      PreparedStatement ps = con.prepareStatement(sql);
      
      
 String sql1 = "SELECT studid FROM STUDENTINF";
-Statement stmt=null;
+PreparedStatement ps1=con.prepareStatement(sql1);
 int pwd=0;
-
-      ResultSet rs = stmt.executeQuery(sql1);
+/*
+ResultSet rs = ps1.executeQuery(sql1);
+      
     
       while(rs.next()){
           
@@ -324,10 +325,11 @@ int pwd=0;
          if(id.equals(id1))
          {
              pwd=1;
+             studedntIDField.setText();
              ps.executeUpdate(newpwd, 5);
          }
          
-    }
+    }*/
       if(pwd==0)
       {
           System.out.println("ID didn't matched");

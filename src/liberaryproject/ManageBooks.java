@@ -85,6 +85,11 @@ public class ManageBooks extends javax.swing.JFrame {
 
         listOfBookbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Ingredients_List_50px.png"))); // NOI18N
         listOfBookbutton.setText("List of Books");
+        listOfBookbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listOfBookbuttonActionPerformed(evt);
+            }
+        });
 
         bookRequestButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Book_Shelf_50px.png"))); // NOI18N
         bookRequestButton.setText("Books Request");
@@ -148,13 +153,36 @@ public class ManageBooks extends javax.swing.JFrame {
 
         EditBookInfo editBookInfo=new EditBookInfo();
         editBookInfo.setVisible(true);
+        
+        //To change the window
+        ManageBooks manageBooks;
+        manageBooks = new ManageBooks();
+        manageBooks.setVisible(false);
+        dispose();
+                
     }//GEN-LAST:event_editBookInfoButtonActionPerformed
 
     private void addNewBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewBookButtonActionPerformed
 
         AddNewBook addNewBook=new AddNewBook();
         addNewBook.setVisible(true);
+        
+        
     }//GEN-LAST:event_addNewBookButtonActionPerformed
+
+    private void listOfBookbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfBookbuttonActionPerformed
+
+        ListofBooks listofBooks= new ListofBooks();
+        listofBooks.setVisible(true);
+                
+                
+               
+                //To change the window
+        ManageBooks manageBooks;
+        manageBooks = new ManageBooks();
+        manageBooks.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_listOfBookbuttonActionPerformed
 
     /**
      * @param args the command line arguments
