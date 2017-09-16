@@ -38,7 +38,6 @@ public class ManageBooks extends javax.swing.JFrame {
         backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(838, 490));
 
         jPanel1.setBackground(new java.awt.Color(18, 49, 113));
         jPanel1.setToolTipText("");
@@ -80,6 +79,11 @@ public class ManageBooks extends javax.swing.JFrame {
 
         listOfBookbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Ingredients_List_50px.png"))); // NOI18N
         listOfBookbutton.setText("List of Books");
+        listOfBookbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listOfBookbuttonActionPerformed(evt);
+            }
+        });
 
         editBookInfoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Bookmark_50px.png"))); // NOI18N
         editBookInfoButton.setText("Edit Book Info");
@@ -91,6 +95,11 @@ public class ManageBooks extends javax.swing.JFrame {
 
         bookRequestButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Book_Shelf_50px.png"))); // NOI18N
         bookRequestButton.setText("Books Request");
+        bookRequestButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookRequestButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -105,7 +114,7 @@ public class ManageBooks extends javax.swing.JFrame {
                         .addComponent(listOfBookbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(editBookInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                         .addComponent(bookRequestButton)))
                 .addContainerGap())
         );
@@ -123,7 +132,7 @@ public class ManageBooks extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24));
         titleLabel.setText("Manage Books");
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Back_25px.png"))); // NOI18N
@@ -141,14 +150,14 @@ public class ManageBooks extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(173, 173, 173)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(184, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(579, Short.MAX_VALUE)
                 .addComponent(titleLabel)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addComponent(backButton)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 683, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,19 +182,56 @@ public class ManageBooks extends javax.swing.JFrame {
 
         AddNewBook addNewBook=new AddNewBook();
         addNewBook.setVisible(true);
+        
+        //To close the current window and opens new
+        ManageBooks manageBooks=new ManageBooks();
+        manageBooks.setVisible(false);
+        dispose();
     }//GEN-LAST:event_addNewBookButtonActionPerformed
 
     private void editBookInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookInfoButtonActionPerformed
         
         EditBookInfo editBookInfo=new EditBookInfo();
         editBookInfo.setVisible(true);
+        
+        //To close the current window and opens new
+        ManageBooks manageBooks=new ManageBooks();
+        manageBooks.setVisible(false);
+        dispose();
     }//GEN-LAST:event_editBookInfoButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         
         LiberarianMenu liberarianMenu=new LiberarianMenu();
         liberarianMenu.setVisible(true);
+        
+        //To close the current window and opens new
+        ManageBooks manageBooks=new ManageBooks();
+        manageBooks.setVisible(false);
+        dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+private void listOfBookbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listOfBookbuttonActionPerformed
+    
+    ListofBooks listofBooks=new ListofBooks();
+    listofBooks.setVisible(true);
+    
+    //To close the current window and opens new
+        ManageBooks manageBooks=new ManageBooks();
+        manageBooks.setVisible(false);
+        dispose();
+}//GEN-LAST:event_listOfBookbuttonActionPerformed
+
+private void bookRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookRequestButtonActionPerformed
+
+   BookRequest bookRequest=new BookRequest();
+   bookRequest.setVisible(true);
+   
+   //To close the current window and opens new
+        ManageBooks manageBooks=new ManageBooks();
+        manageBooks.setVisible(false);
+        dispose();
+}//GEN-LAST:event_bookRequestButtonActionPerformed
 
     /**
      * @param args the command line arguments

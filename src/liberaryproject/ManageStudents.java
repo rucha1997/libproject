@@ -30,14 +30,13 @@ public class ManageStudents extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         titleLabel = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         addNewStudentButton = new javax.swing.JButton();
         editStudentButton = new javax.swing.JButton();
         studentDetailsButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(838, 490));
 
         jPanel1.setBackground(new java.awt.Color(18, 49, 113));
 
@@ -65,13 +64,13 @@ public class ManageStudents extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24));
         titleLabel.setText("Manage Students");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Back_25px.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Back_25px.png"))); // NOI18N
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -134,16 +133,16 @@ public class ManageStudents extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(backButton)
+                        .addGap(0, 653, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 533, Short.MAX_VALUE)
                         .addComponent(titleLabel)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(208, 208, 208)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(221, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +153,7 @@ public class ManageStudents extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(jButton2))
+                .addComponent(backButton))
         );
 
         pack();
@@ -168,6 +167,11 @@ public class ManageStudents extends javax.swing.JFrame {
         // TODO add your handling code here:
         EditStudent editStudent=new EditStudent();
         editStudent.setVisible(true);
+        
+        //To close the current window 
+    ManageStudents manageStudents=new ManageStudents();
+    manageStudents.setVisible(false);
+    dispose();
     }//GEN-LAST:event_editStudentButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -178,13 +182,23 @@ public class ManageStudents extends javax.swing.JFrame {
         // TODO add your handling code here:
         AddNewStudent addNewStudent=new AddNewStudent();
         addNewStudent.setVisible(true);
+        
+        //To close the current window 
+    ManageStudents manageStudents=new ManageStudents();
+    manageStudents.setVisible(false);
+    dispose();
     }//GEN-LAST:event_addNewStudentButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         LiberarianMenu liberarianMenu=new LiberarianMenu() ;
         liberarianMenu.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        
+        //To close the current window 
+    ManageStudents manageStudents=new ManageStudents();
+    manageStudents.setVisible(false);
+    dispose();
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,9 +237,9 @@ public class ManageStudents extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addNewStudentButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JButton editStudentButton;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton studentDetailsButton;

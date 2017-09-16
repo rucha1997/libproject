@@ -17,6 +17,8 @@ public class LiberarianMenu extends javax.swing.JFrame {
      */
     public LiberarianMenu() {
         initComponents();
+        
+        
     }
 
     /**
@@ -59,7 +61,7 @@ public class LiberarianMenu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,6 +132,11 @@ public class LiberarianMenu extends javax.swing.JFrame {
 
         logoutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Exit_50px.png"))); // NOI18N
         logoutButton.setText("Logout");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,7 +151,7 @@ public class LiberarianMenu extends javax.swing.JFrame {
                         .addComponent(manageStudentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(searchBooksButton, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(manageBorrowerButton))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(adminSettingButton)
@@ -201,12 +208,22 @@ public class LiberarianMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         GenerateReport generateReport=new  GenerateReport();
         generateReport.setVisible(true);
+        
+        //To close the current window when opens new
+        LiberarianMenu liberarianMenu=new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_generatereportButtonActionPerformed
 
     private void generateBackupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBackupButtonActionPerformed
         // TODO add your handling code here:
         GenerateBackup generateBackup=new GenerateBackup();
         generateBackup.setVisible(true);
+        
+        //To close the current window when opens new
+        LiberarianMenu liberarianMenu=new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_generateBackupButtonActionPerformed
 
     private void manageBorrowerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBorrowerButtonActionPerformed
@@ -214,24 +231,44 @@ public class LiberarianMenu extends javax.swing.JFrame {
         ManageBorrower manageBorrower=new ManageBorrower();
         manageBorrower.setVisible(true);
         
+        //To close the current window when opens new
+        LiberarianMenu liberarianMenu=new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
+        
     }//GEN-LAST:event_manageBorrowerButtonActionPerformed
 
     private void searchBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBooksButtonActionPerformed
         // TODO add your handling code here:
         SearchBooks searchBooks=new SearchBooks();
         searchBooks.setVisible(true);
+        
+        //To close the current window when opens new
+        LiberarianMenu liberarianMenu=new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_searchBooksButtonActionPerformed
 
     private void manageBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBooksButtonActionPerformed
         // TODO add your handling code here:
         ManageBooks manageBooks=new ManageBooks();
         manageBooks.setVisible(true);
+        
+        //To close the current window when opens new
+        LiberarianMenu liberarianMenu=new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_manageBooksButtonActionPerformed
 
     private void manageStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageStudentButtonActionPerformed
         // TODO add your handling code here:
         ManageStudents manageStudents=new ManageStudents();
         manageStudents.setVisible(true);
+        
+        //To close the current window when opens new
+        LiberarianMenu liberarianMenu=new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_manageStudentButtonActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -242,11 +279,25 @@ public class LiberarianMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
         AdminSettings adminSettings=new AdminSettings();
         adminSettings.setVisible(true);
+        
+        //To close the current window when opens new
+        LiberarianMenu liberarianMenu=new LiberarianMenu();
+        liberarianMenu.setVisible(false);
+        dispose();
     }//GEN-LAST:event_adminSettingButtonActionPerformed
+
+private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+
+
+    LoginPage loginPage=new LoginPage();
+    loginPage.setVisible(true);
+    System.out.println("Succesfully LogOut");
+}//GEN-LAST:event_logoutButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
