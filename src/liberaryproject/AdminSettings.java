@@ -30,11 +30,11 @@ public class AdminSettings extends javax.swing.JFrame {
         indiraPannel = new javax.swing.JPanel();
         indiraButton = new javax.swing.JButton();
         passwordPannel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        toChangeCurrentPasswordLabel = new javax.swing.JLabel();
         currentPasswordField = new javax.swing.JPasswordField();
-        jLabel2 = new javax.swing.JLabel();
+        toChangeNewPasswordLabel = new javax.swing.JLabel();
         newPasswordField = new javax.swing.JPasswordField();
-        jLabel3 = new javax.swing.JLabel();
+        confirmPasswordLabel = new javax.swing.JLabel();
         confirmPasswordField = new javax.swing.JPasswordField();
         confirmButton = new javax.swing.JButton();
         informationPannel = new javax.swing.JPanel();
@@ -81,18 +81,18 @@ public class AdminSettings extends javax.swing.JFrame {
         );
 
         passwordPannel.setBackground(new java.awt.Color(153, 255, 153));
-        passwordPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        passwordPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         passwordPannel.setToolTipText("");
 
-        jLabel1.setText("Current Password");
+        toChangeCurrentPasswordLabel.setText("Current Password");
 
         currentPasswordField.setText("jPasswordField1");
 
-        jLabel2.setText("New Password");
+        toChangeNewPasswordLabel.setText("New Password");
 
         newPasswordField.setText("jPasswordField1");
 
-        jLabel3.setText("Confirm Password");
+        confirmPasswordLabel.setText("Confirm Password");
 
         confirmPasswordField.setText("jPasswordField1");
 
@@ -107,26 +107,26 @@ public class AdminSettings extends javax.swing.JFrame {
                 .addGroup(passwordPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(confirmButton)
                     .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
+                    .addComponent(confirmPasswordLabel)
                     .addComponent(newPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
+                    .addComponent(toChangeNewPasswordLabel)
                     .addComponent(currentPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(toChangeCurrentPasswordLabel))
                 .addContainerGap(100, Short.MAX_VALUE))
         );
         passwordPannelLayout.setVerticalGroup(
             passwordPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(passwordPannelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1)
+                .addComponent(toChangeCurrentPasswordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(currentPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(toChangeNewPasswordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(newPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addComponent(confirmPasswordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(confirmPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -135,7 +135,7 @@ public class AdminSettings extends javax.swing.JFrame {
         );
 
         informationPannel.setBackground(new java.awt.Color(153, 255, 153));
-        informationPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        informationPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         userNameLabel.setText("Username");
 
@@ -193,13 +193,13 @@ public class AdminSettings extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        passwordLabel.setFont(new java.awt.Font("Tahoma", 1, 12));
+        passwordLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         passwordLabel.setText("Password");
 
-        informationLabel.setFont(new java.awt.Font("Tahoma", 1, 12));
+        informationLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         informationLabel.setText("Information");
 
-        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24));
+        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         titleLabel.setText("Admin Settings");
         titleLabel.setToolTipText("");
 
@@ -220,18 +220,18 @@ public class AdminSettings extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(passwordPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(passwordLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(informationLabel)
                     .addComponent(informationPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(68, 68, 68))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(546, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(titleLabel)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addComponent(backButton)
-                .addGap(0, 655, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,6 +307,7 @@ public class AdminSettings extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JButton confirmButton;
     private javax.swing.JPasswordField confirmPasswordField;
+    private javax.swing.JLabel confirmPasswordLabel;
     private javax.swing.JPasswordField currentPasswordField;
     private javax.swing.JLabel currentPasswordLabel;
     private javax.swing.JTextField emailField;
@@ -315,9 +316,6 @@ public class AdminSettings extends javax.swing.JFrame {
     private javax.swing.JPanel indiraPannel;
     private javax.swing.JLabel informationLabel;
     private javax.swing.JPanel informationPannel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JPasswordField newPasswordField;
@@ -326,6 +324,8 @@ public class AdminSettings extends javax.swing.JFrame {
     private javax.swing.JPanel passwordPannel;
     private javax.swing.JButton submitButton;
     private javax.swing.JLabel titleLabel;
+    private javax.swing.JLabel toChangeCurrentPasswordLabel;
+    private javax.swing.JLabel toChangeNewPasswordLabel;
     private javax.swing.JTextField userNameField;
     private javax.swing.JLabel userNameLabel;
     // End of variables declaration//GEN-END:variables

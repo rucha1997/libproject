@@ -142,11 +142,8 @@ private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new BookRequest().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new BookRequest().setVisible(true);
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -27,8 +27,8 @@ public class EditStudent extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
+        indiraPannel = new javax.swing.JPanel();
+        indiraButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         emailField = new javax.swing.JTextField();
         contactNoField = new javax.swing.JTextField();
@@ -44,7 +44,7 @@ public class EditStudent extends javax.swing.JFrame {
         emailLabel = new javax.swing.JLabel();
         doneWithInfoEditButton = new javax.swing.JButton();
         studentIdforSearchLabel = new javax.swing.JLabel();
-        studedntIDForSearchField = new javax.swing.JTextField();
+        studentIDForSearchField = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         newPasswordLabel = new javax.swing.JLabel();
         retypePasswordLabel = new javax.swing.JLabel();
@@ -58,34 +58,40 @@ public class EditStudent extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(18, 49, 113));
+        indiraPannel.setBackground(new java.awt.Color(18, 49, 113));
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        indiraButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
+        indiraButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                indiraButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout indiraPannelLayout = new javax.swing.GroupLayout(indiraPannel);
+        indiraPannel.setLayout(indiraPannelLayout);
+        indiraPannelLayout.setHorizontalGroup(
+            indiraPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(indiraPannelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(indiraButton, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        indiraPannelLayout.setVerticalGroup(
+            indiraPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, indiraPannelLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(indiraButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jPanel4.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        studedntIDField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studedntIDFieldActionPerformed(evt);
+            }
+        });
 
         studentIdLabel.setText("Student ID:");
 
@@ -164,7 +170,7 @@ public class EditStudent extends javax.swing.JFrame {
         studentIdforSearchLabel.setText("Student ID:");
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         newPasswordLabel.setText("New Password:");
 
@@ -232,7 +238,7 @@ public class EditStudent extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(indiraPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(106, 106, 106)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -242,7 +248,7 @@ public class EditStudent extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(studedntIDForSearchField)
+                        .addComponent(studentIDForSearchField)
                         .addGap(277, 277, 277))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
@@ -261,13 +267,13 @@ public class EditStudent extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(indiraPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(studentIdforSearchLabel)
-                    .addComponent(studedntIDForSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(studentIDForSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(personalInfoLabel)
@@ -283,15 +289,24 @@ public class EditStudent extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void indiraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indiraButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_indiraButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         ManageStudents manageStudents= new ManageStudents();
         manageStudents.setVisible(true);
+        
+        //To change the window
+        EditStudent editStudent = new EditStudent();
+        editStudent.setVisible(false);
+        dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void studedntIDFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studedntIDFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studedntIDFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,10 +336,8 @@ public class EditStudent extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditStudent().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new EditStudent().setVisible(true);
         });
     }
 
@@ -339,9 +352,9 @@ public class EditStudent extends javax.swing.JFrame {
     private javax.swing.JLabel editPasswordLabel;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton indiraButton;
+    private javax.swing.JPanel indiraPannel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel newPasswordLabel;
     private javax.swing.JPasswordField passwordField;
@@ -349,9 +362,9 @@ public class EditStudent extends javax.swing.JFrame {
     private javax.swing.JPasswordField retypePasswordField;
     private javax.swing.JLabel retypePasswordLabel;
     private javax.swing.JTextField studedntIDField;
-    private javax.swing.JTextField studedntIDForSearchField;
     private javax.swing.JTextField studentBatchField;
     private javax.swing.JLabel studentBatchLabel;
+    private javax.swing.JTextField studentIDForSearchField;
     private javax.swing.JLabel studentIdLabel;
     private javax.swing.JLabel studentIdforSearchLabel;
     private javax.swing.JTextField studentNameField;

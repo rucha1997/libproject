@@ -27,19 +27,19 @@ public class BorrowBook extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jButton4 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        indiraPannel = new javax.swing.JPanel();
+        indiaraButton = new javax.swing.JButton();
+        borrowIdPannel = new javax.swing.JPanel();
         studentIDLabel = new javax.swing.JLabel();
         studentIDFIeld = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
+        autoFillPannel = new javax.swing.JPanel();
         nameLabel = new javax.swing.JLabel();
         batchLabel = new javax.swing.JLabel();
         departmentLabel = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         batchField = new javax.swing.JTextField();
         departmentField = new javax.swing.JTextField();
-        jPanel4 = new javax.swing.JPanel();
+        bookIDPannel = new javax.swing.JPanel();
         doneBorrowingBookButton = new javax.swing.JButton();
         accessionNumberLabel = new javax.swing.JLabel();
         classNumberLabel = new javax.swing.JLabel();
@@ -53,54 +53,54 @@ public class BorrowBook extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setBackground(new java.awt.Color(18, 49, 113));
+        indiraPannel.setBackground(new java.awt.Color(18, 49, 113));
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        indiaraButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logo.png"))); // NOI18N
+        indiaraButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                indiaraButtonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout indiraPannelLayout = new javax.swing.GroupLayout(indiraPannel);
+        indiraPannel.setLayout(indiraPannelLayout);
+        indiraPannelLayout.setHorizontalGroup(
+            indiraPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(indiraPannelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(indiaraButton, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        indiraPannelLayout.setVerticalGroup(
+            indiraPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, indiraPannelLayout.createSequentialGroup()
                 .addGap(11, 11, 11)
-                .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(indiaraButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jPanel1.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        borrowIdPannel.setBackground(new java.awt.Color(153, 255, 153));
+        borrowIdPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         studentIDLabel.setText("Student ID");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout borrowIdPannelLayout = new javax.swing.GroupLayout(borrowIdPannel);
+        borrowIdPannel.setLayout(borrowIdPannelLayout);
+        borrowIdPannelLayout.setHorizontalGroup(
+            borrowIdPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(borrowIdPannelLayout.createSequentialGroup()
+                .addGroup(borrowIdPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(borrowIdPannelLayout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addComponent(studentIDLabel))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(borrowIdPannelLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(studentIDFIeld, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        borrowIdPannelLayout.setVerticalGroup(
+            borrowIdPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(borrowIdPannelLayout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addComponent(studentIDLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -108,9 +108,9 @@ public class BorrowBook extends javax.swing.JFrame {
                 .addContainerGap(99, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
-        jPanel2.setPreferredSize(new java.awt.Dimension(197, 207));
+        autoFillPannel.setBackground(new java.awt.Color(153, 255, 153));
+        autoFillPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        autoFillPannel.setPreferredSize(new java.awt.Dimension(197, 207));
 
         nameLabel.setText("Name");
 
@@ -118,33 +118,33 @@ public class BorrowBook extends javax.swing.JFrame {
 
         departmentLabel.setText("Department");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout autoFillPannelLayout = new javax.swing.GroupLayout(autoFillPannel);
+        autoFillPannel.setLayout(autoFillPannelLayout);
+        autoFillPannelLayout.setHorizontalGroup(
+            autoFillPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(autoFillPannelLayout.createSequentialGroup()
+                .addGroup(autoFillPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(autoFillPannelLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(autoFillPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(departmentField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(batchField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(autoFillPannelLayout.createSequentialGroup()
                         .addGap(72, 72, 72)
                         .addComponent(departmentLabel))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGroup(autoFillPannelLayout.createSequentialGroup()
                         .addGap(82, 82, 82)
                         .addComponent(nameLabel)))
                 .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, autoFillPannelLayout.createSequentialGroup()
                 .addContainerGap(85, Short.MAX_VALUE)
                 .addComponent(batchLabel)
                 .addGap(81, 81, 81))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        autoFillPannelLayout.setVerticalGroup(
+            autoFillPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(autoFillPannelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(nameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -160,8 +160,8 @@ public class BorrowBook extends javax.swing.JFrame {
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(153, 255, 153));
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        bookIDPannel.setBackground(new java.awt.Color(153, 255, 153));
+        bookIDPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         doneBorrowingBookButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Checkmark_25px_1.png"))); // NOI18N
 
@@ -169,31 +169,31 @@ public class BorrowBook extends javax.swing.JFrame {
 
         classNumberLabel.setText("Class No.");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout bookIDPannelLayout = new javax.swing.GroupLayout(bookIDPannel);
+        bookIDPannel.setLayout(bookIDPannelLayout);
+        bookIDPannelLayout.setHorizontalGroup(
+            bookIDPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bookIDPannelLayout.createSequentialGroup()
+                .addGroup(bookIDPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bookIDPannelLayout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addComponent(accessionNumberLabel))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(bookIDPannelLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(bookIDPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(classNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(accessionNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(bookIDPannelLayout.createSequentialGroup()
                         .addGap(80, 80, 80)
                         .addComponent(classNumberLabel))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGroup(bookIDPannelLayout.createSequentialGroup()
                         .addGap(77, 77, 77)
                         .addComponent(doneBorrowingBookButton)))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        bookIDPannelLayout.setVerticalGroup(
+            bookIDPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, bookIDPannelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(accessionNumberLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -207,16 +207,16 @@ public class BorrowBook extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        borrowerIDLabel.setFont(new java.awt.Font("Tahoma", 1, 12));
+        borrowerIDLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         borrowerIDLabel.setText("Borrower ID");
 
-        autoFillLabel.setFont(new java.awt.Font("Tahoma", 1, 12));
+        autoFillLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         autoFillLabel.setText("Auto Fill");
 
-        bookIDLabel.setFont(new java.awt.Font("Tahoma", 1, 12));
+        bookIDLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         bookIDLabel.setText("Book ID");
 
-        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24));
+        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         titleLabel.setText("Borrow Book");
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Back_25px.png"))); // NOI18N
@@ -230,50 +230,48 @@ public class BorrowBook extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(indiraPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(backButton)
-                .addGap(0, 664, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(titleLabel)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(borrowIdPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(borrowerIDLabel))
                         .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(autoFillPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(autoFillLabel))
                         .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bookIDPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(bookIDLabel))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(indiraPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(titleLabel)
-                .addGap(7, 7, 7)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
                         .addComponent(borrowerIDLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(borrowIdPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(autoFillLabel)
                             .addComponent(bookIDLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(bookIDPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(autoFillPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(backButton))
         );
@@ -281,9 +279,9 @@ public class BorrowBook extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void indiaraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indiaraButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_indiaraButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
        
@@ -330,21 +328,21 @@ public class BorrowBook extends javax.swing.JFrame {
     private javax.swing.JTextField accessionNumberField;
     private javax.swing.JLabel accessionNumberLabel;
     private javax.swing.JLabel autoFillLabel;
+    private javax.swing.JPanel autoFillPannel;
     private javax.swing.JButton backButton;
     private javax.swing.JTextField batchField;
     private javax.swing.JLabel batchLabel;
     private javax.swing.JLabel bookIDLabel;
+    private javax.swing.JPanel bookIDPannel;
+    private javax.swing.JPanel borrowIdPannel;
     private javax.swing.JLabel borrowerIDLabel;
     private javax.swing.JTextField classNumberField;
     private javax.swing.JLabel classNumberLabel;
     private javax.swing.JTextField departmentField;
     private javax.swing.JLabel departmentLabel;
     private javax.swing.JButton doneBorrowingBookButton;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JButton indiaraButton;
+    private javax.swing.JPanel indiraPannel;
     private javax.swing.JTextField nameField;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField studentIDFIeld;
