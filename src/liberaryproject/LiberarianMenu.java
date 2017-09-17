@@ -292,6 +292,10 @@ private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-
     LoginPage loginPage=new LoginPage();
     loginPage.setVisible(true);
     System.out.println("Succesfully LogOut");
+    
+    LiberarianMenu liberarianMenu = new LiberarianMenu();
+    liberarianMenu.setVisible(false);
+    dispose();
 }//GEN-LAST:event_logoutButtonActionPerformed
 
     /**

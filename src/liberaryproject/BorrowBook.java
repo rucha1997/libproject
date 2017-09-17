@@ -287,6 +287,10 @@ public class BorrowBook extends javax.swing.JFrame {
        
         ManageBooks manageBooks=new ManageBooks();
         manageBooks.setVisible(true);
+        
+        BorrowBook borrowBook = new BorrowBook();
+        borrowBook.setVisible(false);
+        dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**

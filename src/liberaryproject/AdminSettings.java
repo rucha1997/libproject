@@ -266,6 +266,7 @@ public class AdminSettings extends javax.swing.JFrame {
         //To close the Window
         AdminSettings adminSettings = new AdminSettings();
         adminSettings.setVisible(false);
+        dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**

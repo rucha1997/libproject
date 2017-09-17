@@ -121,13 +121,9 @@ public class LoginPage extends javax.swing.JFrame {
 
         loginbutton.setFont(new java.awt.Font("Gabriola", 0, 24)); // NOI18N
         loginbutton.setText("Login");
-        loginbutton.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-                loginbuttonAncestorMoved(evt);
+        loginbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginbuttonActionPerformed(evt);
             }
         });
 
@@ -216,29 +212,16 @@ public class LoginPage extends javax.swing.JFrame {
         passWord=sc.next();
     }//GEN-LAST:event_passwordFieldActionPerformed
 
-    private void loginbuttonAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_loginbuttonAncestorMoved
-       
-        try{
-            String sql="select * from users where username=? and password=?";
-            
-            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-                
-            
+    private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbuttonActionPerformed
         
-        /*if(userName.equals("name") && passWord.equals("1234")){
-            LiberarianMenu liberarianMenu=new LiberarianMenu();
-            liberarianMenu.setVisible(true);
-        }
-        else if(userName.equals("name")){
-         System.out.println("Wrong Password");
-        }
-        else {
-         System.out.println("Invalid User");
-        }*/
-    }//GEN-LAST:event_loginbuttonAncestorMoved
+        LiberarianMenu liberarianMenu=new LiberarianMenu();
+        liberarianMenu.setVisible(true);
+        
+        //To change the window
+        LoginPage loginPage=new LoginPage();
+        loginPage.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_loginbuttonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -204,6 +204,11 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
         titleLabel.setText("Search by Author ");
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Back_25px.png"))); // NOI18N
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -241,6 +246,17 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
     private void indiraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indiraButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_indiraButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+
+        SearchBooks searchBooks =new SearchBooks();
+        searchBooks.setVisible(true);
+        
+        //To change the window
+        SearchbyAuthorName searchbyAuthorName =new SearchbyAuthorName();
+        searchbyAuthorName.setVisible(false);
+        dispose();
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments

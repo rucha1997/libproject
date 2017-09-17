@@ -164,6 +164,12 @@ public class SearchBooks extends javax.swing.JFrame {
 
         SearchbyCode searchbyCode=new SearchbyCode();
         searchbyCode.setVisible(true);
+        
+        //To close the window
+        SearchBooks searchBooks = new SearchBooks();
+        searchBooks.setVisible(false);
+        dispose();
+        
     }//GEN-LAST:event_searchByCodeButtonActionPerformed
 
     private void indiraButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_indiraButtonActionPerformed
@@ -174,6 +180,12 @@ public class SearchBooks extends javax.swing.JFrame {
 
         SearchbyName searchbyName=new SearchbyName();
         searchbyName.setVisible(true);
+        
+        SearchBooks searchBooks=new SearchBooks();
+        searchBooks.setVisible(false);
+        dispose();
+        
+                
                 
     }//GEN-LAST:event_searchbyNameButtonActionPerformed
 
@@ -181,12 +193,20 @@ public class SearchBooks extends javax.swing.JFrame {
 
         SearchbyAuthorName searchbyAuthorName=new SearchbyAuthorName();
         searchbyAuthorName.setVisible(true);
+        
+        SearchBooks searchBooks =new SearchBooks();
+        searchBooks.setVisible(false);
+        dispose();
     }//GEN-LAST:event_searchByAuthorNameButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
 
         LiberarianMenu liberarianMenu=new LiberarianMenu();
         liberarianMenu.setVisible(true);
+        
+        SearchBooks searchBooks =new SearchBooks();
+        searchBooks.setVisible(false);
+        dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
