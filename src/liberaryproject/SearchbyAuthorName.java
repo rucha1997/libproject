@@ -49,10 +49,12 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
         rowNumberField = new javax.swing.JTextField();
         titleLabel = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
+        menuLabel = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         indiraPannel.setBackground(new java.awt.Color(18, 49, 113));
 
@@ -70,7 +72,7 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
             .addGroup(indiraPannelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(indiraButton, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         indiraPannelLayout.setVerticalGroup(
             indiraPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,6 +87,12 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
 
         authorNameforSearchLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         authorNameforSearchLabel.setText("Author Name:");
+
+        accessionNumberforSearchField.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                accessionNumberforSearchFieldMouseMoved(evt);
+            }
+        });
 
         accessionNumberLabel.setText("Accession No. :");
 
@@ -210,33 +218,42 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
             }
         });
 
+        menuLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Menu_48px_1.png"))); // NOI18N
+        menuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuLabelMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(indiraPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(detailsPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(titleLabel)
-                        .addContainerGap())))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(detailsPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(backButton)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(menuLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(titleLabel)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(indiraPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(titleLabel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(titleLabel)
+                    .addComponent(menuLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(detailsPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(backButton))
         );
 
@@ -257,6 +274,19 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
         searchbyAuthorName.setVisible(false);
         dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void accessionNumberforSearchFieldMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accessionNumberforSearchFieldMouseMoved
+        
+        
+        //To auto complete the details
+    }//GEN-LAST:event_accessionNumberforSearchFieldMouseMoved
+
+    private void menuLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLabelMouseClicked
+
+        
+        //To display the menu
+        
+    }//GEN-LAST:event_menuLabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -316,6 +346,7 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
     private javax.swing.JButton indiraButton;
     private javax.swing.JPanel indiraPannel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel menuLabel;
     private javax.swing.JTextField rowNumberField;
     private javax.swing.JLabel rowNumberLabel;
     private javax.swing.JLabel titleLabel;
