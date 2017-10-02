@@ -300,37 +300,46 @@ public class AddNewStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_studedntIDFieldActionPerformed
 
     private void addNewStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addNewStudentButtonActionPerformed
-        boolean re=false;
+        boolean re = false;
+        if(contactNoField.getText().length()!=10)
+            {
+                contactNoField.setText("enter proper number");
+               re=false;
+            }
+        else
+            re=true;
+        
+        EmailValidator emailValidator = new EmailValidator();
+   if(!emailValidator.validate(emailField.getText().trim())) {
+                        jLabel1.setText("invalid E-mailID..");
+                        re=false;
+            }
+   else
+       re=true;
         try { 
+            if(re!=false)
+            {
             Class.forName("com.mysql.jdbc.Driver");
         
         
         Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
 //here sonoo is database name, root is username and password 
            
+
             PreparedStatement ps = con.prepareStatement("INSERT INTO studinf VALUES(?,?,?,?,?,?,?)");
+           
+            
             ps.setString(1,studedntIDField.getText());
             ps.setString(2, studentNameField.getText());
             ps.setString(3, studentBatchField.getText());
             ps.setString(4, departmentField.getText());
+            /**/
             ps.setString(5, contactNoField.getText());
-            EmailValidator emailValidator = new EmailValidator();
-   if(!emailValidator.validate(emailField.getText().trim())) {
-       jLabel1.setText("invalid E-mailID..");
-        /*
-           Action that you want to take. For ex. make email id field red
-           or give message box saying invalid email id.
-        */
-        
-               
-   }
-   else
-   {
-             ps.setString(6, emailField.getText());
-   }
-              ps.setString(7, passwordField.getText());
+            ps.setString(6, emailField.getText());
+    ps.setString(7, passwordField.getText());
         ps.execute();
         re=true;
+            }
        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(AddNewStudent.class.getName()).log(Level.SEVERE, null, ex);
            
