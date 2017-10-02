@@ -5,6 +5,11 @@
  */
 package liberaryproject;
 
+import java.sql.*;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author amans
@@ -228,6 +233,11 @@ public class AddNewBook extends javax.swing.JFrame {
         addButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Checkmark_25px_1.png"))); // NOI18N
         addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -280,6 +290,30 @@ public class AddNewBook extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_columnNumberfieldActionPerformed
 
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        try {                                          
+           
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
+             PreparedStatement ps = con.prepareStatement("INSERT INTO books VALUES(?,?,?,?,?,?,?,?)");
+             ps.setString(1, accessionNumberfield.getText());
+              ps.setString(2, classNumberField.getText());
+               ps.setString(3, bookTitleField.getText());
+                ps.setString(4, authorNameField.getText());
+                 ps.setString(5, editionField.getText());
+                  ps.setString(6, bookSelfNumberField.getText());
+                   ps.setString(7, rowNumberfield.getText());
+                    ps.setString(8, columnNumberfield.getText());
+                ps.execute();    
+                   
+                
+
+        }catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddNewStudent.class.getName()).log(Level.SEVERE, null, ex);
+           
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -308,8 +342,13 @@ public class AddNewBook extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new AddNewBook().setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            
+
+            @Override
+            public void run() {
+                new AddNewBook().setVisible(true);
+            }
         });
     }
 
