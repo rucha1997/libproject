@@ -5,28 +5,32 @@
  */
 package liberaryproject;
 
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author amans
  */
 public class EditStudent extends javax.swing.JFrame {
-static String newpwd;
-static String id;
+
+    static String newpwd;
+    static String id;
+    String studid;
+
     /**
      * Creates new form EditStudent
      */
     public EditStudent() {
         initComponents();
-        
-        newpwd=passwordField.getText();
-        id=studedntIDField.getText();
+
     }
 
     /**
@@ -64,6 +68,7 @@ static String id;
         doneWithPasswordEditButton = new javax.swing.JButton();
         personalInfoLabel = new javax.swing.JLabel();
         editPasswordLabel = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -172,6 +177,12 @@ static String id;
         studentIdforSearchLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         studentIdforSearchLabel.setText("Student ID:");
 
+        studedntIDForSearchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studedntIDForSearchFieldActionPerformed(evt);
+            }
+        });
+
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -226,6 +237,13 @@ static String id;
         editPasswordLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         editPasswordLabel.setText("Edit Password");
 
+        jButton1.setText("Search");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -248,17 +266,20 @@ static String id;
                         .addComponent(studentIdforSearchLabel)
                         .addGap(4, 4, 4)
                         .addComponent(studedntIDForSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(258, 258, 258))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1)
+                        .addGap(175, 175, 175))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(studentIdforSearchLabel)
-                    .addComponent(studedntIDForSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
+                    .addComponent(studedntIDForSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(personalInfoLabel)
                     .addComponent(editPasswordLabel))
@@ -276,10 +297,43 @@ static String id;
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void studedntIDForSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studedntIDForSearchFieldActionPerformed
+        
+    }//GEN-LAST:event_studedntIDForSearchFieldActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            studid = studedntIDForSearchField.getText();
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/libproj", "root", "rucha");
+//here sonoo is database name, root is username and password 
+            Statement st = con.createStatement();
+            String query = "SELECT * from studinf";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+
+                if ((studedntIDForSearchField.getText()).equals(rs.getString(1))) {
+                    studedntIDField.setText(rs.getString(1));
+                    studentNameField.setText(rs.getString(2));
+                    studentBatchField.setText(rs.getString(3));
+                     departmentField.setText(rs.getString(4));
+                     contactNoField.setText(rs.getString(5));
+                     emailField.setText(rs.getString(6));
+                     
+                }
+                else{
+                    System.out.println("Not Found");
+                }
+
+            }st.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(EditStudent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    
     public static void main(String args[]) throws SQLException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -305,45 +359,8 @@ static String id;
         //</editor-fold>
 
         /* Create and display the form */
-        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproj","root","rucha");
-//here sonoo is database name, root is username and password 
-String sql="UPDATE studinf SET password=? WHERE stud_name=?";
-     PreparedStatement ps = con.prepareStatement(sql);
-     
-     
-String sql1 = "SELECT studid FROM STUDENTINF";
-PreparedStatement ps1=con.prepareStatement(sql1);
-int pwd=0;
-/*
-ResultSet rs = ps1.executeQuery(sql1);
-      
-    
-      while(rs.next()){
-          
-         //Retrieve by column name
-         int id1  = rs.getInt("studid");
-         if(id.equals(id1))
-         {
-             pwd=1;
-             studedntIDField.setText();
-             ps.executeUpdate(newpwd, 5);
-         }
-         
-    }*/
-      if(pwd==0)
-      {
-          System.out.println("ID didn't matched");
-      }
-       
-      
-
-     
         java.awt.EventQueue.invokeLater(new Runnable() {
-             private Statement stmt;
-            {
-                this.stmt = con.createStatement();
-            }
-            
+
             public void run() {
                 new EditStudent().setVisible(true);
             }
@@ -360,6 +377,7 @@ ResultSet rs = ps1.executeQuery(sql1);
     private javax.swing.JLabel editPasswordLabel;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel emailLabel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
