@@ -307,29 +307,7 @@ public class BorrowBook extends javax.swing.JFrame {
 
     private void studentIDFIeldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_studentIDFIeldInputMethodTextChanged
            
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-          Connection   con = DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
        
-        PreparedStatement ps = con.prepareStatement("SELECT stud_name,batch,depart FROM studinf WHERE studid=?");
-        ResultSet rs;
-        ps.setString(1,studentIDFIeld.getText());
-      
-        rs = ps.executeQuery();
-       
-    while(rs.next()) { 
-      JOptionPane.showMessageDialog(null,rs.getString(1));
-      
-       nameField.setText(rs.getString("stud_name"));
-       batchField.setText(rs.getString("batch"));
-       departmentField.setText(rs.getString("depart"));
-     
-    }
-         } catch (SQLException ex) {
-            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_studentIDFIeldInputMethodTextChanged
 
     private void studentIDFIeldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studentIDFIeldKeyPressed
@@ -346,9 +324,9 @@ public class BorrowBook extends javax.swing.JFrame {
        
     while(rs.next()) { 
       JOptionPane.showMessageDialog(null,rs.getString(2));
-       nameField.setText(rs.getString(2));
-       batchField.setText(rs.getString(3));
-        departmentField.setText(rs.getString(4));
+       nameField.setText(rs.getString(1));
+       batchField.setText(rs.getString(2));
+        departmentField.setText(rs.getString(3));
      
     }
          } catch (SQLException ex) {
