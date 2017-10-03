@@ -49,7 +49,6 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
         rowNumberField = new javax.swing.JTextField();
         titleLabel = new javax.swing.JLabel();
         backButton = new javax.swing.JButton();
-        menuLabel = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -88,9 +87,9 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
         authorNameforSearchLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         authorNameforSearchLabel.setText("Author Name:");
 
-        accessionNumberforSearchField.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                accessionNumberforSearchFieldMouseMoved(evt);
+        accessionNumberforSearchField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                accessionNumberforSearchFieldMousePressed(evt);
             }
         });
 
@@ -218,13 +217,6 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
             }
         });
 
-        menuLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Menu_48px_1.png"))); // NOI18N
-        menuLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuLabelMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -238,8 +230,7 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
                 .addComponent(backButton)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(menuLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(titleLabel)
                 .addContainerGap())
         );
@@ -248,10 +239,8 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(indiraPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLabel)
-                    .addComponent(menuLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(titleLabel)
+                .addGap(31, 31, 31)
                 .addComponent(detailsPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(backButton))
@@ -275,18 +264,9 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
-    private void accessionNumberforSearchFieldMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accessionNumberforSearchFieldMouseMoved
-        
-        
-        //To auto complete the details
-    }//GEN-LAST:event_accessionNumberforSearchFieldMouseMoved
-
-    private void menuLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLabelMouseClicked
-
-        
-        //To display the menu
-        
-    }//GEN-LAST:event_menuLabelMouseClicked
+    private void accessionNumberforSearchFieldMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accessionNumberforSearchFieldMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_accessionNumberforSearchFieldMousePressed
 
     /**
      * @param args the command line arguments
@@ -346,7 +326,6 @@ public class SearchbyAuthorName extends javax.swing.JFrame {
     private javax.swing.JButton indiraButton;
     private javax.swing.JPanel indiraPannel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel menuLabel;
     private javax.swing.JTextField rowNumberField;
     private javax.swing.JLabel rowNumberLabel;
     private javax.swing.JLabel titleLabel;

@@ -289,11 +289,11 @@ public class LiberarianMenu extends javax.swing.JFrame {
 private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
 
 
-    LoginPage loginPage=new LoginPage();
-    loginPage.setVisible(true);
-    System.out.println("Succesfully LogOut");
+    Welcome welcome = new Welcome();
+    welcome.setVisible(true);
     
-    LiberarianMenu liberarianMenu = new LiberarianMenu();
+    LiberarianMenu liberarianMenu;
+        liberarianMenu = new LiberarianMenu();
     liberarianMenu.setVisible(false);
     dispose();
 }//GEN-LAST:event_logoutButtonActionPerformed
