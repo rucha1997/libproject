@@ -303,6 +303,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="accessionNumberfield">
+          <Events>
+            <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="accessionNumberfieldInputMethodTextChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -405,6 +408,9 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="accessionNumberconfirmField">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="accessionNumberconfirmFieldFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="backButton">
       <Properties>

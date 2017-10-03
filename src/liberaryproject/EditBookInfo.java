@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package liberaryproject;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -167,6 +170,14 @@ public class EditBookInfo extends javax.swing.JFrame {
 
         jLabel4.setText("Accession no.:");
 
+        accessionNumberfield.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                accessionNumberfieldInputMethodTextChanged(evt);
+            }
+        });
+
         jLabel5.setText("Class No.:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -258,6 +269,12 @@ public class EditBookInfo extends javax.swing.JFrame {
                 .addContainerGap(62, Short.MAX_VALUE))
         );
 
+        accessionNumberconfirmField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                accessionNumberconfirmFieldFocusLost(evt);
+            }
+        });
+
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Back_25px.png"))); // NOI18N
         backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -334,6 +351,52 @@ public class EditBookInfo extends javax.swing.JFrame {
         ManageBooks manageBooks=new ManageBooks();
         manageBooks.setVisible(true);
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void accessionNumberconfirmFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_accessionNumberconfirmFieldFocusLost
+        try {
+            // TODO add your handling code here:
+            Class.forName("com.mysql.jdbc.Driver");
+           Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
+        PreparedStatement ps=con.prepareStatement("SELECT * FROM books WHERE access_no=?");
+        ResultSet rs;
+        ps.setString(1, accessionNumberconfirmField.getText());
+        rs=ps.executeQuery();
+        while(rs.next())
+        {
+            accessionNumberfield.setText(rs.getString(1));
+            classNumberField.setText(rs.getString(2));
+           bookTitleField.setText(rs.getString(3));
+           authorNameField .setText(rs.getString(4));
+           editionField.setText(rs.getString(5));
+           bookSelfNumberField.setText(rs.getString(6));
+           rowNumberfield.setText(rs.getString(7));
+           columnNumberfield .setText(rs.getString(8));
+        }
+        
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(EditBookInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditBookInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+    }//GEN-LAST:event_accessionNumberconfirmFieldFocusLost
+
+    private void accessionNumberfieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_accessionNumberfieldInputMethodTextChanged
+        // TODO add your handling code here:
+         try {
+            // TODO add your handling code here:
+            Class.forName("com.mysql.jdbc.Driver");
+           Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
+        PreparedStatement ps=con.prepareStatement("INSERT INTO books(access_no)VALUES ?;");
+       ps.setString(1, accessionNumberfield.getText());
+       ps.execute();
+         }catch (SQLException ex) {
+            Logger.getLogger(EditBookInfo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EditBookInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_accessionNumberfieldInputMethodTextChanged
 
     /**
      * @param args the command line arguments

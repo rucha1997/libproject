@@ -191,6 +191,12 @@ public class BorrowBook extends javax.swing.JFrame {
 
         classNumberLabel.setText("Class No.");
 
+        classNumberField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                classNumberFieldMouseEntered(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -292,26 +298,36 @@ public class BorrowBook extends javax.swing.JFrame {
               
             Connection   con = DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
             
-            PreparedStatement ps=con.prepareStatement("SELECT title,author_n FROM books WHERE access_no=?");
+            PreparedStatement ps=con.prepareStatement("SELECT title,author_n,clas FROM books WHERE access_no=?");
             ResultSet rs;
             ps.setString(1, accessionNumberField.getText());//accessionnumber primary key
             
             rs=ps.executeQuery();
+            PreparedStatement pq=con.prepareStatement("INSERT INTO borrower VALUES(?,?,?,?,?);");
             while(rs.next())
             {
+                
                 title=rs.getString("title");
                 author=rs.getString("author_n");
+            
+                 pq.setString(1, studentIDFIeld.getText());
+                 
+            pq.setString(2, accessionNumberField.getText());
+             
+            pq.setString(3, rs.getString("clas"));
+             
+             pq.setString(4, rs.getString(1));
+              
+             pq.setString(5, rs.getString(2));
+              
+              r=true;
             }
             
-            PreparedStatement ps2=con.prepareStatement("INSERT INTO borrower VALUES(?,?,?,?,?,)");
-            ps2.setString(1, studentIDFIeld.getText());
-            ps2.setString(2, accessionNumberField.getText());
-            ps2.setString(3, classNumberField.getText());
-             ps2.setString(4, title);
-             ps2.setString(5, author);
             
-             ps2.execute();
-             r=true;
+           
+            
+             pq.execute();
+            
             // catch (SQLException e ) {
         } catch (SQLException ex) {
             Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
@@ -344,7 +360,7 @@ public class BorrowBook extends javax.swing.JFrame {
         rs = ps.executeQuery();
        
     while(rs.next()) { 
-     // JOptionPane.showMessageDialog(null,rs.getString(2));
+     // 
        nameField.setText(rs.getString(1));
        batchField.setText(rs.getString(2));
         departmentField.setText(rs.getString(3));
@@ -356,6 +372,30 @@ public class BorrowBook extends javax.swing.JFrame {
             Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_studentIDFIeldKeyPressed
+
+    private void classNumberFieldMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_classNumberFieldMouseEntered
+        try {
+            // TODO add your handling code here:
+            Class.forName("com.mysql.jdbc.Driver");
+        
+              
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
+        
+            
+            PreparedStatement ps2=con.prepareStatement("SELECT clas FROM books WHERE access_no=?");
+            ResultSet rs2;
+            ps2.setString(1, accessionNumberField.getText());//accessionnumber primary key
+            rs2=ps2.executeQuery();
+            while(rs2.next())
+            {
+                classNumberField.setText(rs2.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_classNumberFieldMouseEntered
 
     /**
      * @param args the command line arguments
