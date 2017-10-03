@@ -5,6 +5,13 @@
  */
 package liberaryproject;
 
+import java.sql.*;
+import java.awt.event.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author amans
@@ -81,6 +88,19 @@ public class BorrowBook extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         studentIDLabel.setText("Student ID");
+
+        studentIDFIeld.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                studentIDFIeldInputMethodTextChanged(evt);
+            }
+        });
+        studentIDFIeld.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                studentIDFIeldKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -263,9 +283,80 @@ public class BorrowBook extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void doneBorrowingBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneBorrowingBookButtonActionPerformed
-       
+             
+         
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+              
+            Connection   con = DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
+            
+            PreparedStatement ps=con.prepareStatement("SELECT title,author_n FROM books WHERE access_no=?");
+            ResultSet rs;
+            
+            // catch (SQLException e ) {
+        } catch (SQLException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        }catch (ClassNotFoundException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+          
         
     }//GEN-LAST:event_doneBorrowingBookButtonActionPerformed
+
+    private void studentIDFIeldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_studentIDFIeldInputMethodTextChanged
+           
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+          Connection   con = DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
+       
+        PreparedStatement ps = con.prepareStatement("SELECT stud_name,batch,depart FROM studinf WHERE studid=?");
+        ResultSet rs;
+        ps.setString(1,studentIDFIeld.getText());
+      
+        rs = ps.executeQuery();
+       
+    while(rs.next()) { 
+      JOptionPane.showMessageDialog(null,rs.getString(1));
+      
+       nameField.setText(rs.getString("stud_name"));
+       batchField.setText(rs.getString("batch"));
+       departmentField.setText(rs.getString("depart"));
+     
+    }
+         } catch (SQLException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_studentIDFIeldInputMethodTextChanged
+
+    private void studentIDFIeldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studentIDFIeldKeyPressed
+             
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+          Connection   con = DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
+       
+        PreparedStatement ps = con.prepareStatement("SELECT stud_name,batch,depart FROM studinf WHERE studid=?");
+        ResultSet rs;
+        ps.setString(1,studentIDFIeld.getText());
+      
+        rs = ps.executeQuery();
+       
+    while(rs.next()) { 
+      JOptionPane.showMessageDialog(null,rs.getString(2));
+       nameField.setText(rs.getString(2));
+       batchField.setText(rs.getString(3));
+        departmentField.setText(rs.getString(4));
+     
+    }
+         } catch (SQLException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_studentIDFIeldKeyPressed
 
     /**
      * @param args the command line arguments

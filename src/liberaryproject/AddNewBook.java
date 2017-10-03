@@ -5,6 +5,14 @@
  */
 package liberaryproject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author amans
@@ -81,7 +89,7 @@ public class AddNewBook extends javax.swing.JFrame {
         );
 
         primaryPsnnel.setBackground(new java.awt.Color(153, 255, 153));
-        primaryPsnnel.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        primaryPsnnel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         accessionNumberLabel.setText("Accession no.:");
 
@@ -99,7 +107,7 @@ public class AddNewBook extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(primaryPsnnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(classNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(accessionNumberfield, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE))
+                    .addComponent(accessionNumberfield))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         primaryPsnnelLayout.setVerticalGroup(
@@ -110,14 +118,14 @@ public class AddNewBook extends javax.swing.JFrame {
                     .addComponent(accessionNumberLabel)
                     .addComponent(accessionNumberfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(primaryPsnnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(primaryPsnnelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(classNumberLabel)
                     .addComponent(classNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
 
         detailPannel.setBackground(new java.awt.Color(153, 255, 153));
-        detailPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        detailPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         bookTitleField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,7 +176,7 @@ public class AddNewBook extends javax.swing.JFrame {
         );
 
         addressPannel.setBackground(new java.awt.Color(153, 255, 153));
-        addressPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(0));
+        addressPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         countLabel.setText("Count:");
 
@@ -227,11 +235,16 @@ public class AddNewBook extends javax.swing.JFrame {
                 .addContainerGap(62, Short.MAX_VALUE))
         );
 
-        addButton.setFont(new java.awt.Font("Tahoma", 1, 12));
+        addButton.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         addButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Checkmark_25px_1.png"))); // NOI18N
         addButton.setText("Add");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
-        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24));
+        titleLabel.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         titleLabel.setText("Add New Book");
 
         backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Back_25px.png"))); // NOI18N
@@ -277,14 +290,12 @@ public class AddNewBook extends javax.swing.JFrame {
                             .addComponent(detailPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(primaryPsnnel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(addressPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
                         .addComponent(addButton)
                         .addContainerGap(22, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(backButton))))
+                    .addComponent(backButton)))
         );
 
         pack();
@@ -318,6 +329,39 @@ public class AddNewBook extends javax.swing.JFrame {
                 
     }//GEN-LAST:event_backButtonActionPerformed
 
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+      boolean rs=false;
+         try{ 
+            
+            Class.forName("com.mysql.jdbc.Driver");
+        
+        
+        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
+//here sonoo is database name, root is username and password 
+           
+
+            PreparedStatement ps = con.prepareStatement("INSERT INTO books VALUES(?,?,?,?,?,?,?,?)");
+           
+            
+            ps.setString(1,accessionNumberfield.getText());
+            ps.setString(2, classNumberField.getText());
+            ps.setString(3, bookTitleField.getText());
+            ps.setString(4, authorNameField.getText());
+            /**/
+            ps.setString(5, editionField.getText());
+            ps.setString(6,bookSelfNumberField.getText());
+            ps.setString(7, rowNumberfield.getText());
+              ps.setString(8, columnNumberfield.getText());
+        ps.execute();
+        rs=true;
+            
+       } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(AddNewStudent.class.getName()).log(Level.SEVERE, null, ex);
+          
+    }//GEN-LAST:event_addButtonActionPerformed
+     if(rs==true)
+             JOptionPane.showMessageDialog(null, "book Added Successfully..");
+    }
     /**
      * @param args the command line arguments
      */
