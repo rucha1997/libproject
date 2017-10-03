@@ -284,8 +284,9 @@ public class BorrowBook extends javax.swing.JFrame {
 
     private void doneBorrowingBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneBorrowingBookButtonActionPerformed
              
-         
-        
+         String title = null;
+         String author = null;
+        boolean r=false;
         try {
             Class.forName("com.mysql.jdbc.Driver");
               
@@ -293,7 +294,24 @@ public class BorrowBook extends javax.swing.JFrame {
             
             PreparedStatement ps=con.prepareStatement("SELECT title,author_n FROM books WHERE access_no=?");
             ResultSet rs;
+            ps.setString(1, accessionNumberField.getText());//accessionnumber primary key
             
+            rs=ps.executeQuery();
+            while(rs.next())
+            {
+                title=rs.getString("title");
+                author=rs.getString("author_n");
+            }
+            
+            PreparedStatement ps2=con.prepareStatement("INSERT INTO borrower VALUES(?,?,?,?,?,)");
+            ps2.setString(1, studentIDFIeld.getText());
+            ps2.setString(2, accessionNumberField.getText());
+            ps2.setString(3, classNumberField.getText());
+             ps2.setString(4, title);
+             ps2.setString(5, author);
+            
+             ps2.execute();
+             r=true;
             // catch (SQLException e ) {
         } catch (SQLException ex) {
             Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
@@ -301,7 +319,10 @@ public class BorrowBook extends javax.swing.JFrame {
             Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-          
+         if(r==true)
+         {
+             JOptionPane.showMessageDialog(null,"operation succesfull" );
+         }
         
     }//GEN-LAST:event_doneBorrowingBookButtonActionPerformed
 
@@ -323,7 +344,7 @@ public class BorrowBook extends javax.swing.JFrame {
         rs = ps.executeQuery();
        
     while(rs.next()) { 
-      JOptionPane.showMessageDialog(null,rs.getString(2));
+     // JOptionPane.showMessageDialog(null,rs.getString(2));
        nameField.setText(rs.getString(1));
        batchField.setText(rs.getString(2));
         departmentField.setText(rs.getString(3));
