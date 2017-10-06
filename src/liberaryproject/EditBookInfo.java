@@ -180,6 +180,14 @@ public class EditBookInfo extends javax.swing.JFrame {
 
         jLabel5.setText("Class No.:");
 
+        classNumberField.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                classNumberFieldInputMethodTextChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -272,6 +280,11 @@ public class EditBookInfo extends javax.swing.JFrame {
         accessionNumberconfirmField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 accessionNumberconfirmFieldFocusLost(evt);
+            }
+        });
+        accessionNumberconfirmField.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                accessionNumberconfirmFieldMouseReleased(evt);
             }
         });
 
@@ -397,6 +410,15 @@ public class EditBookInfo extends javax.swing.JFrame {
             Logger.getLogger(EditBookInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_accessionNumberfieldInputMethodTextChanged
+
+    private void accessionNumberconfirmFieldMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accessionNumberconfirmFieldMouseReleased
+        
+             
+    }//GEN-LAST:event_accessionNumberconfirmFieldMouseReleased
+
+    private void classNumberFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_classNumberFieldInputMethodTextChanged
+      
+    }//GEN-LAST:event_classNumberFieldInputMethodTextChanged
 
     /**
      * @param args the command line arguments
