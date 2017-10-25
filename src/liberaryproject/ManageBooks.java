@@ -34,6 +34,7 @@ public class ManageBooks extends javax.swing.JFrame {
         editBookInfoButton = new javax.swing.JButton();
         listOfBookbutton = new javax.swing.JButton();
         bookRequestButton = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(838, 490));
@@ -94,6 +95,18 @@ public class ManageBooks extends javax.swing.JFrame {
         bookRequestButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Book_Shelf_50px.png"))); // NOI18N
         bookRequestButton.setText("Books Request");
 
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icons8_Back_25px.png"))); // NOI18N
+        backButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backButtonMouseClicked(evt);
+            }
+        });
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -108,6 +121,9 @@ public class ManageBooks extends javax.swing.JFrame {
                     .addComponent(bookRequestButton, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(listOfBookbutton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(75, 75, 75))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(backButton)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -120,7 +136,8 @@ public class ManageBooks extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bookRequestButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(editBookInfoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53))
+                .addGap(20, 20, 20)
+                .addComponent(backButton))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -139,7 +156,7 @@ public class ManageBooks extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         pack();
@@ -184,6 +201,26 @@ public class ManageBooks extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_listOfBookbuttonActionPerformed
 
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+
+        LiberarianMenu liberarianMenu= new LiberarianMenu();
+        liberarianMenu.setVisible(true);
+        
+        ManageBooks manageBooks = new ManageBooks();
+        manageBooks.setVisible(false);
+        dispose();
+
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void backButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backButtonMouseClicked
+     LiberarianMenu liberarianMenu= new LiberarianMenu();
+        liberarianMenu.setVisible(true);
+    
+    ManageBooks bookRequest=new ManageBooks();
+    bookRequest.setVisible(false);
+    dispose();
+    }//GEN-LAST:event_backButtonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -221,6 +258,7 @@ public class ManageBooks extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addNewBookButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JButton bookRequestButton;
     private javax.swing.JButton editBookInfoButton;
     private javax.swing.JButton jButton1;

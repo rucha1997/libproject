@@ -5,6 +5,14 @@
  */
 package liberaryproject;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author amans
@@ -80,6 +88,12 @@ public class SearchbyCode extends javax.swing.JFrame {
 
         accessionNumberforSearchLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         accessionNumberforSearchLabel.setText("Accession no:");
+
+        accessionNumberforSearchField.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                accessionNumberforSearchFieldMouseMoved(evt);
+            }
+        });
 
         accessionNumberLabel.setText("Accession No. :");
 
@@ -222,6 +236,35 @@ public class SearchbyCode extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void accessionNumberforSearchFieldMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accessionNumberforSearchFieldMouseMoved
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+          Connection   con = DriverManager.getConnection("jdbc:mysql://localhost:3306/libproject","root","rucha");
+       
+        PreparedStatement ps = con.prepareStatement("SELECT * FROM books WHERE access_no=?");
+        ResultSet rs;
+        ps.setString(1,accessionNumberforSearchField.getText());
+      
+        rs = ps.executeQuery();
+       
+    while(rs.next()) { 
+     // 
+       accessionNumberfield.setText(rs.getString(1));
+       classNumberField.setText(rs.getString(2));
+        bookNameField.setText(rs.getString(3));
+       authotNameField.setText(rs.getString(4));
+          editionField.setText(rs.getString(5));
+           columnNumberField.setText(rs.getString(7));
+           rowNumberField.setText(rs.getString(8));
+     
+    }
+         } catch (SQLException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BorrowBook.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_accessionNumberforSearchFieldMouseMoved
 
     /**
      * @param args the command line arguments

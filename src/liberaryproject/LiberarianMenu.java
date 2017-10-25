@@ -225,11 +225,11 @@ public class LiberarianMenu extends javax.swing.JFrame {
 
     private void manageBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBooksButtonActionPerformed
         // TODO add your handling code here:
-        ManageBooks manageBooks=new ManageBooks();
+         ManageBooks manageBooks=new ManageBooks();
         manageBooks.setVisible(true);
         
         //To close thew current window 
-        LiberarianMenu liberarianMenu= new LiberarianMenu();
+         LiberarianMenu liberarianMenu= new LiberarianMenu();
         liberarianMenu.setVisible(false);
         dispose();
     }//GEN-LAST:event_manageBooksButtonActionPerformed
